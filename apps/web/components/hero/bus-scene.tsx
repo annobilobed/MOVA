@@ -196,7 +196,7 @@ function Scene({ animate }: { animate: boolean }) {
   );
 }
 
-export default function BusScene({ animate = true }: { animate?: boolean }) {
+export default function BusScene({ animate = true, onReady }: { animate?: boolean; onReady?: () => void }) {
   return (
     <Canvas
       shadows
@@ -205,6 +205,7 @@ export default function BusScene({ animate = true }: { animate?: boolean }) {
       gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}
       frameloop={animate ? "always" : "demand"}
       aria-hidden
+      onCreated={() => requestAnimationFrame(() => requestAnimationFrame(() => onReady?.()))}
     >
       <ambientLight intensity={0.85} />
       <hemisphereLight args={["#ffffff", "#3a2df0", 0.7]} />

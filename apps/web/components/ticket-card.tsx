@@ -17,7 +17,7 @@ export function TicketCard({ ticket, reveal = false }: { ticket: Ticket; reveal?
       animate={{ opacity: 1, y: 0, rotateX: 0 }}
       transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: animate ? 0.25 : 0 }}
       style={{ transformPerspective: 900 }}
-      className="mx-auto w-full max-w-sm overflow-hidden rounded-[24px] bg-surface shadow-float ring-1 ring-border"
+      className="mx-auto w-full max-w-sm overflow-hidden rounded-[24px] bg-surface text-left shadow-float ring-1 ring-border"
     >
       <div className="bg-[linear-gradient(120deg,#493BFF_0%,#8655FF_100%)] px-6 pt-5 pb-6 text-white">
         <div className="flex items-center justify-between text-sm">

@@ -13,7 +13,7 @@ function apply(pref: Pref) {
   document.documentElement.dataset.theme = dark ? "dark" : "light";
 }
 
-export function ThemeSwitcher() {
+export function ThemeSwitcher({ compact = false }: { compact?: boolean }) {
   const [pref, setPref] = useState<Pref>("system");
 
   useEffect(() => {
@@ -45,10 +45,11 @@ export function ThemeSwitcher() {
           role="radio"
           aria-checked={pref === id}
           onClick={() => choose(id)}
-          className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm text-muted transition-colors aria-checked:bg-accent aria-checked:text-white"
+          title={label}
+          className="flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-1.5 text-sm text-muted transition-colors aria-checked:bg-accent aria-checked:text-white"
         >
           <Icon aria-hidden className="size-4" />
-          {label}
+          {compact ? <span className="sr-only">{label}</span> : label}
         </button>
       ))}
     </div>

@@ -37,12 +37,6 @@ export function HeroVisual() {
     return () => ((window as any).cancelIdleCallback ? (window as any).cancelIdleCallback(idle) : clearTimeout(idle));
   }, []);
 
-  useEffect(() => {
-    if (mode !== "3d") return;
-    const t = window.setTimeout(() => setReady(true), 400);
-    return () => clearTimeout(t);
-  }, [mode]);
-
   return (
     <div className="relative aspect-[16/11] w-full">
       <div className={`absolute inset-0 transition-opacity duration-700 ${ready ? "opacity-0" : "opacity-100"}`}>
@@ -50,7 +44,7 @@ export function HeroVisual() {
       </div>
       {mode === "3d" && (
         <div className={`absolute inset-0 transition-opacity duration-700 ${ready ? "opacity-100" : "opacity-0"}`}>
-          <BusScene animate={animate} />
+          <BusScene animate={animate} onReady={() => setReady(true)} />
         </div>
       )}
     </div>

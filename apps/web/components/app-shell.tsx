@@ -82,7 +82,7 @@ export function AppShell({ roles, children }: { roles: Role[]; children: React.R
             <p className="truncate font-semibold">{user.fullName}</p>
             <p className="text-sm text-muted">{roleName[user.role]}</p>
           </div>
-          <ThemeSwitcher />
+          <ThemeSwitcher compact />
           <button onClick={signOut} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[15px] font-medium text-muted hover:bg-ground hover:text-fg">
             <LogOut aria-hidden className="size-5" /> Sign out
           </button>
