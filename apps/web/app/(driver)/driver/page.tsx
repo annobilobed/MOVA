@@ -25,7 +25,7 @@ export default function DriverHome() {
           <Card key={t.id} className="p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="tabular font-display text-2xl font-extrabold">{formatTime(t.departureAt)} <span className="text-base font-semibold text-muted">{formatDate(t.departureAt)}</span></p>
+                <p className="tabular font-display text-2xl font-extrabold">{formatTime(t.departureAt)} <span className="ml-1.5 text-base font-semibold text-muted">{formatDate(t.departureAt)}</span></p>
                 <p className="mt-1 font-display text-lg font-bold">{t.origin} → {t.destination}</p>
                 <p className="text-sm text-muted">{t.bus.plate}</p>
               </div>

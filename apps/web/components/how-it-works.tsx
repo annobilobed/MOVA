@@ -158,7 +158,7 @@ function TicketDemo() {
         </div>
         <div className="mt-4 grid grid-cols-3 gap-2 border-t border-dashed border-border pt-3 text-center text-xs">
           <div><p className="text-muted">Seat</p><p className="tabular font-bold">14</p></div>
-          <div><p className="text-muted">Departs</p><p className="tabular font-bold">06:00</p></div>
+          <div><p className="text-muted">Departs</p><p className="tabular font-bold whitespace-nowrap">6:00 AM</p></div>
           <div><p className="text-muted">Bus</p><p className="font-bold">GR ···</p></div>
         </div>
       </div>

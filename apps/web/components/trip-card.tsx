@@ -20,7 +20,7 @@ export function TripCard({ trip }: { trip: Trip }) {
         </div>
         <div>
           <p className="tabular font-display text-[1.65rem] leading-none font-extrabold">
-            {formatTime(trip.departureAt)} <span className="text-base font-semibold text-muted">{formatDate(trip.departureAt)}</span>
+            {formatTime(trip.departureAt)} <span className="ml-1.5 text-base font-semibold text-muted">{formatDate(trip.departureAt)}</span>
           </p>
           <div className="mt-3 grid grid-cols-[12px_1fr] gap-x-3 gap-y-1.5">
             <span aria-hidden className="relative mt-1.5 size-3 rounded-full border-2 border-route bg-surface after:absolute after:top-[calc(100%+2px)] after:left-1/2 after:h-[calc(100%+8px)] after:w-0.5 after:-translate-x-1/2 after:bg-[repeating-linear-gradient(180deg,var(--route)_0_3px,transparent_3px_6px)]" />

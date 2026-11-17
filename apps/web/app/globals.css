@@ -120,7 +120,7 @@
   * { scrollbar-width: thin; scrollbar-color: color-mix(in oklab, var(--muted) 45%, transparent) transparent; }
 }
 
-@utility tabular { font-variant-numeric: tabular-nums; }
+@utility tabular { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 @utility container-page {
   width: 100%;
