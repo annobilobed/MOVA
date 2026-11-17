@@ -9,8 +9,9 @@ export function BusFallback() {
         </linearGradient>
       </defs>
       {/* route ribbon */}
-      <path d="M-20 380 C 140 330, 240 300, 340 290 S 560 230, 680 150" fill="none" stroke="#2A1F9E" strokeWidth="92" strokeLinecap="round" opacity="0.9" />
-      <path d="M-20 380 C 140 330, 240 300, 340 290 S 560 230, 680 150" fill="none" stroke="#12D6C5" strokeWidth="5" strokeDasharray="16 14" strokeLinecap="round" />
+      <path d="M-20 380 C 140 330, 240 300, 340 290 S 560 230, 680 150" fill="none" stroke="#0a9c90" strokeWidth="92" strokeLinecap="round" transform="translate(0 10)" />
+      <path d="M-20 380 C 140 330, 240 300, 340 290 S 560 230, 680 150" fill="none" stroke="#12D6C5" strokeWidth="88" strokeLinecap="round" />
+      <path d="M-20 380 C 140 330, 240 300, 340 290 S 560 230, 680 150" fill="none" stroke="#ffffff" strokeWidth="5" strokeDasharray="16 14" strokeLinecap="round" />
       {/* shadow */}
       <ellipse cx="330" cy="318" rx="190" ry="20" fill="#171936" opacity="0.22" />
       {/* coach body */}
@@ -33,7 +34,7 @@ export function BusFallback() {
       </g>
       {/* pins */}
       <g transform="translate(92 250)">
-        <path d="M0 0 C -26 0 -26 -40 0 -58 C 26 -40 26 0 0 0Z" fill="#12D6C5" transform="rotate(180 0 -29)" />
+        <path d="M0 0 C -26 0 -26 -40 0 -58 C 26 -40 26 0 0 0Z" fill="#8655FF" transform="rotate(180 0 -29)" />
         <circle cx="0" cy="-36" r="9" fill="#fff" />
       </g>
       <g transform="translate(560 128)">

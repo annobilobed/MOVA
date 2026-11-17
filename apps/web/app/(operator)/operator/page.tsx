@@ -3,7 +3,7 @@
 import { ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
 import { LoadState } from "@/components/load-state";
-import { Metric } from "@/components/metric";
+import { SummaryRow } from "@/components/metric";
 import { Badge, Card, DemoBadge, PageHeader } from "@/components/ui";
 import { formatDate, formatTime } from "@/lib/format";
 import { buttonClass } from "@/lib/styles";
@@ -27,12 +27,15 @@ export default function OperatorOverview() {
         actions={<Link href="/operator/trips#new" className={buttonClass()}><Plus className="size-4" />New trip</Link>}
       />
       {ov.error && <LoadState loading={false} error={ov.error} reload={ov.reload} label="" />}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Metric accent label="Departing in 24 hours" value={ov.loading ? undefined : m?.next24h ?? null} />
-        <Metric label="Upcoming trips" value={ov.loading ? undefined : m?.upcomingTrips ?? null} />
-        <Metric label="Booked passengers" value={ov.loading ? undefined : m?.upcomingPassengers ?? null} hint="On upcoming trips" />
-        <Metric label="Buses" value={ov.loading ? undefined : m?.buses ?? null} />
-      </div>
+      <SummaryRow
+        loading={ov.loading}
+        items={[
+          { label: "Departing in 24 hours", value: m?.next24h },
+          { label: "Upcoming trips", value: m?.upcomingTrips },
+          { label: "Booked passengers", value: m?.upcomingPassengers },
+          { label: "Buses", value: m?.buses },
+        ]}
+      />
 
       <Card as="section" className="mt-8 overflow-hidden">
         <div className="flex items-center justify-between border-b border-border px-5 py-4">

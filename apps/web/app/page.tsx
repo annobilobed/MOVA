@@ -1,4 +1,4 @@
-import { ArrowRight, Bus, CreditCard, GraduationCap, Lock, QrCode, School } from "lucide-react";
+import { ArrowRight, Bus, CreditCard, Lock, QrCode } from "lucide-react";
 import Link from "next/link";
 import { HeroVisual } from "@/components/hero/hero-visual";
 import { HowItWorks } from "@/components/how-it-works";
@@ -14,10 +14,16 @@ import type { Trip } from "@/lib/types";
 export const revalidate = 30;
 
 export default async function Home() {
-  const [data, places] = await Promise.all([
+  const [data, places, regional, shuttles] = await Promise.all([
     serverApi<{ trips: Trip[] }>("/trips?limit=4"),
     serverApi<{ origins: string[] }>("/trips/places"),
+    serverApi<{ trips: Trip[] }>("/trips?type=inter_regional&limit=100"),
+    serverApi<{ trips: Trip[] }>("/trips?type=campus_shuttle&limit=100"),
   ]);
+  const uniq = (xs: string[]) => [...new Set(xs)];
+  const regionalStops = uniq((regional?.trips ?? []).map((t) => t.destination));
+  const shuttleStops = uniq((shuttles?.trips ?? []).flatMap((t) => [t.origin, t.destination]));
+  const anyDemo = [...(regional?.trips ?? []), ...(shuttles?.trips ?? [])].some((t) => t.isDemo);
   const trips = data?.trips ?? [];
   // Suggest an origin only when every live trip leaves from the same place.
   const defaultOrigin = places?.origins.length === 1 ? places.origins[0] : undefined;
@@ -29,9 +35,9 @@ export default async function Home() {
         <div aria-hidden className="pointer-events-none absolute bottom-[-30%] left-[-15%] -z-10 size-[640px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.14),transparent_65%)]" />
         <SiteHeader overHero />
         <main id="main">
-          <section className="container-page grid items-center gap-8 pt-8 pb-16 sm:pt-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-6 lg:pt-14 lg:pb-24">
+          <section className="container-page grid items-center gap-8 pt-8 pb-6 sm:pt-12 sm:pb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-6 lg:pt-14 lg:pb-24">
             <div className="max-w-xl">
-              <h1 className="text-[clamp(2.4rem,5.6vw,4.25rem)] leading-[1.02] font-extrabold tracking-[-0.035em]">
+              <h1 className="text-[clamp(2.4rem,5.6vw,4.25rem)] leading-[1.04] font-extrabold tracking-[-0.02em] [word-spacing:0.04em]">
                 Your journey. Your seat. Your freedom.
               </h1>
               <p className="mt-5 max-w-md text-lg text-white/85">
@@ -44,9 +50,9 @@ export default async function Home() {
                 How MOVA works <ArrowRight aria-hidden className="size-4" />
               </Link>
             </div>
-            <div className="relative -mx-4 sm:mx-0 lg:-mr-16 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]">
+            <div className="relative -mx-4 sm:mx-0 lg:-mr-16 [mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)]">
               <HeroVisual />
-              <div aria-hidden className="absolute top-[10%] left-[14%] hidden items-center gap-2.5 rounded-2xl border border-white/25 bg-white/14 px-3.5 py-2.5 shadow-float backdrop-blur-md sm:flex">
+              <div aria-hidden className="absolute top-[6%] left-[10%] flex items-center gap-2.5 sm:top-[10%] sm:left-[14%] rounded-2xl border border-white/25 bg-white/14 px-3.5 py-2.5 shadow-float backdrop-blur-md sm:flex">
                 <span className="tabular grid size-8 place-items-center rounded-lg bg-electric text-sm font-bold">14</span>
                 <span className="text-sm leading-tight"><span className="block font-semibold">Seat selected</span><span className="text-white/75">Held for 10 minutes</span></span>
               </div>
@@ -113,20 +119,21 @@ export default async function Home() {
 
       <section aria-label="Trip types" className="py-20 sm:py-24">
         <div className="container-page grid gap-4 lg:grid-cols-[1.25fr_1fr]">
-          <Link href="/trips?type=inter_regional" className="group relative isolate flex min-h-72 flex-col justify-end overflow-hidden rounded-[28px] bg-ink p-8 text-white">
+          <Link href="/trips?type=inter_regional" className="group relative isolate flex flex-col overflow-hidden rounded-[28px] bg-ink p-8 text-white sm:p-10">
             <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(120%_90%_at_100%_0%,rgba(134,85,255,0.55),transparent_60%),radial-gradient(80%_70%_at_0%_100%,rgba(18,214,197,0.25),transparent_60%)]" />
-            <GraduationCap aria-hidden className="mb-auto size-9 text-aqua" />
-            <h2 className="mt-10 text-3xl font-extrabold">Going home for vacation</h2>
+            <h2 className="text-3xl font-extrabold">Going home for vacation</h2>
             <p className="mt-2 max-w-md text-white/75">Inter-regional coaches from campus to cities across Ghana. Book early to get the seat you want.</p>
-            <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-aqua">Find inter-regional trips <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-1" /></span>
+            <RouteLine stops={regionalStops} from={regional?.trips[0]?.origin} tone="dark" />
+            <span className="mt-auto inline-flex items-center gap-1.5 pt-8 font-semibold text-aqua">Find inter-regional trips <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-1" /></span>
           </Link>
-          <Link href="/trips?type=campus_shuttle" className="group relative isolate flex min-h-72 flex-col justify-end overflow-hidden rounded-[28px] border border-border bg-surface p-8">
-            <School aria-hidden className="mb-auto size-9 text-accent-fg" />
-            <h2 className="mt-10 text-3xl font-extrabold">Getting around campus</h2>
+          <Link href="/trips?type=campus_shuttle" className="group relative isolate flex flex-col overflow-hidden rounded-[28px] border border-border bg-surface p-8 sm:p-10">
+            <h2 className="text-3xl font-extrabold">Getting around campus</h2>
             <p className="mt-2 text-muted">Campus shuttles between halls, faculties and town, with the same seat booking and QR tickets.</p>
-            <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-accent-fg">Find campus shuttles <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-1" /></span>
+            <RouteLine stops={shuttleStops} tone="light" />
+            <span className="mt-auto inline-flex items-center gap-1.5 pt-8 font-semibold text-accent-fg">Find campus shuttles <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-1" /></span>
           </Link>
         </div>
+        {anyDemo && <p className="container-page mt-3 text-sm text-muted">Routes shown are from current demo data.</p>}
       </section>
 
       <section aria-labelledby="faq" className="border-t border-border bg-surface py-20 sm:py-24">
@@ -171,5 +178,27 @@ export default async function Home() {
       </section>
       <SiteFooter />
     </>
+  );
+}
+
+/** Real stops from live trips, drawn on the route line. Hidden when there are none. */
+function RouteLine({ stops, from, tone }: { stops: string[]; from?: string; tone: "dark" | "light" }) {
+  if (!stops.length) return null;
+  const shown = stops.slice(0, 6);
+  return (
+    <ol aria-label={from ? `Destinations from ${from}` : "Stops"} className="relative mt-8 flex flex-col gap-3">
+      <span aria-hidden className={`absolute top-2 bottom-2 left-[5px] w-0.5 bg-[repeating-linear-gradient(180deg,var(--color-aqua)_0_5px,transparent_5px_9px)]`} />
+      {from && (
+        <li className={`relative flex items-center gap-3 text-sm ${tone === "dark" ? "text-white/70" : "text-muted"}`}>
+          <span aria-hidden className="size-3 rounded-full border-2 border-aqua bg-transparent" /> From {from}
+        </li>
+      )}
+      {shown.map((s) => (
+        <li key={s} className="relative flex items-center gap-3 font-display text-xl font-bold">
+          <span aria-hidden className="size-3 rounded-full bg-aqua" /> {s}
+        </li>
+      ))}
+      {stops.length > shown.length && <li className={`pl-6 text-sm ${tone === "dark" ? "text-white/70" : "text-muted"}`}>and {stops.length - shown.length} more</li>}
+    </ol>
   );
 }

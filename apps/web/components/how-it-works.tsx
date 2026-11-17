@@ -54,7 +54,7 @@ export function HowItWorks() {
                 </span>
                 <span className="pl-1">
                   <span className="block font-display text-lg font-bold">{s.title}</span>
-                  <span className={clsx("block text-[15px] text-muted transition-[max-height,opacity] duration-300", on ? "max-h-24 opacity-100" : "max-h-0 overflow-hidden opacity-0 lg:max-h-24 lg:opacity-70")}>
+                  <span className={clsx("block text-[15px] text-muted transition-[max-height,opacity] duration-300", on ? "max-h-24 opacity-100" : "max-h-0 overflow-hidden opacity-0 lg:max-h-24 lg:opacity-100")}>
                     {s.body}
                   </span>
                 </span>
@@ -70,7 +70,7 @@ export function HowItWorks() {
             <span className="tabular">09:41</span>
             <Smartphone className="size-3.5" />
           </div>
-          <div className="relative h-[360px] overflow-hidden rounded-[22px] bg-ground">
+          <div className="relative h-[400px] overflow-hidden rounded-[22px] bg-ground">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={active}
@@ -99,7 +99,7 @@ function SeatDemo() {
   return (
     <div>
       <p className="text-sm font-semibold">Choose your seat</p>
-      <div className="mt-4 grid grid-cols-[repeat(2,1fr)_16px_repeat(2,1fr)] gap-2">
+      <div className="mt-4 grid grid-cols-[repeat(2,1fr)_16px_repeat(2,1fr)] gap-1.5">
         {Array.from({ length: 24 }, (_, i) => i + 1).flatMap((n, i) => {
           const cells = [];
           if (i % 4 === 2) cells.push(<span key={`a${n}`} />);
@@ -108,7 +108,7 @@ function SeatDemo() {
             <span
               key={n}
               className={clsx(
-                "tabular grid h-9 place-items-center rounded-lg text-xs font-semibold",
+                "tabular grid h-8 place-items-center rounded-lg text-xs font-semibold",
                 sel ? "bg-electric text-white ring-4 ring-electric/25" : taken.has(n) ? "bg-border text-muted line-through" : "border border-aqua bg-surface text-fg",
               )}
             >
