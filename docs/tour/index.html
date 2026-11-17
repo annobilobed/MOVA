@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MOVA app tour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: product walkthrough, confident and plain
+   IDEA: the MOVA route line — each stop is one screen of the journey
+   PICTURE: the real screens, in phone and browser frames, scrollable
+   COLOUR and TYPE: MOVA Electric→Violet field, Lavender Mist ground, Aqua route; Plus Jakarta Sans + Inter
+   LAYOUT: hero band with stop rail, then one stop at a time */
+:root{color-scheme:light dark;--bg:light-dark(#f5f5ff,#0d0e22);--card:light-dark(#fff,#171936);--ink:light-dark(#171936,#f1f1ff);--muted:light-dark(#565b78,#a6aacb);--line:light-dark(#e5e7f2,#2c2f5a);--aqua:#12d6c5;--el:#493bff}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Plus Jakarta Sans",Inter,sans-serif;letter-spacing:-.02em;text-wrap:balance;margin:0}
+.hero{background:linear-gradient(120deg,#493bff,#8655ff);color:#fff;padding:clamp(28px,5vw,56px) max(5vw,16px) 0}
+.hero h1{font-size:clamp(32px,5vw,52px);line-height:1.05;font-weight:800}
+.hero p{max-width:60ch;color:#ffffffd9;margin:12px 0 0}
+.rail{display:flex;gap:4px;overflow-x:auto;margin-top:28px;padding-bottom:0;position:relative}
+.rail a{flex:none;display:flex;align-items:center;gap:10px;padding:14px 16px 16px;color:#ffffffcc;text-decoration:none;font-weight:600;border-radius:14px 14px 0 0;min-height:44px}
+.rail a .dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--aqua)}
+.rail a[aria-current=true]{background:var(--bg);color:var(--ink)}
+.rail a[aria-current=true] .dot{background:var(--aqua)}
+.rail a:focus-visible{outline:3px solid #fff;outline-offset:-3px}
+.band{padding:clamp(24px,4vw,48px) max(5vw,16px);max-width:1340px;margin:0 auto}
+.stop{display:none}.stop.on{display:block}
+.head{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:end;justify-content:space-between;margin-bottom:24px}
+.head h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;line-height:1.1}
+.head p{color:var(--muted);max-width:62ch;margin:6px 0 0}
+.shots{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));align-items:start}
+.shots.wide{grid-template-columns:minmax(0,1fr)}
+figure{margin:0}
+figcaption{font-size:14px;color:var(--muted);margin-top:10px}
+figcaption b{color:var(--ink);font-weight:600}
+.phone{border:10px solid #171936;border-radius:34px;overflow:hidden;background:#171936;max-width:380px;margin:0 auto;box-shadow:0 24px 60px -28px #17193688}
+.browser{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);box-shadow:0 24px 60px -32px #17193666}
+.browser .bar{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.browser .bar i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.scrollshot{max-height:640px;overflow-y:auto;display:block}
+.scrollshot img{display:block;width:100%;height:auto}
+.note{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:40px}
+.note code{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+@media(max-width:600px){.scrollshot{max-height:520px}}
+@media(prefers-reduced-motion:no-preference){.stop.on{animation:in .3s cubic-bezier(.16,1,.3,1)}@keyframes in{from{opacity:0;transform:translateY(8px)}}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>MOVA, screen by screen</h1>
+  <p>The first build of the MOVA student transit app: what students, drivers and operators see. Every screen below is a real capture of the running app. Trips, fares and bus plates are demo data.</p>
+  <nav class="rail" id="rail" aria-label="Tour stops"></nav>
+</header>
+<main class="band" id="stops"></main>
+<p class="band note" style="padding-top:0">Captured from the live development build. Demo sign-in for testing: <code>student@demo.mova</code>, <code>driver@demo.mova</code>, <code>operator@demo.mova</code>, <code>admin@demo.mova</code> with the demo password from the project README. Payments shown are test mode; no money moved.</p>
+<script>
+{
+const P = (src, cap) => ({ src, cap, kind: "phone" }), D = (src, cap) => ({ src, cap, kind: "browser" });
+const stops = [
+  { id: "home", label: "Home page", title: "Search first, with the 3D coach", text: "The landing page opens on the trip search over the MOVA gradient, with the 3D coach riding the aqua route ribbon. Below: how it works, live trips, routes, FAQs.",
+    shots: [D("desktop.png", "<b>Desktop</b>, full page"), P("mobile.png", "<b>Phone</b>, full page"), D("desktop-dark.png", "<b>Dark mode</b>, first screen")] },
+  { id: "search", label: "Find a trip", title: "Trips you can actually book", text: "Search by origin, destination and date, filter by inter-regional or campus shuttle. Each card shows time, route, seats left and fare in cedis.",
+    shots: [P("03-results.png", "<b>Search results</b>"), P("02-dashboard-empty.png", "<b>Student home</b> right after sign-up")] },
+  { id: "seats", label: "Pick a seat", title: "Choose the exact seat, held for 10 minutes", text: "The seat map follows the bus layout: 2 + aisle + 2, back row of 5. Taking a seat starts a server-held 10-minute countdown with a draining route line.",
+    shots: [P("04-seat-map.png", "<b>Seat map</b> with legend"), P("05-seat-held.png", "<b>Seat held</b>, luggage and total")] },
+  { id: "ticket", label: "Pay and get ticket", title: "Pay, then the QR ticket appears", text: "Without Paystack keys the app uses a clearly labelled test checkout. The ticket is issued only after payment is confirmed.",
+    shots: [P("06-test-checkout.png", "<b>Test checkout</b>"), P("07-confirmed-ticket.png", "<b>Booking confirmed</b> with QR ticket"), P("08-tickets.png", "<b>My tickets</b>")] },
+  { id: "driver", label: "Driver", title: "Scan at the bus door", text: "Drivers see only their assigned trips, scan with the phone camera or type the code, and get a full-screen answer they can read in sunlight.",
+    shots: [P("09-driver-trips.png", "<b>Assigned trips</b>"), P("10-scan-valid.png", "<b>Valid ticket</b>"), P("11-scan-used.png", "<b>Already used</b> on a repeat scan")] },
+  { id: "operator", label: "Operator", title: "Run trips and print manifests", text: "Operators create buses and trips and open a manifest for each departure, with a print layout. They only ever see their own company's data.",
+    shots: [D("12-operator-overview.png", "<b>Overview</b>"), D("13-operator-trips.png", "<b>Trips</b> and new-trip form"), D("14-manifest.png", "<b>Passenger manifest</b>")] },
+  { id: "admin", label: "Admin", title: "Accounts, roles and operators", text: "Super admins manage users and transport companies. Role changes need confirmation and are written to an audit log.",
+    shots: [D("16-admin.png", "<b>System overview</b>"), D("17-admin-users.png", "<b>Users</b>")] },
+];
+const rail = document.getElementById("rail"), host = document.getElementById("stops");
+rail.innerHTML = stops.map(s => `<a href="#${s.id}" data-id="${s.id}"><span class="dot"></span>${s.label}</a>`).join("");
+host.innerHTML = stops.map(s => `<section class="stop" id="s-${s.id}" aria-labelledby="h-${s.id}">
+  <div class="head"><div><h2 id="h-${s.id}">${s.title}</h2><p>${s.text}</p></div></div>
+  <div class="shots${s.shots.length === 1 ? " wide" : ""}">${s.shots.map(sh => `<figure>
+    <div class="${sh.kind}">${sh.kind === "browser" ? '<div class="bar"><i></i><i></i><i></i></div>' : ""}
+    <div class="scrollshot" tabindex="0" aria-label="Scrollable screenshot"><img src="img/${sh.src}" alt="${sh.cap.replace(/<[^>]+>/g, "")} screenshot" loading="lazy"></div></div>
+    <figcaption>${sh.cap}</figcaption></figure>`).join("")}</div></section>`).join("");
+const show = () => {
+  const id = (location.hash || "#home").slice(1);
+  const cur = stops.some(s => s.id === id) ? id : "home";
+  document.querySelectorAll(".stop").forEach(el => el.classList.toggle("on", el.id === "s-" + cur));
+  rail.querySelectorAll("a").forEach(a => a.setAttribute("aria-current", a.dataset.id === cur ? "true" : "false"));
+};
+addEventListener("hashchange", show); show();
+}
+</script>
+</body>
+</html>
