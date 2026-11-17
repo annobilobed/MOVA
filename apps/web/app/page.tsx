@@ -9,6 +9,7 @@ import { TripSearch } from "@/components/trip-search";
 import { EmptyState } from "@/components/ui";
 import { buttonClass } from "@/lib/styles";
 import { serverApi } from "@/lib/api";
+import { cedis, formatDateTime } from "@/lib/format";
 import type { Trip } from "@/lib/types";
 
 export const revalidate = 30;
@@ -23,6 +24,10 @@ export default async function Home() {
   const uniq = (xs: string[]) => [...new Set(xs)];
   const regionalStops = uniq((regional?.trips ?? []).map((t) => t.destination));
   const shuttleStops = uniq((shuttles?.trips ?? []).flatMap((t) => [t.origin, t.destination]));
+  const facts = (ts: Trip[] = []) =>
+    ts.length ? { fromFare: Math.min(...ts.map((t) => t.farePesewas)), next: ts[0].departureAt, count: ts.length } : null;
+  const regionalFacts = facts(regional?.trips);
+  const shuttleFacts = facts(shuttles?.trips);
   const anyDemo = [...(regional?.trips ?? []), ...(shuttles?.trips ?? [])].some((t) => t.isDemo);
   const trips = data?.trips ?? [];
   // Suggest an origin only when every live trip leaves from the same place.
@@ -124,13 +129,15 @@ export default async function Home() {
             <h2 className="text-3xl font-extrabold">Going home for vacation</h2>
             <p className="mt-2 max-w-md text-white/75">Inter-regional coaches from campus to cities across Ghana. Book early to get the seat you want.</p>
             <RouteLine stops={regionalStops} from={regional?.trips[0]?.origin} tone="dark" />
-            <span className="mt-auto inline-flex items-center gap-1.5 pt-8 font-semibold text-aqua">Find inter-regional trips <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-1" /></span>
+            <TripFacts facts={regionalFacts} tone="dark" />
+            <span className="inline-flex items-center gap-1.5 pt-6 font-semibold text-aqua">Find inter-regional trips <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-1" /></span>
           </Link>
           <Link href="/trips?type=campus_shuttle" className="group relative isolate flex flex-col overflow-hidden rounded-[28px] border border-border bg-surface p-8 sm:p-10">
             <h2 className="text-3xl font-extrabold">Getting around campus</h2>
             <p className="mt-2 text-muted">Campus shuttles between halls, faculties and town, with the same seat booking and QR tickets.</p>
             <RouteLine stops={shuttleStops} tone="light" />
-            <span className="mt-auto inline-flex items-center gap-1.5 pt-8 font-semibold text-accent-fg">Find campus shuttles <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-1" /></span>
+            <TripFacts facts={shuttleFacts} tone="light" />
+            <span className="inline-flex items-center gap-1.5 pt-6 font-semibold text-accent-fg">Find campus shuttles <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-1" /></span>
           </Link>
         </div>
         {anyDemo && <p className="container-page mt-3 text-sm text-muted">Routes shown are from current demo data.</p>}
@@ -186,7 +193,7 @@ function RouteLine({ stops, from, tone }: { stops: string[]; from?: string; tone
   if (!stops.length) return null;
   const shown = stops.slice(0, 4);
   return (
-    <ol aria-label={from ? `Destinations from ${from}` : "Stops"} className="relative mt-8 flex flex-col gap-3">
+    <ol aria-label={from ? `Destinations from ${from}` : "Stops"} className="relative mt-8 mb-8 flex flex-col gap-3">
       <span aria-hidden className={`absolute top-2 bottom-2 left-[5px] w-0.5 bg-[repeating-linear-gradient(180deg,var(--color-aqua)_0_5px,transparent_5px_9px)]`} />
       {from && (
         <li className={`relative flex items-center gap-3 text-sm ${tone === "dark" ? "text-white/70" : "text-muted"}`}>
@@ -200,5 +207,18 @@ function RouteLine({ stops, from, tone }: { stops: string[]; from?: string; tone
       ))}
       {stops.length > shown.length && <li className={`pl-6 text-sm ${tone === "dark" ? "text-white/70" : "text-muted"}`}>and {stops.length - shown.length} more</li>}
     </ol>
+  );
+}
+
+/** Real figures from live trips: lowest fare, next departure, number of departures. */
+function TripFacts({ facts, tone }: { facts: { fromFare: number; next: string; count: number } | null; tone: "dark" | "light" }) {
+  if (!facts) return null;
+  const label = tone === "dark" ? "text-white/70" : "text-muted";
+  return (
+    <dl className={`mt-auto grid grid-cols-3 gap-4 border-t pt-5 ${tone === "dark" ? "border-white/15" : "border-border"}`}>
+      <div><dt className={`text-sm ${label}`}>Fares from</dt><dd className="tabular font-display text-lg font-bold">{cedis(facts.fromFare)}</dd></div>
+      <div><dt className={`text-sm ${label}`}>Next departure</dt><dd className="tabular font-display text-lg font-bold">{formatDateTime(facts.next)}</dd></div>
+      <div><dt className={`text-sm ${label}`}>Departures</dt><dd className="tabular font-display text-lg font-bold">{facts.count}</dd></div>
+    </dl>
   );
 }
