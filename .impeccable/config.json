@@ -14,6 +14,18 @@
         "value": "plus jakarta sans",
         "createdAt": "2026-11-17T13:44:33.939Z",
         "reason": "spec-pinned fonts; DESIGN.md lists the self-hosted variable builds (Plus Jakarta Sans Variable, Inter Variable); the demo loads the same families from Google Fonts"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-11-17T13:45:54.515Z",
+        "reason": "spec-pinned body face (MOVA spec 3.5: Inter or DM Sans); recorded in DESIGN.md"
+      },
+      {
+        "rule": "overused-font",
+        "value": "plus jakarta sans",
+        "createdAt": "2026-11-17T13:45:54.521Z",
+        "reason": "spec-pinned display face (MOVA spec 3.5: Poppins or Plus Jakarta Sans); recorded in DESIGN.md"
       }
     ]
   }
