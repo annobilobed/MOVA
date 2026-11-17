@@ -1,0 +1,67 @@
+import { Router } from "express";
+import { z } from "zod";
+import { requireRole } from "../lib/auth.js";
+import { query } from "../lib/db.js";
+import { ah } from "../lib/errors.js";
+import { serializeTrip, TRIP_SELECT } from "../lib/trips.js";
+
+export const driver = Router();
+driver.use(requireRole("driver"));
+
+driver.get(
+  "/trips",
+  ah(async (req, res) => {
+    const { rows } = await query(
+      `${TRIP_SELECT} WHERE b.driver_id = $1 AND t.departure_at > now() - interval '12 hours' AND NOT t.is_cancelled ORDER BY t.departure_at`,
+      [req.user!.id],
+    );
+    const result = await Promise.all(
+      rows.map(async (r) => {
+        const { rows: c } = await query(
+          "SELECT count(*) FILTER (WHERE status = 'boarded')::int AS boarded, count(*)::int AS total FROM bookings WHERE trip_id = $1 AND status IN ('confirmed','boarded')",
+          [r.id],
+        );
+        return { ...serializeTrip(r), boarded: c[0].boarded, passengers: c[0].total };
+      }),
+    );
+    res.json({ trips: result });
+  }),
+);
+
+const validateSchema = z.object({ code: z.string().trim().min(1).max(200), tripId: z.string().uuid() });
+
+/**
+ * Validate a scanned ticket for a trip on the driver's assigned bus.
+ * A ticket is accepted once; repeat scans and wrong-bus tickets are rejected (FR-26..29).
+ */
+driver.post(
+  "/validate",
+  ah(async (req, res) => {
+    const { code, tripId } = validateSchema.parse(req.body);
+    const token = code.startsWith("MOVA1:") ? code.slice(6) : code;
+    const { rows: tripRows } = await query(`${TRIP_SELECT} WHERE t.id = $1 AND b.driver_id = $2`, [tripId, req.user!.id]);
+    if (!tripRows[0]) {
+      return res.status(403).json({ result: "not_your_trip", message: "This trip isn't assigned to you." });
+    }
+    const { rows } = await query(
+      `SELECT bk.*, u.full_name, t.bus_id, t.origin, t.destination, t.departure_at
+       FROM bookings bk JOIN users u ON u.id = bk.user_id JOIN trips t ON t.id = bk.trip_id
+       WHERE bk.qr_token = $1`,
+      [token],
+    );
+    const bk = rows[0];
+    if (!bk || bk.status === "cancelled") return res.json({ result: "invalid", message: "This isn't a valid MOVA ticket." });
+    const passenger = { name: bk.full_name, seat: bk.seat_number, route: `${bk.origin} → ${bk.destination}` };
+    if (bk.trip_id !== tripId) {
+      return res.json({ result: "wrong_bus", message: "This ticket is for a different trip or bus.", passenger });
+    }
+    const { rows: updated } = await query(
+      "UPDATE bookings SET status = 'boarded', boarded_at = now(), boarded_by = $2 WHERE id = $1 AND status = 'confirmed' RETURNING boarded_at",
+      [bk.id, req.user!.id],
+    );
+    if (!updated[0]) {
+      return res.json({ result: "already_used", message: "This ticket has already been used.", passenger, boardedAt: bk.boarded_at });
+    }
+    res.json({ result: "valid", message: "Ticket valid. Passenger boarded.", passenger, boardedAt: updated[0].boarded_at });
+  }),
+);

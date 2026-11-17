@@ -1,0 +1,12 @@
+node_modules
+.next
+dist
+.env
+.env.local
+*.log
+.impeccable/questions/
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/config.local.json
+coverage
+test-results

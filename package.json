@@ -1,0 +1,15 @@
+{
+  "name": "mova",
+  "private": true,
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "dev:api": "pnpm --filter @mova/api dev",
+    "dev:web": "pnpm --filter @mova/web dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "db:migrate": "pnpm --filter @mova/api db:migrate",
+    "db:seed": "pnpm --filter @mova/api db:seed",
+    "typecheck": "pnpm -r typecheck"
+  }
+}
