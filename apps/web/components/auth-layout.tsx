@@ -4,8 +4,8 @@ import { Logo } from "./logo";
 export function AuthLayout({ title, subtitle, children }: { title: string; subtitle: string; children: React.ReactNode }) {
   return (
     <div className="grid min-h-dvh lg:grid-cols-[1fr_minmax(0,560px)]">
-      <aside aria-hidden className="relative hidden overflow-hidden bg-[linear-gradient(120deg,#493BFF_0%,#8655FF_100%)] lg:block">
-        <div className="absolute -right-24 -bottom-24 size-[520px] rounded-full bg-[radial-gradient(circle,rgba(18,214,197,0.35),transparent_62%)]" />
+      <aside aria-hidden className="relative hidden overflow-hidden mova-flow lg:block">
+        <div className="absolute -right-24 -bottom-24 size-[520px] rounded-full mova-drift-a bg-[radial-gradient(circle,rgba(18,214,197,0.35),transparent_62%)]" />
         <div className="relative flex h-full flex-col justify-between p-12 text-white">
           <Logo tone="light" />
           <div>

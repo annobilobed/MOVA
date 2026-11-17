@@ -1,6 +1,7 @@
 import "@fontsource-variable/plus-jakarta-sans";
 import "@fontsource-variable/inter";
 import "./globals.css";
+import "./flow.css";
 import type { Metadata, Viewport } from "next";
 import { SessionProvider } from "@/components/session";
 import { themeScript } from "@/components/theme";

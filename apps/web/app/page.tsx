@@ -35,9 +35,9 @@ export default async function Home() {
 
   return (
     <>
-      <div className="relative isolate overflow-hidden bg-[linear-gradient(120deg,#493BFF_0%,#8655FF_100%)] text-white dark:bg-[linear-gradient(120deg,#2b20c4_0%,#5a2fd6_100%)]">
-        <div aria-hidden className="pointer-events-none absolute -top-40 right-[-10%] -z-10 size-[720px] rounded-full bg-[radial-gradient(circle,rgba(18,214,197,0.28),transparent_62%)]" />
-        <div aria-hidden className="pointer-events-none absolute bottom-[-30%] left-[-15%] -z-10 size-[640px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.14),transparent_65%)]" />
+      <div className="relative isolate overflow-hidden mova-flow text-white">
+        <div aria-hidden className="pointer-events-none absolute -top-40 right-[-10%] -z-10 size-[720px] rounded-full mova-drift-a bg-[radial-gradient(circle,rgba(18,214,197,0.28),transparent_62%)]" />
+        <div aria-hidden className="pointer-events-none absolute bottom-[-30%] left-[-15%] -z-10 size-[640px] rounded-full mova-drift-b bg-[radial-gradient(circle,rgba(255,255,255,0.14),transparent_65%)]" />
         <SiteHeader overHero />
         <main id="main">
           <section className="container-page grid items-center gap-8 pt-8 pb-6 sm:pt-12 sm:pb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-6 lg:pt-14 lg:pb-24">
@@ -171,7 +171,7 @@ export default async function Home() {
 
       <section className="py-20 sm:py-24">
         <div className="container-page">
-          <div className="relative isolate overflow-hidden rounded-[32px] bg-[linear-gradient(120deg,#493BFF_0%,#3a2df0_45%,#12D6C5_130%)] px-8 py-14 text-white sm:px-14">
+          <div className="relative isolate overflow-hidden rounded-[32px] mova-flow-cta px-8 py-14 text-white sm:px-14">
             <div className="max-w-xl">
               <h2 className="text-3xl font-extrabold sm:text-[2.6rem] sm:leading-[1.1]">Your next trip starts with a seat.</h2>
               <p className="mt-3 text-lg text-white/90">Create a free account with your UCC student ID and book in minutes.</p>
