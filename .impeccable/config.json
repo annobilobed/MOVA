@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "inter",
+        "createdAt": "2026-11-17T13:44:33.925Z",
+        "reason": "spec-pinned fonts; DESIGN.md lists the self-hosted variable builds (Plus Jakarta Sans Variable, Inter Variable); the demo loads the same families from Google Fonts"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "plus jakarta sans",
+        "createdAt": "2026-11-17T13:44:33.939Z",
+        "reason": "spec-pinned fonts; DESIGN.md lists the self-hosted variable builds (Plus Jakarta Sans Variable, Inter Variable); the demo loads the same families from Google Fonts"
+      }
+    ]
+  }
+}
