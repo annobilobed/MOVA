@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MOVA — Project Documentation</title>
+<style>
+@font-face { font-family: "Jakarta"; src: url("../../apps/web/node_modules/@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2") format("woff2"); font-weight: 200 800; }
+@font-face { font-family: "InterV"; src: url("../../apps/web/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
+@page { size: A4; margin: 14mm 15mm 17mm; }
+@page :first { margin: 0; }
+:root { --el:#493bff; --vi:#8655ff; --aq:#12d6c5; --aqi:#0a7f75; --ink:#171936; --mut:#565b78; --line:#e5e7f2; --mist:#f5f5ff; --coral:#c4283b; --sun:#8a5a00; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 9.4pt/1.5 "InterV", system-ui, sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+h1, h2, h3, h4 { font-family: "Jakarta", "InterV", sans-serif; letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
+h1 { font-size: 24pt; font-weight: 800; margin: 0 0 4mm; }
+h2 { font-size: 13pt; font-weight: 800; margin: 5.5mm 0 2mm; }
+h3 { font-size: 11pt; font-weight: 700; margin: 5mm 0 1.5mm; }
+p { margin: 0 0 2.5mm; }
+.lead { font-size: 10.8pt; color: var(--mut); max-width: 150mm; }
+.chapter { page-break-before: always; }
+.kicker-num { font-family: "Jakarta"; font-weight: 800; color: var(--aqi); font-size: 11pt; margin-bottom: 2mm; display: flex; align-items: center; gap: 3mm; }
+.kicker-num::after { content: ""; flex: 1; height: 0; border-top: 2px dashed var(--aq); }
+table { width: 100%; border-collapse: collapse; margin: 2mm 0 3.5mm; font-size: 8.4pt; page-break-inside: auto; }
+th { text-align: left; background: var(--mist); color: var(--mut); font-weight: 600; font-size: 7.8pt; padding: 2mm 2.5mm; border-bottom: 1px solid var(--line); }
+td { padding: 1.6mm 2.4mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr { page-break-inside: avoid; }
+code, .mono { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 8.3pt; background: var(--mist); border-radius: 3px; padding: 0.3mm 1.2mm; }
+pre { font-family: ui-monospace, Menlo, monospace; font-size: 8.2pt; background: #171936; color: #e9e8ff; border-radius: 3mm; padding: 4mm; white-space: pre-wrap; page-break-inside: avoid; margin: 2mm 0 4mm; }
+ul, ol { margin: 0 0 3mm; padding-left: 5mm; }
+li { margin-bottom: 1mm; }
+.note { border: 1px solid var(--line); background: var(--mist); border-radius: 3mm; padding: 3.5mm 4mm; margin: 3mm 0 4mm; page-break-inside: avoid; }
+.note.warn { background: #fff4d9; border-color: #f1d9a0; }
+.note b:first-child { display: block; margin-bottom: 1mm; }
+.pill { display: inline-block; border-radius: 99px; padding: 0.2mm 2.2mm; font-size: 7.5pt; font-weight: 600; border: 1px solid currentColor; white-space: nowrap; }
+.done { color: var(--aqi); } .planned { color: var(--sun); } .partial { color: var(--el); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+.card { border: 1px solid var(--line); border-radius: 3mm; padding: 3.5mm 4mm; page-break-inside: avoid; }
+.card h4 { font-size: 10pt; margin-bottom: 1mm; }
+.card p { font-size: 8.8pt; color: var(--mut); margin: 0; }
+figure { margin: 3mm 0 5mm; page-break-inside: avoid; }
+figure img { width: 100%; border: 1px solid var(--line); border-radius: 3mm; display: block; }
+figure.crop img { height: 95mm; object-fit: cover; object-position: top; }
+figure.phone img { height: 120mm; object-fit: cover; object-position: top; border-radius: 5mm; border: 3px solid var(--ink); }
+figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
+.swatch { display: flex; align-items: center; gap: 2.5mm; }
+.swatch i { width: 9mm; height: 9mm; border-radius: 2mm; border: 1px solid rgba(0,0,0,.08); flex: none; }
+.swatch b { display: block; font-size: 8.8pt; } .swatch span { font-size: 7.8pt; color: var(--mut); }
+.toc { columns: 2; column-gap: 10mm; font-size: 10pt; padding: 0; list-style: none; }
+.toc li { display: flex; gap: 3mm; padding: 1.6mm 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
+.toc li span:first-child { font-family: "Jakarta"; font-weight: 800; color: var(--aqi); width: 7mm; }
+/* Cover */
+.cover { height: 297mm; position: relative; overflow: hidden; color: #fff; background: linear-gradient(120deg, #493bff 0%, #5a3dff 30%, #8655ff 100%); padding: 26mm 20mm; display: flex; flex-direction: column; }
+.cover .glow { position: absolute; width: 170mm; height: 170mm; right: -50mm; top: -40mm; border-radius: 50%; background: radial-gradient(circle, rgba(18,214,197,.35), transparent 62%); }
+.cover h1 { font-size: 46pt; line-height: 1; margin: 22mm 0 6mm; position: relative; }
+.cover .sub { font-size: 15pt; color: rgba(255,255,255,.88); max-width: 130mm; position: relative; }
+.cover .route { position: relative; margin-top: 14mm; }
+.cover .meta { margin-top: auto; position: relative; display: grid; grid-template-columns: repeat(3, auto); gap: 4mm 14mm; font-size: 9.5pt; justify-content: start; }
+.cover .meta span { display: block; color: rgba(255,255,255,.7); font-size: 8pt; }
+.logo { display: flex; align-items: center; gap: 3mm; font-family: "Jakarta"; font-weight: 800; font-size: 18pt; position: relative; }
+.flow { display: flex; align-items: stretch; gap: 0; margin: 4mm 0 5mm; }
+.flow div { flex: 1; text-align: center; font-size: 8pt; padding: 3mm 1.5mm; border: 1px solid var(--line); border-right: 0; position: relative; background: #fff; }
+.flow div:last-child { border-right: 1px solid var(--line); }
+.flow div b { display: block; font-family: "Jakarta"; font-size: 9.5pt; color: var(--el); }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover">
+  <div class="glow"></div>
+  <div class="logo">
+    <svg viewBox="0 0 40 40" width="36" height="36"><rect width="40" height="40" rx="11" fill="#fff" fill-opacity=".16"/><path d="M10 28V14.5a2.5 2.5 0 0 1 4.6-1.4L20 21l5.4-7.9a2.5 2.5 0 0 1 4.6 1.4V24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="30" cy="28.5" r="3.2" fill="#12D6C5"/></svg>
+    MOVA
+  </div>
+  <h1>Project Documentation</h1>
+  <p class="sub">MOVA — the UCC Student Transit System. Seat booking, Paystack payments, QR tickets, driver ticket scanning and an operator portal.</p>
+  <svg class="route" viewBox="0 0 500 60" width="150mm"><path d="M8 40 C 110 8, 190 52, 290 28 S 440 10, 492 22" fill="none" stroke="#12D6C5" stroke-width="4" stroke-dasharray="12 10" stroke-linecap="round"/><circle cx="8" cy="40" r="7" fill="none" stroke="#12D6C5" stroke-width="4"/><circle cx="492" cy="22" r="8" fill="#12D6C5"/></svg>
+  <div class="meta">
+    <div><span>Version</span>First build (release 1 candidate)</div>
+    <div><span>Date</span>17 November 2026</div>
+    <div><span>Repository</span>github.com/annobilobed/MOVA</div>
+    <div><span>Source specification</span>MOVA Complete Website Design and Implementation Specification</div>
+    <div><span>Status</span>Built and tested; not yet deployed</div>
+    <div><span>Payments</span>Test mode until Paystack keys are added</div>
+  </div>
+</section>
+
+<!-- CONTENTS -->
+<section>
+  <h1>Contents</h1>
+  <ol class="toc">
+    <li><span>1</span><span>Project summary</span></li>
+    <li><span>2</span><span>Users and features</span></li>
+    <li><span>3</span><span>The booking journey</span></li>
+    <li><span>4</span><span>Architecture and technology</span></li>
+    <li><span>5</span><span>Repository structure</span></li>
+    <li><span>6</span><span>Data model</span></li>
+    <li><span>7</span><span>Business rules</span></li>
+    <li><span>8</span><span>API reference</span></li>
+    <li><span>9</span><span>Security and privacy</span></li>
+    <li><span>10</span><span>Website pages</span></li>
+    <li><span>11</span><span>Design system</span></li>
+    <li><span>12</span><span>Screens</span></li>
+    <li><span>13</span><span>Running the project locally</span></li>
+    <li><span>14</span><span>Configuration</span></li>
+    <li><span>15</span><span>Testing</span></li>
+    <li><span>16</span><span>Deployment</span></li>
+    <li><span>17</span><span>Status, gaps and next steps</span></li>
+    <li><span>A</span><span>Demo accounts and data</span></li>
+  </ol>
+  <div class="note"><b>How to read this document</b>Sections 1–3 explain what MOVA is and how people use it. Sections 4–9 are the technical reference for developers. Sections 10–12 cover the interface and design. Sections 13–16 explain how to run, test and deploy it. Section 17 lists what is finished, what is planned, and the decisions still open.</div>
+</section>
+
+<!-- 1 -->
+<section class="chapter">
+  <div class="kicker-num">1</div>
+  <h1>Project summary</h1>
+  <p class="lead">MOVA replaces queues and cash for UCC student bus travel. A student finds a trip, chooses an exact seat, pays digitally in Ghana cedis, and boards with a QR ticket that the driver of the assigned bus scans once.</p>
+  <h2>What was built</h2>
+  <div class="grid2">
+    <div class="card"><h4>Web application</h4><p>Next.js 15 website: public landing page, trip search, seat selection, checkout, payment status, QR tickets, student dashboard, driver scanner, operator portal and super-admin area. Light and dark themes.</p></div>
+    <div class="card"><h4>API</h4><p>Node.js + Express + TypeScript service with PostgreSQL and Redis. Handles accounts, trips, ten-minute seat holds, Paystack payments, idempotent webhooks, tickets, validation, manifests and administration.</p></div>
+    <div class="card"><h4>Tests</h4><p>16 automated API tests covering the specification's acceptance criteria, plus a 19-step end-to-end browser run across all four roles.</p></div>
+    <div class="card"><h4>Clickable demo and tour</h4><p>A self-contained interactive demo (sample data) and a screen-by-screen tour, both viewable without a server.</p></div>
+  </div>
+  <h2>Key numbers</h2>
+  <table>
+    <tr><th>Item</th><th>Value</th></tr>
+    <tr><td>User roles</td><td>4 — student, driver, operator admin, super admin</td></tr>
+    <tr><td>Web pages / routes</td><td>24</td></tr>
+    <tr><td>API endpoints</td><td>34</td></tr>
+    <tr><td>Database tables</td><td>8 (plus migration tracking)</td></tr>
+    <tr><td>Automated API tests</td><td>16, all passing</td></tr>
+    <tr><td>Seat hold duration</td><td>10 minutes, held by the server in Redis</td></tr>
+    <tr><td>Default bus layout</td><td>49 seats: 11 rows of 2 + aisle + 2, then a back row of 5</td></tr>
+    <tr><td>Currency</td><td>Ghana cedis (GHS); Paystack receives pesewas (GHS × 100)</td></tr>
+  </table>
+  <h2>Scope decisions</h2>
+  <ul>
+    <li>Built from scratch as a full web application. The Flutter mobile app described in the source specification is deferred.</li>
+    <li>Students register with any email address plus their UCC student ID.</li>
+    <li>Development data uses Cape Coast (UCC) as the origin with demo routes, all clearly labelled "Demo data".</li>
+    <li>Light and dark themes are included in the first release.</li>
+    <li>Visual direction: the mobility category standard executed at the level of Uber/Bolt, FlixBus/Omio and Revolut/Monzo.</li>
+  </ul>
+</section>
+
+<!-- 2 -->
+<section class="chapter">
+  <div class="kicker-num">2</div>
+  <h1>Users and features</h1>
+  <table>
+    <tr><th style="width:18%">Role</th><th style="width:30%">Needs</th><th>What MOVA gives them</th></tr>
+    <tr><td><b>Student</b></td><td>Find trips, choose a seat, pay, show a ticket</td><td>Trip search and filters; seat map with live states; 10-minute hold with countdown; luggage choice; server-calculated total; Paystack checkout; every payment outcome; QR ticket with all details as text; dashboard; My tickets (upcoming and past); profile.</td></tr>
+    <tr><td><b>Driver</b></td><td>See assigned trips, board passengers</td><td>Assigned trips with boarded counts; camera QR scanner with manual code entry; full-screen results: Valid, Already used, Wrong bus, Invalid ticket, Not your trip, Network unavailable; vibration feedback.</td></tr>
+    <tr><td><b>Operator admin</b></td><td>Run buses, trips and manifests</td><td>Overview of real counts; trip list with search, type filter and upcoming/past tabs; new-trip form; bus list and new-bus form with driver assignment; passenger manifest with print layout. Data limited to their own company.</td></tr>
+    <tr><td><b>Super admin</b></td><td>Manage accounts and companies</td><td>System overview including payments needing review; user search and filter; role, company and active-status changes behind a confirmation step, recorded in an audit log; staff account creation with a one-time temporary password; company management.</td></tr>
+  </table>
+  <h2>Feature status against the specification</h2>
+  <table>
+    <tr><th>Area</th><th>Status</th><th>Notes</th></tr>
+    <tr><td>Registration, login, role routing</td><td><span class="pill done">Built</span></td><td>httpOnly cookie session, 7-day expiry</td></tr>
+    <tr><td>Trip discovery and filters</td><td><span class="pill done">Built</span></td><td>Origin, destination, date, trip type</td></tr>
+    <tr><td>Seat map and ten-minute locking</td><td><span class="pill done">Built</span></td><td>Redis TTL locks; one held seat per student per trip</td></tr>
+    <tr><td>Paystack payments and webhooks</td><td><span class="pill partial">Built, test mode</span></td><td>Needs Paystack keys to take real payments</td></tr>
+    <tr><td>QR tickets and validation</td><td><span class="pill done">Built</span></td><td>Single use, bus-bound</td></tr>
+    <tr><td>Operator portal, bus and trip forms, company scoping</td><td><span class="pill done">Built</span></td><td>Marked "Planned" in the source; now implemented</td></tr>
+    <tr><td>Driver in-app scanner</td><td><span class="pill done">Built (web)</span></td><td>Uses the phone camera in the browser</td></tr>
+    <tr><td>Password reset</td><td><span class="pill planned">Planned</span></td><td>UI directs users to support</td></tr>
+    <tr><td>Booking cancellation</td><td><span class="pill planned">Planned</span></td><td>UI directs users to support</td></tr>
+    <tr><td>SMS notifications (Arkesel)</td><td><span class="pill planned">Planned</span></td><td>Not promised anywhere in the UI</td></tr>
+    <tr><td>Live GPS bus tracking</td><td><span class="pill planned">Planned</span></td><td>Not promised anywhere in the UI</td></tr>
+    <tr><td>Flutter mobile app</td><td><span class="pill planned">Deferred</span></td><td>Web app is fully responsive in the meantime</td></tr>
+  </table>
+</section>
+
+<!-- 3 -->
+<section class="chapter">
+  <div class="kicker-num">3</div>
+  <h1>The booking journey</h1>
+  <div class="flow">
+    <div><b>1 Discover</b>Search trips</div><div><b>2 Compare</b>Fare, time, seats left</div><div><b>3 Select</b>Choose a seat</div><div><b>4 Hold</b>Server holds it 10 min</div><div><b>5 Pay</b>Paystack, Pending</div><div><b>6 Confirm</b>Booking + QR ticket</div><div><b>7 Board</b>Driver scans once</div>
+  </div>
+  <h2>Step by step</h2>
+  <ol>
+    <li><b>Search.</b> The student enters origin, destination and an optional date. Only upcoming, non-cancelled trips are returned.</li>
+    <li><b>Choose a seat.</b> The seat map shows each seat as Available, Your seat, Temporarily unavailable (held by another student) or Booked — always with a text label or icon, never colour alone. The map refreshes every 15 seconds.</li>
+    <li><b>Hold.</b> Tapping a seat asks the server to lock it in Redis for 10 minutes. The countdown appears only after the server confirms. Choosing another seat releases the first.</li>
+    <li><b>Checkout.</b> The student picks luggage. The server calculates the total (fare + luggage fee) and creates a Pending payment. Any amount sent by the browser is ignored.</li>
+    <li><b>Pay.</b> The student is redirected to Paystack (or the labelled test checkout). Re-trying within 15 minutes reuses the same open payment instead of creating another.</li>
+    <li><b>Confirm.</b> When Paystack confirms (via signed webhook or verification), the server creates exactly one booking and a unique ticket token, then releases the hold. The ticket appears only after this.</li>
+    <li><b>Board.</b> The driver scans the QR. The ticket is accepted once, only for the trip on the driver's assigned bus.</li>
+  </ol>
+  <h2>Payment outcomes</h2>
+  <table>
+    <tr><th>State</th><th>Message to the student</th><th>What happens</th></tr>
+    <tr><td>Pending</td><td>"We're confirming your payment."</td><td>Page polls every 2.5 s; warns after 45 s that mobile money can take a minute</td></tr>
+    <tr><td>Successful</td><td>"Your booking is confirmed."</td><td>Ticket revealed with animation; link to My tickets</td></tr>
+    <tr><td>Failed</td><td>"Payment wasn't completed."</td><td>Shows whether the seat is still held; safe retry</td></tr>
+    <tr><td>Refunded</td><td>"Your payment was refunded."</td><td>Seat was taken before payment completed; refund issued</td></tr>
+    <tr><td>Needs review (flagged)</td><td>"We're reviewing this payment."</td><td>Amount/currency mismatch; no ticket; support path</td></tr>
+    <tr><td>Offline / timeout</td><td>"Connection interrupted."</td><td>Re-checks on reconnect; never assumes failure</td></tr>
+  </table>
+</section>
+
+<!-- 4 -->
+<section class="chapter">
+  <div class="kicker-num">4</div>
+  <h1>Architecture and technology</h1>
+  <svg viewBox="0 0 640 230" width="100%" style="margin:2mm 0 4mm">
+    <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#565b78"/></marker></defs>
+    <g font-family="InterV, sans-serif" font-size="11">
+      <rect x="10" y="80" width="120" height="64" rx="10" fill="#f5f5ff" stroke="#e5e7f2"/><text x="70" y="106" text-anchor="middle" font-weight="700">Browser</text><text x="70" y="124" text-anchor="middle" fill="#565b78" font-size="9.5">students, drivers, staff</text>
+      <rect x="175" y="60" width="150" height="104" rx="10" fill="#493bff"/><text x="250" y="92" text-anchor="middle" fill="#fff" font-weight="700">Next.js 15 web app</text><text x="250" y="112" text-anchor="middle" fill="#e9e8ff" font-size="9.5">pages + design system</text><text x="250" y="130" text-anchor="middle" fill="#e9e8ff" font-size="9.5">/api/* proxied to API</text><text x="250" y="148" text-anchor="middle" fill="#e9e8ff" font-size="9.5">(same origin, httpOnly cookie)</text>
+      <rect x="370" y="60" width="140" height="104" rx="10" fill="#171936"/><text x="440" y="92" text-anchor="middle" fill="#fff" font-weight="700">Express API</text><text x="440" y="112" text-anchor="middle" fill="#c9cbe0" font-size="9.5">auth · trips · locks</text><text x="440" y="130" text-anchor="middle" fill="#c9cbe0" font-size="9.5">payments · tickets</text><text x="440" y="148" text-anchor="middle" fill="#c9cbe0" font-size="9.5">driver · operator · admin</text>
+      <rect x="545" y="20" width="88" height="54" rx="10" fill="#e3faf7" stroke="#12d6c5"/><text x="589" y="44" text-anchor="middle" font-weight="700">PostgreSQL</text><text x="589" y="61" text-anchor="middle" fill="#565b78" font-size="9">data</text>
+      <rect x="545" y="88" width="88" height="54" rx="10" fill="#e3faf7" stroke="#12d6c5"/><text x="589" y="112" text-anchor="middle" font-weight="700">Redis</text><text x="589" y="129" text-anchor="middle" fill="#565b78" font-size="9">seat locks</text>
+      <rect x="545" y="156" width="88" height="54" rx="10" fill="#fff4d9" stroke="#f1d9a0"/><text x="589" y="180" text-anchor="middle" font-weight="700">Paystack</text><text x="589" y="197" text-anchor="middle" fill="#565b78" font-size="9">GHS payments</text>
+      <path d="M130 112 H172" stroke="#565b78" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M325 112 H367" stroke="#565b78" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M510 90 L542 50" stroke="#565b78" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M510 112 H542" stroke="#565b78" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M510 134 L542 176" stroke="#565b78" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M545 196 C 480 225, 460 200, 455 168" stroke="#8a5a00" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#ar)"/><text x="470" y="222" fill="#8a5a00" font-size="9">signed webhook</text>
+    </g>
+  </svg>
+  <table>
+    <tr><th>Layer</th><th>Technology</th><th>Notes</th></tr>
+    <tr><td>Website</td><td>Next.js 15 (App Router), React 19, Tailwind CSS 4, Motion (Framer Motion), React Three Fiber + three.js, lucide icons, jsQR</td><td>3D hero lazy-loaded after the page is usable, skipped on Save-Data / 2G / 3G, static SVG fallback</td></tr>
+    <tr><td>Fonts</td><td>Plus Jakarta Sans Variable, Inter Variable</td><td>Self-hosted through @fontsource (no external font requests)</td></tr>
+    <tr><td>API</td><td>Node.js 22, Express 5, TypeScript, Zod, bcryptjs, jsonwebtoken, helmet, express-rate-limit, qrcode</td><td>Validation on every input; safe error messages</td></tr>
+    <tr><td>Database</td><td>PostgreSQL 16 (pg)</td><td>SQL migrations; unique partial index prevents double booking</td></tr>
+    <tr><td>Cache / locks</td><td>Redis 7 (ioredis)</td><td>Seat locks with expiry; one held seat per student per trip</td></tr>
+    <tr><td>Payments</td><td>Paystack Ghana</td><td>Mobile money and card; HMAC-SHA512 webhook verification</td></tr>
+    <tr><td>Tests</td><td>Vitest + Supertest; Playwright for end-to-end</td><td>API tests run against a real Postgres and Redis</td></tr>
+    <tr><td>Monorepo</td><td>pnpm workspaces</td><td><code>apps/api</code> and <code>apps/web</code></td></tr>
+    <tr><td>Hosting target</td><td>Render (blueprint in <code>render.yaml</code>)</td><td>As named in the source specification</td></tr>
+  </table>
+  <h2>How a request flows</h2>
+  <p>The browser only talks to the website's own address. Requests to <code>/api/*</code> are forwarded by Next.js to the Express API, so the session cookie stays httpOnly and same-origin and is never readable by JavaScript. Public pages (the home page's live trips) are fetched on the server and refreshed every 30 seconds.</p>
+</section>
+
+<!-- 5 -->
+<section class="chapter">
+  <div class="kicker-num">5</div>
+  <h1>Repository structure</h1>
+<pre>MOVA/
+├── apps/
+│   ├── api/                      Express API
+│   │   ├── src/
+│   │   │   ├── app.ts            routes, security middleware
+│   │   │   ├── server.ts         entry point
+│   │   │   ├── db/               migrate.ts, seed.ts (demo data), migrations/001_init.sql
+│   │   │   ├── lib/              config, db, redis (locks), auth, payments, paystack,
+│   │   │   │                     trips, layout (seat layouts), money (fees), errors
+│   │   │   └── routes/           auth, trips, payments, webhooks, tickets,
+│   │   │                         driver, operator, admin
+│   │   └── test/api.test.ts      16 acceptance tests
+│   └── web/                      Next.js website
+│       ├── app/                  pages (see section 10), globals.css, flow.css
+│       ├── components/           ui, trip-card, seat-map, countdown, ticket-card,
+│       │                         how-it-works, app-shell, hero/ (3D bus + fallback)
+│       ├── lib/                  api client, formatting, types, styles
+│       └── middleware.ts         signed-out redirect for private pages
+├── docs/
+│   ├── MOVA-spec.md / .docx      source specification
+│   ├── demo/                     clickable demo (single HTML file)
+│   ├── tour/                     screen-by-screen tour
+│   └── index.html                GitHub Pages entry (the demo)
+├── PRODUCT.md                    product record
+├── DESIGN.md                     design system
+├── render.yaml                   one-click Render deployment
+├── docker-compose.yml            local Postgres + Redis
+└── README.md</pre>
+</section>
+
+<!-- 6 -->
+<section class="chapter">
+  <div class="kicker-num">6</div>
+  <h1>Data model</h1>
+  <p class="lead">Defined in <code>apps/api/src/db/migrations/001_init.sql</code>. All IDs are UUIDs.</p>
+  <table>
+    <tr><th style="width:17%">Table</th><th style="width:43%">Key columns</th><th>Purpose and rules</th></tr>
+    <tr><td><b>companies</b></td><td>name (unique), is_demo</td><td>Transport operators. Operators and drivers belong to one.</td></tr>
+    <tr><td><b>users</b></td><td>full_name, email (unique, case-insensitive), phone, student_id, password_hash, role, company_id, is_active</td><td>Roles: student, driver, operator, super_admin. Passwords hashed with bcrypt.</td></tr>
+    <tr><td><b>buses</b></td><td>company_id, plate (unique), capacity (1–90), layout (JSON), driver_id</td><td>Layout is an array of rows; each cell is a seat number or empty (aisle).</td></tr>
+    <tr><td><b>trips</b></td><td>company_id, bus_id, origin, destination, departure_at, fare_pesewas, trip_type, is_cancelled, is_demo</td><td>trip_type: inter_regional or campus_shuttle. Past departures cannot be created or booked.</td></tr>
+    <tr><td><b>payments</b></td><td>reference (unique), user_id, trip_id, seat_number, luggage, fare/luggage/amount in pesewas, status, status_reason, provider, authorization_url, paid_at</td><td>Status: pending, successful, failed, refunded, flagged. Amounts always calculated by the server.</td></tr>
+    <tr><td><b>bookings</b></td><td>trip_id, user_id, payment_id (unique), seat_number, luggage, qr_token (unique), status, boarded_at, boarded_by</td><td><b>Unique index on (trip_id, seat_number) for active bookings</b> — the database itself prevents double booking.</td></tr>
+    <tr><td><b>webhook_events</b></td><td>provider, event, reference, received_at</td><td>Log of every verified webhook received.</td></tr>
+    <tr><td><b>audit_log</b></td><td>actor_id, action, target, details (JSON)</td><td>Role changes, staff and company creation, failed refunds.</td></tr>
+  </table>
+  <h3>Seat locks (Redis, not the database)</h3>
+  <p><code>mova:lock:{tripId}:{seat}</code> → student ID, expires after <code>SEAT_LOCK_SECONDS</code> (600). <code>mova:userlock:{tripId}:{userId}</code> → the seat that student holds, so taking a new seat releases the old one. Seat availability = layout minus active bookings minus active locks.</p>
+</section>
+
+<!-- 7 -->
+<section class="chapter">
+  <div class="kicker-num">7</div>
+  <h1>Business rules</h1>
+  <p class="lead">Every rule below is enforced on the server, and the starred ones are covered by automated tests.</p>
+  <table>
+    <tr><th style="width:5%">#</th><th style="width:45%">Rule</th><th>How it is enforced</th></tr>
+    <tr><td>1</td><td>One active booking per trip and seat ★</td><td>Unique partial index on bookings; insert inside a transaction</td></tr>
+    <tr><td>2</td><td>A seat hold lasts ten minutes ★</td><td>Redis key with 600 s expiry; set only if free (NX)</td></tr>
+    <tr><td>3</td><td>A booking is created only after Paystack confirms ★</td><td>Booking insert happens only in <code>finalizePayment</code> on a verified success</td></tr>
+    <tr><td>4</td><td>The server calculates every amount ★</td><td>Client amounts ignored; fare from the trip, fee from the luggage table</td></tr>
+    <tr><td>5</td><td>Amounts in GHS; Paystack receives pesewas</td><td>All money stored as integer pesewas</td></tr>
+    <tr><td>6</td><td>Duplicate webhooks never create duplicate bookings ★</td><td>Payment row locked FOR UPDATE; only a pending payment can change</td></tr>
+    <tr><td>7</td><td>Every successful payment ends in a booking or a refund ★</td><td>If the seat is taken or held by someone else, the payment is refunded</td></tr>
+    <tr><td>8</td><td>Wrong amount or currency is flagged, not booked ★</td><td>Status "flagged"; admin overview shows the count</td></tr>
+    <tr><td>9</td><td>A driver validates only tickets for their assigned bus ★</td><td>Trip must belong to the driver's bus; mismatches return "wrong bus"</td></tr>
+    <tr><td>10</td><td>A ticket is accepted once ★</td><td>Atomic update from confirmed to boarded</td></tr>
+    <tr><td>11</td><td>Operators see only their own company ★</td><td>Company scope applied to every operator query</td></tr>
+    <tr><td>12</td><td>Past trips cannot be created or booked ★</td><td>Checked on trip creation, seat lock and payment start</td></tr>
+    <tr><td>13</td><td>A student has at most one seat per trip</td><td>Lock refused if the student already has an active booking on the trip</td></tr>
+  </table>
+</section>
+
+<!-- 8 -->
+<section class="chapter">
+  <div class="kicker-num">8</div>
+  <h1>API reference</h1>
+  <p class="lead">All paths start with <code>/api</code>. Responses are JSON. Errors use <code>{"error": {"code", "message", "fields"?}}</code>. Auth = session cookie <code>mova_session</code>.</p>
+  <table>
+    <tr><th style="width:9%">Method</th><th style="width:33%">Path</th><th style="width:14%">Access</th><th>Purpose</th></tr>
+    <tr><td>GET</td><td>/health</td><td>Public</td><td>Service status and payment mode</td></tr>
+    <tr><td>POST</td><td>/auth/register</td><td>Public</td><td>Create a student account (rate limited)</td></tr>
+    <tr><td>POST</td><td>/auth/login</td><td>Public</td><td>Sign in (rate limited)</td></tr>
+    <tr><td>POST</td><td>/auth/logout</td><td>Any</td><td>Sign out</td></tr>
+    <tr><td>GET</td><td>/auth/me</td><td>Signed in</td><td>Current user</td></tr>
+    <tr><td>GET</td><td>/trips</td><td>Public</td><td>Search: origin, destination, date, type, limit</td></tr>
+    <tr><td>GET</td><td>/trips/places</td><td>Public</td><td>Origins and destinations with upcoming trips</td></tr>
+    <tr><td>GET</td><td>/trips/luggage</td><td>Public</td><td>Luggage options and fees</td></tr>
+    <tr><td>GET</td><td>/trips/:id</td><td>Public</td><td>Trip details</td></tr>
+    <tr><td>GET</td><td>/trips/:id/seats</td><td>Public</td><td>Layout and seat states (viewer-aware)</td></tr>
+    <tr><td>GET</td><td>/trips/:id/quote</td><td>Public</td><td>Server-calculated total for a luggage option</td></tr>
+    <tr><td>POST</td><td>/trips/:id/locks</td><td>Student</td><td>Hold a seat for 10 minutes</td></tr>
+    <tr><td>DELETE</td><td>/trips/:id/locks/:seat</td><td>Student</td><td>Release a held seat</td></tr>
+    <tr><td>POST</td><td>/payments</td><td>Student</td><td>Start payment; returns Paystack or test checkout URL</td></tr>
+    <tr><td>GET</td><td>/payments/:reference</td><td>Owner</td><td>Status; verifies with Paystack while pending</td></tr>
+    <tr><td>POST</td><td>/payments/:reference/test-outcome</td><td>Owner, test mode only</td><td>Simulate success, failure or tampered amount</td></tr>
+    <tr><td>POST</td><td>/webhooks/paystack</td><td>Paystack (signed)</td><td>charge.success / charge.failed</td></tr>
+    <tr><td>GET</td><td>/tickets</td><td>Student</td><td>My tickets</td></tr>
+    <tr><td>GET</td><td>/tickets/:id</td><td>Owner</td><td>Ticket details with QR code (SVG)</td></tr>
+    <tr><td>GET</td><td>/driver/trips</td><td>Driver</td><td>Assigned trips with boarded counts</td></tr>
+    <tr><td>POST</td><td>/driver/validate</td><td>Driver</td><td>Validate a scanned code for a trip</td></tr>
+    <tr><td>GET</td><td>/operator/overview</td><td>Operator, admin</td><td>Company counts</td></tr>
+    <tr><td>GET / POST</td><td>/operator/buses</td><td>Operator, admin</td><td>List / create buses</td></tr>
+    <tr><td>GET</td><td>/operator/drivers</td><td>Operator, admin</td><td>Drivers in the company</td></tr>
+    <tr><td>GET / POST</td><td>/operator/trips</td><td>Operator, admin</td><td>List (upcoming or past) / create trips</td></tr>
+    <tr><td>GET</td><td>/operator/trips/:id/manifest</td><td>Operator, admin</td><td>Passenger manifest</td></tr>
+    <tr><td>GET</td><td>/admin/overview</td><td>Super admin</td><td>System counts incl. flagged payments</td></tr>
+    <tr><td>GET / POST</td><td>/admin/users</td><td>Super admin</td><td>Search users / create staff account</td></tr>
+    <tr><td>PATCH</td><td>/admin/users/:id</td><td>Super admin</td><td>Change role, company, active status (audited)</td></tr>
+    <tr><td>GET / POST</td><td>/admin/companies</td><td>Super admin</td><td>List / create companies</td></tr>
+  </table>
+  <h3>Driver validation results</h3>
+  <p><code>valid</code> · <code>already_used</code> · <code>wrong_bus</code> · <code>invalid</code> · <code>not_your_trip</code> (HTTP 403). The QR encodes only <code>MOVA1:&lt;opaque token&gt;</code>; no personal data is inside the code.</p>
+</section>
+
+<!-- 9 -->
+<section class="chapter">
+  <div class="kicker-num">9</div>
+  <h1>Security and privacy</h1>
+  <table>
+    <tr><th style="width:30%">Requirement (source)</th><th>Implementation</th></tr>
+    <tr><td>SEC-1 Passwords</td><td>Minimum 8 characters; bcrypt with cost 12; never stored or returned in plain text</td></tr>
+    <tr><td>SEC-2 Sessions</td><td>Signed JWT, 7-day expiry; signing secret from the environment (32+ characters enforced in production)</td></tr>
+    <tr><td>SEC-3 Token storage</td><td>httpOnly, SameSite=Lax cookie (Secure in production); never in localStorage</td></tr>
+    <tr><td>SEC-4 Role checks</td><td>Role middleware on every protected route; UI hides links but the API is the authority</td></tr>
+    <tr><td>SEC-5 Rate limits</td><td>300 requests/minute overall; 20 attempts/15 min on sign-in and registration</td></tr>
+    <tr><td>SEC-6 Validation</td><td>Zod schemas on all inputs; parameterised SQL everywhere</td></tr>
+    <tr><td>SEC-7 Webhooks</td><td>HMAC-SHA512 on the raw body with timing-safe comparison; invalid signatures rejected (401)</td></tr>
+    <tr><td>SEC-8 Secrets</td><td>Only in environment variables; <code>.env</code> files are git-ignored</td></tr>
+    <tr><td>SEC-9 HTTPS</td><td>Required in production (Render provides it); Secure cookie flag</td></tr>
+    <tr><td>SEC-10 Data protection (Act 843)</td><td>Phone and student ID shown only to the operator of trips the student booked; manifests carry a data-handling notice</td></tr>
+    <tr><td>SEC-11 Safe errors</td><td>Generic messages; no stack traces, SQL or secrets in responses</td></tr>
+    <tr><td>Headers</td><td>helmet on the API; nosniff, Referrer-Policy, X-Frame-Options DENY and Permissions-Policy on the website</td></tr>
+  </table>
+  <div class="note warn"><b>Before a public launch</b>Add real Paystack keys and remove <code>ALLOW_TEST_PAYMENTS</code>; replace demo data; publish the approved privacy notice, terms and support contact; switch to paid hosting with daily database backups; run a security review.</div>
+</section>
+
+<!-- 10 -->
+<section class="chapter">
+  <div class="kicker-num">10</div>
+  <h1>Website pages</h1>
+  <table>
+    <tr><th style="width:32%">Path</th><th style="width:16%">Who</th><th>What it shows</th></tr>
+    <tr><td>/</td><td>Everyone</td><td>Hero with live search and 3D coach, how it works, live trips, route panels, FAQs</td></tr>
+    <tr><td>/trips</td><td>Everyone</td><td>Search results with type filter, empty and retry states</td></tr>
+    <tr><td>/trips/[id]</td><td>Everyone (booking needs sign-in)</td><td>Trip details, seat map, hold timer, luggage, total</td></tr>
+    <tr><td>/checkout/test/[reference]</td><td>Student</td><td>Labelled test checkout (only without Paystack keys)</td></tr>
+    <tr><td>/payments/[reference]</td><td>Student</td><td>Live payment status and ticket reveal</td></tr>
+    <tr><td>/auth/sign-in, /auth/register</td><td>Everyone</td><td>Sign in; student registration</td></tr>
+    <tr><td>/dashboard</td><td>Student</td><td>Greeting, search, upcoming tickets, next-trip ticket</td></tr>
+    <tr><td>/tickets, /tickets/[id]</td><td>Student</td><td>Upcoming and past tickets; full QR ticket</td></tr>
+    <tr><td>/profile</td><td>All signed in</td><td>Account details, theme choice, sign out</td></tr>
+    <tr><td>/driver, /driver/scan</td><td>Driver</td><td>Assigned trips; camera scanner with full-screen results</td></tr>
+    <tr><td>/operator, /operator/trips, /operator/buses</td><td>Operator, admin</td><td>Overview, trips table and form, buses table and form</td></tr>
+    <tr><td>/operator/manifests/[tripId]</td><td>Operator, admin</td><td>Passenger manifest with print layout</td></tr>
+    <tr><td>/admin, /admin/users, /admin/companies</td><td>Super admin</td><td>System overview, user management, companies</td></tr>
+    <tr><td>/help, /privacy, /terms</td><td>Everyone</td><td>FAQs; draft legal pages pending approval</td></tr>
+  </table>
+  <h3>Navigation</h3>
+  <p>Public pages use a top navigation. Signed-in areas use a side navigation on desktop and a bottom bar on phones. Links a role cannot use are hidden, and any page opened by the wrong role shows a clear "not available for your account" message.</p>
+  <h3>Responsive and accessible</h3>
+  <ul>
+    <li>Mobile-first layouts tested at 390 px phones and 1280–1440 px desktops.</li>
+    <li>Labelled inputs with errors next to the field; visible focus rings; keyboard-reachable controls; skip link.</li>
+    <li>Seat and payment states always carry text or icons, never colour alone; ticket details shown as text beside the QR.</li>
+    <li>All animation stops under the device's reduce-motion setting.</li>
+  </ul>
+</section>
+
+<!-- 11 -->
+<section class="chapter">
+  <div class="kicker-num">11</div>
+  <h1>Design system</h1>
+  <p class="lead">Full reference in <code>DESIGN.md</code>. Tokens live in <code>apps/web/app/globals.css</code>; animated gradients in <code>apps/web/app/flow.css</code>.</p>
+  <h2>Colour</h2>
+  <div class="grid3">
+    <div class="swatch"><i style="background:#493bff"></i><div><b>Electric #493BFF</b><span>Primary actions, links, selected</span></div></div>
+    <div class="swatch"><i style="background:#8655ff"></i><div><b>Violet #8655FF</b><span>Gradient partner, highlights</span></div></div>
+    <div class="swatch"><i style="background:#12d6c5"></i><div><b>Aqua #12D6C5</b><span>Routes, available seats</span></div></div>
+    <div class="swatch"><i style="background:#ff6b79"></i><div><b>Coral #FF6B79</b><span>Held seats, low-seat warnings</span></div></div>
+    <div class="swatch"><i style="background:#ffd166"></i><div><b>Sun #FFD166</b><span>Demo badges, last 2 minutes of hold</span></div></div>
+    <div class="swatch"><i style="background:#f5f5ff"></i><div><b>Lavender Mist #F5F5FF</b><span>Page background</span></div></div>
+    <div class="swatch"><i style="background:#171936"></i><div><b>Ink #171936</b><span>Text, dark surfaces</span></div></div>
+    <div class="swatch"><i style="background:#626782"></i><div><b>Slate #626782</b><span>Secondary text</span></div></div>
+    <div class="swatch"><i style="background:#0a7f75"></i><div><b>Aqua Ink #0A7F75</b><span>Aqua as readable text</span></div></div>
+  </div>
+  <h2>Type, shape and motion</h2>
+  <table>
+    <tr><td style="width:25%"><b>Headings</b></td><td>Plus Jakarta Sans, 700–800, tight tracking</td></tr>
+    <tr><td><b>Body and UI</b></td><td>Inter, 15–16 px; tabular numerals for times, fares and seats</td></tr>
+    <tr><td><b>Times</b></td><td>12-hour with AM/PM (e.g. 6:00 AM), Africa/Accra time zone</td></tr>
+    <tr><td><b>Corners</b></td><td>Seats 10 px · controls 12 px · cards 18 px · ticket 24 px · panels 28–32 px</td></tr>
+    <tr><td><b>Depth</b></td><td>Soft shadow at rest, Lift (electric-tinted) on hover, Float for objects over colour</td></tr>
+    <tr><td><b>Motion</b></td><td>One easing curve (expo ease-out); 150–550 ms interactions; reduced-motion respected</td></tr>
+    <tr><td><b>Animated gradients</b></td><td>Brand fields slowly flow through Electric/Violet shades (22–26 s loops) with drifting aqua glows; a faint 60 s colour wash behind the page</td></tr>
+    <tr><td><b>Signature</b></td><td>The aqua route line: hero ribbon, trip cards, seat-hold timer, ticket, route panels, how-it-works</td></tr>
+    <tr><td><b>Themes</b></td><td>Light and dark, following the device or chosen by the user</td></tr>
+  </table>
+  <h2>Honest data rules</h2>
+  <ul>
+    <li>Every seeded trip, company and plate carries a "Demo data" badge.</li>
+    <li>Dashboard numbers come only from real data; unknown values show "—".</li>
+    <li>No GPS, SMS, cancellation or password-reset features are promised before they exist.</li>
+  </ul>
+</section>
+
+<!-- 12 -->
+<section class="chapter">
+  <div class="kicker-num">12</div>
+  <h1>Screens</h1>
+  <figure class="crop"><img src="../../.impeccable/review/desktop-fold.png" alt=""><figcaption>Home page: search-first hero over the animated brand gradient, with the 3D coach on the aqua route ribbon.</figcaption></figure>
+  <div class="grid3">
+    <figure class="phone"><img src="../../.impeccable/review/04-seat-map.png" alt=""><figcaption>Seat map with legend.</figcaption></figure>
+    <figure class="phone"><img src="../../.impeccable/review/07-confirmed-ticket.png" alt=""><figcaption>Booking confirmed with QR ticket.</figcaption></figure>
+    <figure class="phone"><img src="../../.impeccable/review/10-scan-valid.png" alt=""><figcaption>Driver scan: Valid ticket.</figcaption></figure>
+  </div>
+</section>
+<section class="chapter">
+  <figure class="crop"><img src="../../.impeccable/review/12-operator-overview.png" alt=""><figcaption>Operator overview.</figcaption></figure>
+  <figure class="crop"><img src="../../.impeccable/review/14-manifest.png" alt=""><figcaption>Passenger manifest (printable).</figcaption></figure>
+</section>
+
+<!-- 13 -->
+<section class="chapter">
+  <div class="kicker-num">13</div>
+  <h1>Running the project locally</h1>
+  <p>Requirements: Node.js 22+, pnpm 10, PostgreSQL 16 and Redis 7 (Docker can provide both).</p>
+<pre>pnpm install
+docker compose up -d                       # Postgres + Redis (or use local installs)
+cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.example apps/web/.env.local
+pnpm db:migrate                            # create tables
+pnpm db:seed                               # demo data (labelled "Demo data")
+pnpm dev                                   # API on :4000, website on :3000</pre>
+  <p>Open <code>http://localhost:3000</code>. Without a Paystack key, payments use the labelled test checkout.</p>
+  <h3>Useful commands</h3>
+  <table>
+    <tr><td style="width:40%"><code>pnpm dev:api</code> / <code>pnpm dev:web</code></td><td>Run one app</td></tr>
+    <tr><td><code>pnpm --filter @mova/api test</code></td><td>Run the 16 API tests (uses the <code>mova_test</code> database)</td></tr>
+    <tr><td><code>pnpm --filter @mova/web build</code></td><td>Production build of the website</td></tr>
+    <tr><td><code>pnpm typecheck</code></td><td>TypeScript checks for both apps</td></tr>
+  </table>
+
+  <div class="kicker-num" style="margin-top:9mm">14</div>
+  <h1>Configuration</h1>
+  <table>
+    <tr><th style="width:30%">Variable</th><th style="width:14%">App</th><th>Meaning</th></tr>
+    <tr><td><code>DATABASE_URL</code></td><td>API</td><td>PostgreSQL connection string</td></tr>
+    <tr><td><code>REDIS_URL</code></td><td>API</td><td>Redis connection string</td></tr>
+    <tr><td><code>JWT_SECRET</code></td><td>API</td><td>Session signing secret; 32+ characters in production</td></tr>
+    <tr><td><code>PAYSTACK_SECRET_KEY</code></td><td>API</td><td>Paystack secret key; empty = test mode</td></tr>
+    <tr><td><code>ALLOW_TEST_PAYMENTS</code></td><td>API</td><td><code>true</code> allows test mode in production (demo deployments only)</td></tr>
+    <tr><td><code>WEB_ORIGIN</code></td><td>API</td><td>Public website address (for Paystack callback); falls back to <code>RENDER_EXTERNAL_URL</code></td></tr>
+    <tr><td><code>SEAT_LOCK_SECONDS</code></td><td>API</td><td>Seat hold length, default 600</td></tr>
+    <tr><td><code>PORT</code>, <code>NODE_ENV</code></td><td>Both</td><td>Port and environment</td></tr>
+    <tr><td><code>API_URL</code></td><td>Web</td><td>Where the website forwards <code>/api/*</code> (e.g. <code>http://127.0.0.1:4000</code>)</td></tr>
+  </table>
+  <p>Luggage fees are set in <code>apps/api/src/lib/money.ts</code> (currently placeholder values: GH₵ 10 standard bag, GH₵ 25 large bag).</p>
+</section>
+
+<!-- 15 -->
+<section class="chapter">
+  <div class="kicker-num">15</div>
+  <h1>Testing</h1>
+  <h2>Automated API tests — 16 passing</h2>
+  <table>
+    <tr><th style="width:22%">Area</th><th>Test</th></tr>
+    <tr><td>Accounts</td><td>Registers, logs out and logs back in; rejects duplicate email</td></tr>
+    <tr><td>Accounts</td><td>Sets an httpOnly session cookie</td></tr>
+    <tr><td>Accounts</td><td>Returns field errors for invalid registration</td></tr>
+    <tr><td>Trips</td><td>Lists upcoming trips with fare, seats left and filters</td></tr>
+    <tr><td>Trips</td><td>Seat layout matches bus capacity (back row of five)</td></tr>
+    <tr><td>Seat locks</td><td>Locks a seat for one student for 10 minutes and blocks others</td></tr>
+    <tr><td>Payments</td><td>Server calculates the amount and ignores client totals</td></tr>
+    <tr><td>Payments</td><td>Refuses payment without a live seat hold</td></tr>
+    <tr><td>Payments</td><td>Creates one booking and ticket on success; tampered amount is flagged</td></tr>
+    <tr><td>Double booking</td><td>Second payment for a taken seat is refunded; one booking only</td></tr>
+    <tr><td>Webhooks</td><td>Rejects invalid signatures and processes duplicates once</td></tr>
+    <tr><td>Validation</td><td>Accepts a valid ticket once; rejects repeat and wrong-bus scans</td></tr>
+    <tr><td>Operator</td><td>Sees the manifest for their own company only</td></tr>
+    <tr><td>Operator</td><td>Creates buses and future trips; past trips refused</td></tr>
+    <tr><td>Roles</td><td>Students cannot reach driver, operator or admin endpoints</td></tr>
+    <tr><td>Admin</td><td>Super admin can change roles, with audit log entry</td></tr>
+  </table>
+  <h2>End-to-end browser run — 19 steps passing</h2>
+  <p>Registration validation → sign-up → dashboard → search → empty state → seat map → seat hold with countdown → test checkout → booking confirmed with QR → My tickets → driver trips → valid scan → repeat scan rejected → operator overview → operator trips → manifest with the new passenger → admin overview → admin users → role guard → dark mode. No page errors.</p>
+  <h2>Other checks</h2>
+  <ul>
+    <li>Production build passes; the 3D scene loads separately from the home page's first load (about 170 kB).</li>
+    <li>Design review by an independent reviewer (two rounds) with all material fixes applied; design detector clean.</li>
+    <li>Render start-up steps tested locally in production mode.</li>
+  </ul>
+</section>
+
+<!-- 16 -->
+<section class="chapter">
+  <div class="kicker-num">16</div>
+  <h1>Deployment</h1>
+  <h2>Real website — Render</h2>
+  <p><code>render.yaml</code> creates, on free plans in the Frankfurt region: one web service running both the website and the API, a PostgreSQL database and a Redis store. Demo data is seeded on start and refreshed when all demo trips have departed.</p>
+  <ol>
+    <li>Create a Render account at <b>render.com</b> using "Sign up with GitHub".</li>
+    <li>Open <b>render.com/deploy?repo=https://github.com/annobilobed/MOVA</b>; allow access to the repository if asked.</li>
+    <li>Name the blueprint <code>mova</code>; leave <code>PAYSTACK_SECRET_KEY</code> empty for test mode.</li>
+    <li>Click Apply. After 5–10 minutes the service shows "Live" and a link like <code>https://mova-xxxx.onrender.com</code>.</li>
+  </ol>
+  <div class="note"><b>Free plan limits</b>The service sleeps after 15 minutes without visitors (the next visit takes about a minute). The free database expires after 30 days. For launch, move to paid plans with daily backups, as the specification requires.</div>
+  <h2>Clickable demo — GitHub Pages</h2>
+  <p>Served from the <code>/docs</code> folder of the <code>main</code> branch at <b>annobilobed.github.io/MOVA</b>. The tour is at <code>/tour/</code>. The demo uses sample data and saves nothing.</p>
+  <h2>Custom domain plan</h2>
+  <ul>
+    <li><b>yourdomain.com</b> → the real website on Render (add the domain in the Render service settings, then the DNS records Render shows).</li>
+    <li><b>demo.yourdomain.com</b> → the demo on GitHub Pages (CNAME record to <code>annobilobed.github.io</code>, then enter it in Pages settings and enable HTTPS).</li>
+  </ul>
+  <h2>Going live with real payments</h2>
+  <ol>
+    <li>Add the Paystack secret key in Render's environment settings and remove <code>ALLOW_TEST_PAYMENTS</code>.</li>
+    <li>In the Paystack dashboard set the webhook URL to <code>https://yourdomain.com/api/webhooks/paystack</code>.</li>
+    <li>Run test payments end to end, including a duplicate webhook and a refund.</li>
+  </ol>
+</section>
+
+<!-- 17 -->
+<section class="chapter">
+  <div class="kicker-num">17</div>
+  <h1>Status, gaps and next steps</h1>
+  <h2>Finished</h2>
+  <ul>
+    <li>Full web application for all four roles, API, database schema, tests, design system, documentation, clickable demo, deployment blueprint.</li>
+  </ul>
+  <h2>Needs input from the project owner</h2>
+  <table>
+    <tr><th style="width:38%">Item</th><th>Why it matters</th></tr>
+    <tr><td>Final brand approval (MOVA name, UCC branding)</td><td>Required before public launch</td></tr>
+    <tr><td>Real operator, routes, fares, buses</td><td>Replace demo data</td></tr>
+    <tr><td>Real luggage fees</td><td>Placeholders in <code>money.ts</code></td></tr>
+    <tr><td>Paystack account and keys</td><td>To accept real mobile money and card payments</td></tr>
+    <tr><td>Support email/phone, privacy notice, terms</td><td>Pages are marked as drafts</td></tr>
+    <tr><td>Domain name</td><td>For the custom address</td></tr>
+    <tr><td>Hosting plan for launch</td><td>Free plans sleep and the free database expires</td></tr>
+  </table>
+  <h2>Planned features (not built)</h2>
+  <ul>
+    <li>Password reset by email or SMS</li>
+    <li>Booking cancellation and student-initiated refunds (out of scope for release 1 in the source)</li>
+    <li>SMS notifications through Arkesel</li>
+    <li>Live GPS bus tracking</li>
+    <li>Flutter mobile app for students and drivers</li>
+    <li>Real 3D model (GLB) for the hero, if a designed asset is commissioned</li>
+  </ul>
+  <h2>Known limitations</h2>
+  <ul>
+    <li>The scanner runs in the browser; camera access requires HTTPS and permission.</li>
+    <li>Rate limits are per server instance (fine for one instance; use a shared store if scaled out).</li>
+    <li>Departure times are entered and shown in Accra time (UTC+0).</li>
+  </ul>
+</section>
+
+<!-- A -->
+<section class="chapter">
+  <div class="kicker-num">A</div>
+  <h1>Demo accounts and data</h1>
+  <p>For development and demonstrations only. All use the password <code>MovaDemo2026!</code>.</p>
+  <table>
+    <tr><th>Role</th><th>Email</th><th>Notes</th></tr>
+    <tr><td>Student</td><td><code>student@demo.mova</code></td><td>Or register a new student</td></tr>
+    <tr><td>Driver</td><td><code>driver@demo.mova</code></td><td>Bus DEMO-GR 1001-26 (Accra, Takoradi, Ho) and campus shuttle</td></tr>
+    <tr><td>Driver</td><td><code>driver2@demo.mova</code></td><td>Bus DEMO-GR 1002-26 (Kumasi, Tamale)</td></tr>
+    <tr><td>Operator</td><td><code>operator@demo.mova</code></td><td>MOVA Demo Transport</td></tr>
+    <tr><td>Operator</td><td><code>operator2@demo.mova</code></td><td>Coastal Demo Coaches (to test company scoping)</td></tr>
+    <tr><td>Super admin</td><td><code>admin@demo.mova</code></td><td>Full administration</td></tr>
+  </table>
+  <h3>Demo trips</h3>
+  <table>
+    <tr><th>Route</th><th>Type</th><th style="text-align:right">Fare</th></tr>
+    <tr><td>Cape Coast (UCC) → Accra</td><td>Inter-regional</td><td style="text-align:right">GH₵ 95.00</td></tr>
+    <tr><td>Cape Coast (UCC) → Kumasi</td><td>Inter-regional</td><td style="text-align:right">GH₵ 140.00</td></tr>
+    <tr><td>Cape Coast (UCC) → Takoradi</td><td>Inter-regional</td><td style="text-align:right">GH₵ 60.00</td></tr>
+    <tr><td>Cape Coast (UCC) → Tamale</td><td>Inter-regional</td><td style="text-align:right">GH₵ 320.00</td></tr>
+    <tr><td>Cape Coast (UCC) → Ho</td><td>Inter-regional</td><td style="text-align:right">GH₵ 180.00</td></tr>
+    <tr><td>Cape Coast (UCC) → Koforidua</td><td>Inter-regional (Coastal Demo Coaches)</td><td style="text-align:right">GH₵ 150.00</td></tr>
+    <tr><td>UCC Science ↔ Old Site (Administration)</td><td>Campus shuttle</td><td style="text-align:right">GH₵ 3.00</td></tr>
+    <tr><td>UCC Science → Kotokuraba Market</td><td>Campus shuttle</td><td style="text-align:right">GH₵ 5.00</td></tr>
+  </table>
+  <p style="color:var(--mut);font-size:8.5pt">These routes, fares and plates are illustrative and are not real MOVA schedules.</p>
+</section>
+
+</body>
+</html>
