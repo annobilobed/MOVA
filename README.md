@@ -45,6 +45,16 @@ Password for all: `MovaDemo2026!`
 
 All seed companies, trips, fares and plates are illustrative and flagged `is_demo`; the UI labels them. Luggage fees (GH₵ 10 standard bag, GH₵ 25 large) are placeholders in `apps/api/src/lib/money.ts` — confirm real fees with the operator.
 
+## Deploy a working demo (Render, free)
+
+`render.yaml` sets up everything: one web service (website + API), a PostgreSQL database and a Redis store.
+
+1. Create a free account at https://render.com and connect your GitHub.
+2. Open https://render.com/deploy?repo=https://github.com/annobilobed/MOVA and click **Apply**.
+3. Leave `PAYSTACK_SECRET_KEY` empty for test-mode payments, or paste a Paystack test key.
+
+The first deploy takes about 5–10 minutes. Free services sleep after 15 minutes idle (first visit then takes ~1 minute) and Render's free database expires after 30 days.
+
 ## Payments
 
 - **Test mode** (no `PAYSTACK_SECRET_KEY`): checkout opens a clearly labelled MOVA test page where you choose success, failure or a wrong amount. No money moves. The API refuses to start in production without a key.

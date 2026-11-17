@@ -20,7 +20,7 @@ export const config = {
   databaseUrl: required("DATABASE_URL", "postgres://mova:mova@localhost:5432/mova"),
   redisUrl: required("REDIS_URL", "redis://localhost:6379"),
   jwtSecret,
-  webOrigin: process.env.WEB_ORIGIN ?? "http://localhost:3000",
+  webOrigin: process.env.WEB_ORIGIN ?? process.env.RENDER_EXTERNAL_URL ?? "http://localhost:3000",
   paystackSecret: process.env.PAYSTACK_SECRET_KEY ?? "",
   seatLockSeconds: Number(process.env.SEAT_LOCK_SECONDS ?? 600),
   sessionDays: 7,
@@ -28,6 +28,8 @@ export const config = {
 
 /** Test-mode payments are used whenever no Paystack key is configured. Never in production. */
 export const paymentsInTestMode = () => !config.paystackSecret;
-if (config.isProd && paymentsInTestMode()) {
-  throw new Error("PAYSTACK_SECRET_KEY is required in production");
+// A public demo may run test-mode payments only when explicitly allowed; real launches must set a Paystack key.
+export const testPaymentsAllowedInProd = process.env.ALLOW_TEST_PAYMENTS === "true";
+if (config.isProd && paymentsInTestMode() && !testPaymentsAllowedInProd) {
+  throw new Error("PAYSTACK_SECRET_KEY is required in production (or set ALLOW_TEST_PAYMENTS=true for a demo deployment)");
 }
