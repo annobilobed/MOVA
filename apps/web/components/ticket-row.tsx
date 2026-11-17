@@ -15,7 +15,7 @@ export function TicketRow({ ticket }: { ticket: Ticket }) {
       )}
     >
       <div className="grid size-14 shrink-0 place-items-center rounded-2xl bg-info-bg text-center">
-        <span className="text-[10px] font-semibold text-muted uppercase">Seat</span>
+        <span className="text-[11px] font-semibold text-muted">Seat</span>
         <span className="tabular -mt-1 font-display text-xl font-extrabold text-accent-fg">{ticket.seat}</span>
       </div>
       <div className="min-w-0 flex-1">

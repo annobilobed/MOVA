@@ -1,4 +1,4 @@
-import { ArrowRight, Bus, CreditCard, Lock, QrCode } from "lucide-react";
+import { ArrowRight, Bus, CreditCard, Lock, Plus, QrCode } from "lucide-react";
 import Link from "next/link";
 import { HeroVisual } from "@/components/hero/hero-visual";
 import { HowItWorks } from "@/components/how-it-works";
@@ -160,7 +160,7 @@ export default async function Home() {
               <details key={q} className="group py-5 [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-lg font-display text-lg font-bold">
                   {q}
-                  <span aria-hidden className="grid size-8 shrink-0 place-items-center rounded-full border border-border text-xl leading-none text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+                  <span aria-hidden className="grid size-8 shrink-0 place-items-center rounded-full border border-border text-muted transition-transform duration-200 group-open:rotate-45"><Plus className="size-4" /></span>
                 </summary>
                 <p className="mt-3 max-w-prose text-[15px] text-muted">{a}</p>
               </details>
