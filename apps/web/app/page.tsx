@@ -38,7 +38,7 @@ export default async function Home() {
           <section className="container-page grid items-center gap-8 pt-8 pb-6 sm:pt-12 sm:pb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-6 lg:pt-14 lg:pb-24">
             <div className="max-w-xl">
               <h1 className="text-[clamp(2.4rem,5.6vw,4.25rem)] leading-[1.04] font-extrabold tracking-[-0.02em] [word-spacing:0.04em]">
-                Your journey. Your seat. Your freedom.
+                Your journey<span className="-ml-[0.07em]">.</span> Your seat<span className="-ml-[0.07em]">.</span> Your freedom<span className="-ml-[0.07em]">.</span>
               </h1>
               <p className="mt-5 max-w-md text-lg text-white/85">
                 Book student travel from UCC in minutes: pick your exact seat, pay with mobile money or card, and board with a QR ticket on your phone.
@@ -118,7 +118,7 @@ export default async function Home() {
       </section>
 
       <section aria-label="Trip types" className="py-20 sm:py-24">
-        <div className="container-page grid gap-4 lg:grid-cols-[1.25fr_1fr]">
+        <div className="container-page grid gap-4 lg:grid-cols-2">
           <Link href="/trips?type=inter_regional" className="group relative isolate flex flex-col overflow-hidden rounded-[28px] bg-ink p-8 text-white sm:p-10">
             <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(120%_90%_at_100%_0%,rgba(134,85,255,0.55),transparent_60%),radial-gradient(80%_70%_at_0%_100%,rgba(18,214,197,0.25),transparent_60%)]" />
             <h2 className="text-3xl font-extrabold">Going home for vacation</h2>
@@ -184,7 +184,7 @@ export default async function Home() {
 /** Real stops from live trips, drawn on the route line. Hidden when there are none. */
 function RouteLine({ stops, from, tone }: { stops: string[]; from?: string; tone: "dark" | "light" }) {
   if (!stops.length) return null;
-  const shown = stops.slice(0, 6);
+  const shown = stops.slice(0, 4);
   return (
     <ol aria-label={from ? `Destinations from ${from}` : "Stops"} className="relative mt-8 flex flex-col gap-3">
       <span aria-hidden className={`absolute top-2 bottom-2 left-[5px] w-0.5 bg-[repeating-linear-gradient(180deg,var(--color-aqua)_0_5px,transparent_5px_9px)]`} />

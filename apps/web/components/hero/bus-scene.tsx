@@ -11,7 +11,7 @@ const CORAL = "#FF6B79";
 const SUN = "#FFD166";
 const INK = "#171936";
 const WHITE = "#F7F7FF";
-const GLASS = "#1d2150";
+const GLASS = "#3b4596";
 
 /** Side profile of a coach, extruded across its width. Nose at +x. */
 function coachProfile() {
@@ -49,12 +49,12 @@ function Glass({ position, size, rotation }: { position: [number, number, number
     <group position={position} rotation={rotation}>
       <mesh>
         <boxGeometry args={size} />
-        <meshPhysicalMaterial color={GLASS} roughness={0.08} metalness={0.2} clearcoat={1} clearcoatRoughness={0.05} />
+        <meshPhysicalMaterial color={GLASS} emissive="#5a64c8" emissiveIntensity={0.25} roughness={0.06} metalness={0.15} clearcoat={1} clearcoatRoughness={0.04} />
       </mesh>
       {/* diagonal sky reflection */}
       <mesh position={[size[0] > size[2] ? -size[0] * 0.18 : 0, size[1] * 0.12, size[0] > size[2] ? size[2] / 2 + 0.002 : 0]} rotation={[0, size[0] > size[2] ? 0 : Math.PI / 2, -0.6]}>
         <planeGeometry args={[Math.max(size[0], size[2]) * 0.18, size[1] * 1.1]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.16} depthWrite={false} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.32} depthWrite={false} />
       </mesh>
     </group>
   );
@@ -195,7 +195,7 @@ function RouteRibbon() {
   const { top, side, dashes } = useMemo(() => {
     const N = 160;
     const points = ROUTE.getSpacedPoints(N);
-    const width = 1.7;
+    const width = 2.35;
     const thick = 0.14;
     const topPos: number[] = [];
     const sidePos: number[] = [];
@@ -277,7 +277,7 @@ function Pin({ position, color, delay = 0 }: { position: [number, number, number
 function Scene({ animate }: { animate: boolean }) {
   const rig = useRef<THREE.Group>(null);
   const bus = useRef<THREE.Group>(null);
-  const shadowTex = useMemo(() => radialTexture("rgba(23,25,54,0.55)", "rgba(23,25,54,0)"), []);
+  const shadowTex = useMemo(() => radialTexture("rgba(23,25,54,0.8)", "rgba(23,25,54,0)"), []);
   const start = ROUTE.getPointAt(0);
   const end = ROUTE.getPointAt(1);
   useFrame(({ clock, pointer }) => {
@@ -291,10 +291,10 @@ function Scene({ animate }: { animate: boolean }) {
   return (
     <group ref={rig} rotation={[0.02, -0.5, 0]}>
       <RouteRibbon />
-      <group ref={bus} position={[0.35, 0.16, 0.02]} rotation={[0, 0.12, 0]}>
+      <group ref={bus} position={[0.35, 0.16, 0.02]} rotation={[0, -0.22, 0]}>
         {/* contact shadow */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.012, 0]}>
-          <planeGeometry args={[5, 1.9]} />
+          <planeGeometry args={[5.2, 2.2]} />
           <meshBasicMaterial map={shadowTex} transparent depthWrite={false} />
         </mesh>
         <Coach />

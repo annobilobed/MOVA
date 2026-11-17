@@ -70,7 +70,7 @@ export function HowItWorks() {
             <span className="tabular">09:41</span>
             <Smartphone className="size-3.5" />
           </div>
-          <div className="relative h-[400px] overflow-hidden rounded-[22px] bg-ground">
+          <div className="relative h-[372px] overflow-hidden rounded-[22px] bg-ground">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={active}
