@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* MOVA tokens. Raw brand values live here only; components use the semantic names. */
+@theme {
+  --color-electric: #493bff;
+  --color-electric-600: #3a2df0;
+  --color-electric-700: #2f23c9;
+  --color-violet: #8655ff;
+  --color-aqua: #12d6c5;
+  --color-aqua-ink: #0a7f75; /* aqua dark enough for text and icons on light grounds */
+  --color-coral: #ff6b79;
+  --color-coral-ink: #c4283b;
+  --color-sun: #ffd166;
+  --color-sun-ink: #8a5a00;
+  --color-ink: #171936;
+  --color-slate: #626782;
+  --color-mist: #f5f5ff;
+  --color-line: #e5e7f2;
+
+  /* Semantic surfaces (light). Dark values are set under [data-theme="dark"]. */
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-route: var(--route);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-info-bg: var(--info-bg);
+
+  --font-display: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-control: 12px;
+  --radius-card: 18px;
+
+  --shadow-soft: 0 1px 2px rgb(23 25 54 / 0.06), 0 8px 24px -12px rgb(23 25 54 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(23 25 54 / 0.06), 0 18px 40px -18px rgb(73 59 255 / 0.35);
+  --shadow-float: 0 24px 60px -24px rgb(23 25 54 / 0.45);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --ground: #f5f5ff;
+  --surface: #ffffff;
+  --raised: #ffffff;
+  --fg: #171936;
+  --muted: #565b78;
+  --border: #e5e7f2;
+  --accent: #493bff;
+  --accent-fg: #3a2df0;
+  --route: #0a7f75;
+  --success: #0a7f75;
+  --success-bg: #e3faf7;
+  --warning: #8a5a00;
+  --warning-bg: #fff4d9;
+  --danger: #c4283b;
+  --danger-bg: #ffe9ec;
+  --info-bg: #ecebff;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --ground: #0d0e22;
+  --surface: #171936;
+  --raised: #1f2246;
+  --fg: #f1f1ff;
+  --muted: #a6aacb;
+  --border: #2c2f5a;
+  --accent: #6a5fff;
+  --accent-fg: #a49dff;
+  --route: #3fe6d7;
+  --success: #3fe6d7;
+  --success-bg: #0e2f33;
+  --warning: #ffd166;
+  --warning-bg: #3a2e12;
+  --danger: #ff8b96;
+  --danger-bg: #3d1720;
+  --info-bg: #231f5c;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--ground);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { background: rgb(73 59 255 / 0.22); color: inherit; }
+  input, textarea { caret-color: var(--accent); }
+  a { text-underline-offset: 0.2em; text-decoration-thickness: 1.5px; }
+  :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  * { scrollbar-width: thin; scrollbar-color: color-mix(in oklab, var(--muted) 45%, transparent) transparent; }
+}
+
+@utility tabular { font-variant-numeric: tabular-nums; }
+
+@utility container-page {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+/* Skeleton shimmer, only while loading. */
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@utility skeleton {
+  background: linear-gradient(90deg, var(--border) 25%, color-mix(in oklab, var(--border) 50%, var(--surface)) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 10px;
+}
+
+/* Route-line sweep loader. */
+@keyframes route-sweep { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body { background: #fff; color: #000; }
+  .no-print { display: none !important; }
+}
