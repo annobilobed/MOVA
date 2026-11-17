@@ -321,3 +321,13 @@ One curve, expo ease-out (`cubic-bezier(0.16, 1, 0.3, 1)`), for seat pulses (220
 - **Don't** add glass or backdrop blur beyond the hero chips and sticky bars.
 - **Don't** use hard offset shadows or heavy outlines; depth is tone first, then soft tinted shadow.
 - **Don't** put uppercase eyebrows or kickers above headings; uppercase is for table column headers only.
+
+## Animated gradients
+
+Added at the user's request. Brand fields (the landing hero, the sign-in panel, the closing call-to-action band) slowly move through the palette's own shades. A faint wash drifts behind the Lavender Mist page ground. Styles live in `apps/web/app/flow.css`.
+
+- **Hero / sign-in field (`.mova-flow`):** Electric `#493bff` → `#5a3dff` → Violet `#8655ff` → `#6c48ff` → `#3f33e6` → Electric, 120°, 260% size, 22s ease-in-out loop. Dark theme: `#2b20c4` → `#3a23b8` → `#5a2fd6` → `#4326c9` → `#241a9e`.
+- **Call-to-action band (`.mova-flow-cta`):** Electric → `#3a2df0` → `#5a3dff` → `#2f8fe6` → Aqua `#12d6c5`, 26s loop.
+- **Glows (`.mova-drift-a`, `.mova-drift-b`):** soft aqua and white radial glows on brand fields, translating and scaling over 28s and 34s.
+- **Page wash (`body::before`):** violet (13%), aqua (11%) and electric (10%) radial tints, 60s drift. Dark theme alphas are 18%, 10% and 16%.
+- **Rules:** intermediate stops are blends of Electric, Violet and Aqua only, never new hues. The motion is slow enough to read as light, not movement. Text stays white on the brand field at every frame. Everything freezes under `prefers-reduced-motion`, and the wash is hidden in print.

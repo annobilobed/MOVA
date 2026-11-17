@@ -26,6 +26,48 @@
         "value": "plus jakarta sans",
         "createdAt": "2026-11-17T13:45:54.521Z",
         "reason": "spec-pinned display face (MOVA spec 3.5: Poppins or Plus Jakarta Sans); recorded in DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#5a3dff",
+        "createdAt": "2026-11-17T15:01:30.236Z",
+        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#6c48ff",
+        "createdAt": "2026-11-17T15:01:30.246Z",
+        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#3f33e6",
+        "createdAt": "2026-11-17T15:01:30.255Z",
+        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#3a23b8",
+        "createdAt": "2026-11-17T15:01:30.262Z",
+        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#5a2fd6",
+        "createdAt": "2026-11-17T15:01:30.271Z",
+        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#4326c9",
+        "createdAt": "2026-11-17T15:01:30.278Z",
+        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#2f8fe6",
+        "createdAt": "2026-11-17T15:01:30.287Z",
+        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
       }
     ]
   }
