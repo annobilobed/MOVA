@@ -63,6 +63,25 @@ export async function finalizePayment(reference: string, outcome: ProviderOutcom
       return "flagged";
     }
 
+    // Luggage top-up: upgrade the existing booking's allowance; no seat logic involved.
+    if (payment.kind === "luggage_topup") {
+      const { rows: upd } = await client.query(
+        `UPDATE bookings SET luggage = $2 WHERE id = $1 AND status IN ('confirmed','boarded')
+           AND array_position(ARRAY['none','standard','large']::luggage_category[], luggage) < array_position(ARRAY['none','standard','large']::luggage_category[], $2::luggage_category)
+         RETURNING id`,
+        [payment.booking_id, payment.luggage],
+      );
+      if (upd[0]) {
+        await setStatus(client, payment.id, "successful", null);
+        await client.query("COMMIT");
+        return "successful";
+      }
+      await setStatus(client, payment.id, "refunded", "Your ticket already had this luggage allowance, so the top-up was refunded.");
+      await client.query("COMMIT");
+      await refund(reference);
+      return "refunded";
+    }
+
     // Seat still ours? Another student may hold it if our lock expired.
     const lock = await getSeatLock(payment.trip_id, payment.seat_number);
     const heldByOther = lock && lock.userId !== payment.user_id;

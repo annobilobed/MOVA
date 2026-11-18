@@ -14,7 +14,7 @@ export const formatDateTime = (iso: string) => `${formatDate(iso)} · ${formatTi
 export const tripTypeLabel = (t: "inter_regional" | "campus_shuttle") => (t === "campus_shuttle" ? "Campus shuttle" : "Inter-regional");
 
 export const luggageLabel = (l: string) =>
-  ({ none: "Hand luggage only", standard: "One standard bag", large: "Large or extra bag" })[l] ?? l;
+  ({ none: "25 kg included", standard: "25 kg + 1 extra bag", large: "25 kg + 2 extra bags" })[l] ?? l;
 
 /** Today's date in Accra as YYYY-MM-DD, for date inputs. */
 export const todayInAccra = () => new Intl.DateTimeFormat("en-CA", { timeZone: TZ }).format(new Date());

@@ -11,6 +11,7 @@ import { getSeatLock } from "../lib/redis.js";
 import { getTripRow, serializeTrip } from "../lib/trips.js";
 
 export const payments = Router();
+export { serializePayment };
 
 const startSchema = z.object({
   tripId: z.string().uuid(),
@@ -32,7 +33,8 @@ function serializePayment(p: any, booking?: any) {
     amountPesewas: p.amount_pesewas,
     provider: p.provider,
     createdAt: p.created_at,
-    bookingId: booking?.id ?? null,
+    kind: p.kind as "booking" | "luggage_topup",
+    bookingId: booking?.id ?? p.booking_id ?? null,
   };
 }
 

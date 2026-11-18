@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HoldTimer } from "@/components/countdown";
+import { LuggageChoice, LuggageRules, useLuggage } from "@/components/luggage";
 import { SeatLegend, SeatMap } from "@/components/seat-map";
 import { useSession } from "@/components/session";
 import { Alert, Badge, Button, Card, DemoBadge, EmptyState, RouteLoader } from "@/components/ui";
@@ -14,7 +15,6 @@ import { buttonClass } from "@/lib/styles";
 import type { Luggage, SeatLayout, SeatState, Trip } from "@/lib/types";
 
 interface SeatsResponse { trip: Trip; layout: SeatLayout; states: Record<string, SeatState> }
-interface LuggageOption { id: Luggage; label: string; feePesewas: number }
 interface Quote { farePesewas: number; luggagePesewas: number; amountPesewas: number }
 
 export function TripBooking({ tripId }: { tripId: string }) {
@@ -25,7 +25,7 @@ export function TripBooking({ tripId }: { tripId: string }) {
   const [hold, setHold] = useState<{ seat: string; expiresAt: string } | null>(null);
   const [pendingSeat, setPendingSeat] = useState<string | null>(null);
   const [notice, setNotice] = useState<{ tone: "error" | "warning" | "info"; text: string } | null>(null);
-  const [luggageOptions, setLuggageOptions] = useState<LuggageOption[]>([]);
+  const luggageData = useLuggage();
   const [luggage, setLuggage] = useState<Luggage>("none");
   const [quote, setQuote] = useState<Quote | null>(null);
   const [paying, setPaying] = useState(false);
@@ -48,7 +48,6 @@ export function TripBooking({ tripId }: { tripId: string }) {
 
   useEffect(() => {
     load();
-    api<{ options: LuggageOption[] }>("/trips/luggage").then((r) => setLuggageOptions(r.options)).catch(() => {});
     const id = setInterval(load, 15000);
     return () => clearInterval(id);
   }, [load]);
@@ -194,17 +193,10 @@ export function TripBooking({ tripId }: { tripId: string }) {
               {notice && <Alert tone={notice.tone}>{notice.text}{notice.tone === "info" && <> <Link href="/tickets" className="font-semibold text-accent-fg underline">My tickets</Link></>}</Alert>}
               {hold && <HoldTimer expiresAt={hold.expiresAt} onExpire={onExpire} />}
 
-              <fieldset disabled={!hold || paying}>
+              <fieldset disabled={!hold || paying} className="flex flex-col gap-3">
                 <legend className="mb-2 flex items-center gap-2 text-sm font-semibold"><LuggageIcon aria-hidden className="size-4" /> Luggage</legend>
-                <div className="grid gap-2">
-                  {luggageOptions.map((o) => (
-                    <label key={o.id} className="flex cursor-pointer items-center gap-3 rounded-xl border border-border p-3 transition-colors has-[:checked]:border-electric has-[:checked]:bg-info-bg has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60">
-                      <input type="radio" name="luggage" value={o.id} checked={luggage === o.id} onChange={() => setLuggage(o.id)} className="size-4 accent-[var(--accent)]" />
-                      <span className="flex-1 text-[15px]">{o.label}</span>
-                      <span className="tabular text-sm font-semibold text-muted">{o.feePesewas ? `+ ${cedis(o.feePesewas)}` : "Free"}</span>
-                    </label>
-                  ))}
-                </div>
+                {luggageData && <LuggageChoice options={luggageData.options} value={luggage} onChange={setLuggage} disabled={!hold || paying} />}
+                <LuggageRules policy={luggageData?.policy} />
               </fieldset>
 
               <dl className="space-y-2 text-[15px]">

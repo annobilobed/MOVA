@@ -114,7 +114,7 @@ describe("seat locking and payment", () => {
     await s.post(`/api/trips/${trip.id}/locks`).send({ seat: "2" });
     const res = await s.post("/api/payments").send({ tripId: trip.id, seat: "2", luggage: "standard", amountPesewas: 1 });
     expect(res.status).toBe(201);
-    expect(res.body.payment.amountPesewas).toBe(trip.farePesewas + 1000);
+    expect(res.body.payment.amountPesewas).toBe(trip.farePesewas + 1500);
     expect(res.body.payment.status).toBe("pending");
   });
 
@@ -204,7 +204,7 @@ describe("ticket validation", () => {
     const first = await driver2.post("/api/driver/validate").send({ code: `MOVA1:${bk.qr_token}`, tripId: trip.id });
     expect(first.body.result).toBe("valid");
     const repeat = await driver2.post("/api/driver/validate").send({ code: `MOVA1:${bk.qr_token}`, tripId: trip.id });
-    expect(repeat.body.result).toBe("already_used");
+    expect(repeat.body.result).toBe("rechecked"); // same driver re-checking, e.g. after a luggage top-up
     const invalid = await driver2.post("/api/driver/validate").send({ code: "MOVA1:nope", tripId: trip.id });
     expect(invalid.body.result).toBe("invalid");
 
@@ -259,5 +259,40 @@ describe("operator and roles", () => {
     expect(res.status).toBe(200);
     const { rows } = await query("SELECT count(*)::int AS n FROM audit_log WHERE action = 'user_updated'");
     expect(rows[0].n).toBe(1);
+  });
+});
+
+describe("luggage top-ups", () => {
+  it("lets a student add luggage after paying, charging only the difference", async () => {
+    const trip = await firstTrip("Ho");
+    const s = await newStudent("luggage@student.test");
+    await s.post(`/api/trips/${trip.id}/locks`).send({ seat: "20" });
+    const pay = await s.post("/api/payments").send({ tripId: trip.id, seat: "20", luggage: "none" });
+    expect(pay.body.payment.amountPesewas).toBe(trip.farePesewas); // 25 kg included in the fare
+    await s.post(`/api/payments/${pay.body.payment.reference}/test-outcome`).send({ outcome: "success" });
+    const ticketId = (await s.get("/api/tickets")).body.tickets[0].id;
+
+    const top = await s.post(`/api/tickets/${ticketId}/luggage`).send({ luggage: "standard" });
+    expect(top.status).toBe(201);
+    expect(top.body.amountPesewas).toBe(1500);
+    expect((await s.post(`/api/payments/${top.body.reference}/test-outcome`).send({ outcome: "success" })).body.status).toBe("successful");
+    expect((await s.get(`/api/tickets/${ticketId}`)).body.ticket.luggage).toBe("standard");
+
+    const top2 = await s.post(`/api/tickets/${ticketId}/luggage`).send({ luggage: "large" });
+    expect(top2.body.amountPesewas).toBe(1500); // difference between 1 and 2 extra bags
+    const same = await s.post(`/api/tickets/${ticketId}/luggage`).send({ luggage: "standard" });
+    expect(same.status).toBe(400);
+
+    const other = await newStudent("nosy@student.test");
+    expect((await other.post(`/api/tickets/${ticketId}/luggage`).send({ luggage: "large" })).status).toBe(403);
+  });
+
+  it("shows the luggage allowance to the driver on scan", async () => {
+    const trip = await firstTrip("Ho"); // driver@demo.mova's bus
+    const { rows: [bk] } = await query("SELECT qr_token FROM bookings WHERE trip_id = $1 LIMIT 1", [trip.id]);
+    const d = await login("driver@demo.mova");
+    const res = await d.post("/api/driver/validate").send({ code: `MOVA1:${bk.qr_token}`, tripId: trip.id });
+    expect(res.body.result).toBe("valid");
+    expect(res.body.passenger.luggage).toBe("25 kg included + 1 extra bag");
   });
 });

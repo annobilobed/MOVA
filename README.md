@@ -43,7 +43,7 @@ Password for all: `MovaDemo2026!`
 | Operator — Coastal Demo Coaches | `operator2@demo.mova` |
 | Super admin | `admin@demo.mova` |
 
-All seed companies, trips, fares and plates are illustrative and flagged `is_demo`; the UI labels them. Luggage fees (GH₵ 10 standard bag, GH₵ 25 large) are placeholders in `apps/api/src/lib/money.ts` — confirm real fees with the operator.
+All seed companies, trips, fares and plates are illustrative and flagged `is_demo`; the UI labels them. Luggage: every ticket includes 25 kg (3 kg margin). Extra bags are GH₵ 15 each (placeholder in `apps/api/src/lib/money.ts`; confirm with the operator). Students can add luggage after booking, until two hours after departure, from My tickets, paying only the difference. Drivers see the luggage allowance when they scan.
 
 ## Deploy a working demo (Render, free)
 
@@ -65,7 +65,7 @@ Business rules enforced on the server: amounts calculated server-side (GHS, sent
 ## Tests
 
 ```bash
-pnpm --filter @mova/api test     # 16 API tests against a real Postgres + Redis (mova_test DB)
+pnpm --filter @mova/api test     # 18 API tests against a real Postgres + Redis (mova_test DB)
 ```
 
 They cover the spec's acceptance criteria: registration/login/duplicate email, trip discovery and filters, seat layout vs capacity, 10-minute locks, server-side amounts and tampering, double booking → refund, webhook signature and idempotency, ticket validation (valid / repeat / wrong bus), operator scoping, role security and audited role changes.

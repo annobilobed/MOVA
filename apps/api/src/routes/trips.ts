@@ -4,7 +4,7 @@ import { requireAuth } from "../lib/auth.js";
 import { query } from "../lib/db.js";
 import { ah, badRequest, conflict, notFound } from "../lib/errors.js";
 import { layoutSeats } from "../lib/layout.js";
-import { LUGGAGE_FEES, LUGGAGE_LABELS, quote, type Luggage } from "../lib/money.js";
+import { LUGGAGE_DETAILS, LUGGAGE_FEES, LUGGAGE_LABELS, LUGGAGE_ORDER, LUGGAGE_POLICY, quote } from "../lib/money.js";
 import { lockSeat, releaseSeat, tripLocks } from "../lib/redis.js";
 import { getTripRow, seatMap, serializeTrip, TRIP_SELECT } from "../lib/trips.js";
 
@@ -55,7 +55,11 @@ trips.get(
 
 trips.get(
   "/luggage",
-  (_req, res) => res.json({ options: (Object.keys(LUGGAGE_FEES) as Luggage[]).map((k) => ({ id: k, label: LUGGAGE_LABELS[k], feePesewas: LUGGAGE_FEES[k] })) }),
+  (_req, res) =>
+    res.json({
+      policy: LUGGAGE_POLICY,
+      options: LUGGAGE_ORDER.map((k) => ({ id: k, label: LUGGAGE_LABELS[k], detail: LUGGAGE_DETAILS[k], feePesewas: LUGGAGE_FEES[k] })),
+    }),
 );
 
 trips.get(

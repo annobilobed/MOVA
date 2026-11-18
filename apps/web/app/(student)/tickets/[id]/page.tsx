@@ -3,6 +3,7 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { use } from "react";
+import { AddLuggage } from "@/components/add-luggage";
 import { LoadState } from "@/components/load-state";
 import { TicketCard } from "@/components/ticket-card";
 import type { Ticket } from "@/lib/types";
@@ -19,6 +20,7 @@ export default function TicketPage({ params }: { params: Promise<{ id: string }>
       <h1 className="sr-only">Ticket</h1>
       <LoadState loading={loading} error={error} reload={reload} label="Loading ticket…" />
       {data && <TicketCard ticket={data.ticket} />}
+      {data && <div className="mx-auto mt-6 max-w-sm"><AddLuggage ticket={data.ticket} /></div>}
       {data && <p className="mt-6 text-center text-sm text-muted">Need to change or cancel? Booking cancellation isn't available yet. Contact support from the <Link href="/help#contact" className="font-semibold text-accent-fg underline">Help page</Link>.</p>}
     </div>
   );

@@ -12,11 +12,12 @@ import { formatTime } from "@/lib/format";
 import type { Trip } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
-type ResultCode = "valid" | "already_used" | "wrong_bus" | "invalid" | "not_your_trip" | "network";
-interface ScanResult { result: ResultCode; message: string; passenger?: { name: string; seat: string; route: string } }
+type ResultCode = "valid" | "rechecked" | "already_used" | "wrong_bus" | "invalid" | "not_your_trip" | "network";
+interface ScanResult { result: ResultCode; message: string; passenger?: { name: string; seat: string; route: string; luggage?: string } }
 
 const RESULT: Record<ResultCode, { title: string; cls: string; Icon: typeof CheckCircle2; vibrate: number[] }> = {
   valid: { title: "Valid ticket", cls: "bg-[#0a7f75] text-white", Icon: CheckCircle2, vibrate: [80] },
+  rechecked: { title: "Scanned before", cls: "bg-[#2f23c9] text-white", Icon: AlertTriangle, vibrate: [60, 60, 60] },
   already_used: { title: "Already used", cls: "bg-[#8a5a00] text-white", Icon: Ban, vibrate: [200, 100, 200] },
   wrong_bus: { title: "Wrong bus", cls: "bg-[#8a5a00] text-white", Icon: AlertTriangle, vibrate: [200, 100, 200] },
   invalid: { title: "Invalid ticket", cls: "bg-[#c4283b] text-white", Icon: XCircle, vibrate: [400] },
@@ -201,6 +202,13 @@ function ResultScreen({ result, onDismiss }: { result: ScanResult; onDismiss: ()
           <p className="text-sm text-white/80">Passenger</p>
           <p className="text-xl font-bold">{result.passenger.name}</p>
           <p className="tabular mt-1 text-lg">Seat {result.passenger.seat} · {result.passenger.route}</p>
+          {result.passenger.luggage && (
+            <p className="mt-3 border-t border-white/25 pt-3 text-sm text-white/80">
+              Luggage paid for
+              <span className="mt-0.5 block text-2xl font-bold text-white">{result.passenger.luggage}</span>
+              <span className="block text-white/80">Up to 3 kg over is fine. More than this? The student adds luggage in My tickets, then scan again.</span>
+            </p>
+          )}
         </div>
       )}
       <button ref={btn} onClick={onDismiss} className="mt-10 h-14 w-full max-w-xs rounded-2xl bg-white text-lg font-bold text-ink">

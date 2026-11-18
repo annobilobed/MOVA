@@ -121,7 +121,7 @@ figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
   <div class="grid2">
     <div class="card"><h4>Web application</h4><p>Next.js 15 website: public landing page, trip search, seat selection, checkout, payment status, QR tickets, student dashboard, driver scanner, operator portal and super-admin area. Light and dark themes.</p></div>
     <div class="card"><h4>API</h4><p>Node.js + Express + TypeScript service with PostgreSQL and Redis. Handles accounts, trips, ten-minute seat holds, Paystack payments, idempotent webhooks, tickets, validation, manifests and administration.</p></div>
-    <div class="card"><h4>Tests</h4><p>16 automated API tests covering the specification's acceptance criteria, plus a 19-step end-to-end browser run across all four roles.</p></div>
+    <div class="card"><h4>Tests</h4><p>18 automated API tests covering the specification's acceptance criteria, plus a 19-step end-to-end browser run across all four roles.</p></div>
     <div class="card"><h4>Clickable demo and tour</h4><p>A self-contained interactive demo (sample data) and a screen-by-screen tour, both viewable without a server.</p></div>
   </div>
   <h2>Key numbers</h2>
@@ -129,9 +129,9 @@ figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
     <tr><th>Item</th><th>Value</th></tr>
     <tr><td>User roles</td><td>4 — student, driver, operator admin, super admin</td></tr>
     <tr><td>Web pages / routes</td><td>24</td></tr>
-    <tr><td>API endpoints</td><td>34</td></tr>
+    <tr><td>API endpoints</td><td>35</td></tr>
     <tr><td>Database tables</td><td>8 (plus migration tracking)</td></tr>
-    <tr><td>Automated API tests</td><td>16, all passing</td></tr>
+    <tr><td>Automated API tests</td><td>18, all passing</td></tr>
     <tr><td>Seat hold duration</td><td>10 minutes, held by the server in Redis</td></tr>
     <tr><td>Default bus layout</td><td>49 seats: 11 rows of 2 + aisle + 2, then a back row of 5</td></tr>
     <tr><td>Currency</td><td>Ghana cedis (GHS); Paystack receives pesewas (GHS × 100)</td></tr>
@@ -315,6 +315,7 @@ figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
     <tr><td>11</td><td>Operators see only their own company ★</td><td>Company scope applied to every operator query</td></tr>
     <tr><td>12</td><td>Past trips cannot be created or booked ★</td><td>Checked on trip creation, seat lock and payment start</td></tr>
     <tr><td>13</td><td>A student has at most one seat per trip</td><td>Lock refused if the student already has an active booking on the trip</td></tr>
+    <tr><td>14</td><td>Every ticket includes 25 kg of luggage (3 kg margin); extra bags are paid per bag ★</td><td>Server-side fees; top-ups charge only the difference and can never lower an allowance</td></tr>
   </table>
 </section>
 
@@ -345,6 +346,7 @@ figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
     <tr><td>GET</td><td>/tickets</td><td>Student</td><td>My tickets</td></tr>
     <tr><td>GET</td><td>/tickets/:id</td><td>Owner</td><td>Ticket details with QR code (SVG)</td></tr>
     <tr><td>GET</td><td>/driver/trips</td><td>Driver</td><td>Assigned trips with boarded counts</td></tr>
+    <tr><td>POST</td><td>/tickets/:id/luggage</td><td>Owner</td><td>Add luggage; pays only the difference (until 2 h after departure)</td></tr>
     <tr><td>POST</td><td>/driver/validate</td><td>Driver</td><td>Validate a scanned code for a trip</td></tr>
     <tr><td>GET</td><td>/operator/overview</td><td>Operator, admin</td><td>Company counts</td></tr>
     <tr><td>GET / POST</td><td>/operator/buses</td><td>Operator, admin</td><td>List / create buses</td></tr>
@@ -357,7 +359,7 @@ figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
     <tr><td>GET / POST</td><td>/admin/companies</td><td>Super admin</td><td>List / create companies</td></tr>
   </table>
   <h3>Driver validation results</h3>
-  <p><code>valid</code> · <code>already_used</code> · <code>wrong_bus</code> · <code>invalid</code> · <code>not_your_trip</code> (HTTP 403). The QR encodes only <code>MOVA1:&lt;opaque token&gt;</code>; no personal data is inside the code.</p>
+  <p><code>valid</code> · <code>rechecked</code> (same driver re-scanning, e.g. after a luggage top-up — the driver must confirm it is the same person) · <code>already_used</code> · <code>wrong_bus</code> · <code>invalid</code> · <code>not_your_trip</code> (HTTP 403). The QR encodes only <code>MOVA1:&lt;opaque token&gt;</code>; no personal data is inside the code.</p>
 </section>
 
 <!-- 9 -->
@@ -502,14 +504,14 @@ pnpm dev                                   # API on :4000, website on :3000</pre
     <tr><td><code>PORT</code>, <code>NODE_ENV</code></td><td>Both</td><td>Port and environment</td></tr>
     <tr><td><code>API_URL</code></td><td>Web</td><td>Where the website forwards <code>/api/*</code> (e.g. <code>http://127.0.0.1:4000</code>)</td></tr>
   </table>
-  <p>Luggage fees are set in <code>apps/api/src/lib/money.ts</code> (currently placeholder values: GH₵ 10 standard bag, GH₵ 25 large bag).</p>
+  <p>Luggage fees are set in <code>apps/api/src/lib/money.ts</code> (25 kg included with every ticket, 3 kg margin; GH₵ 15 per extra bag — placeholder values).</p>
 </section>
 
 <!-- 15 -->
 <section class="chapter">
   <div class="kicker-num">15</div>
   <h1>Testing</h1>
-  <h2>Automated API tests — 16 passing</h2>
+  <h2>Automated API tests — 18 passing</h2>
   <table>
     <tr><th style="width:22%">Area</th><th>Test</th></tr>
     <tr><td>Accounts</td><td>Registers, logs out and logs back in; rejects duplicate email</td></tr>
@@ -528,6 +530,8 @@ pnpm dev                                   # API on :4000, website on :3000</pre
     <tr><td>Operator</td><td>Creates buses and future trips; past trips refused</td></tr>
     <tr><td>Roles</td><td>Students cannot reach driver, operator or admin endpoints</td></tr>
     <tr><td>Admin</td><td>Super admin can change roles, with audit log entry</td></tr>
+    <tr><td>Luggage</td><td>Student adds luggage after paying and is charged only the difference; no downgrades; others' tickets refused</td></tr>
+    <tr><td>Luggage</td><td>Driver sees the luggage allowance on scan</td></tr>
   </table>
   <h2>End-to-end browser run — 19 steps passing</h2>
   <p>Registration validation → sign-up → dashboard → search → empty state → seat map → seat hold with countdown → test checkout → booking confirmed with QR → My tickets → driver trips → valid scan → repeat scan rejected → operator overview → operator trips → manifest with the new passenger → admin overview → admin users → role guard → dark mode. No page errors.</p>

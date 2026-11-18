@@ -77,7 +77,8 @@ export function PaymentStatusView({ reference }: { reference: string }) {
   if (!data) return <RouteLoader label="Checking your payment…" />;
 
   const { payment } = data;
-  const backToTrip = `/trips/${payment.tripId}`;
+  const topup = payment.kind === "luggage_topup";
+  const backToTrip = topup && payment.bookingId ? `/tickets/${payment.bookingId}` : `/trips/${payment.tripId}`;
 
   return (
     <Shell>
@@ -93,8 +94,8 @@ export function PaymentStatusView({ reference }: { reference: string }) {
       {payment.status === "successful" && (
         <div className="flex flex-col items-center text-center">
           <SuccessMark />
-          <h1 className="mt-5 text-3xl font-extrabold">Your booking is confirmed.</h1>
-          <p className="mt-2 text-muted">Your ticket is ready. You'll also find it in My tickets.</p>
+          <h1 className="mt-5 text-3xl font-extrabold">{topup ? "Luggage added to your ticket." : "Your booking is confirmed."}</h1>
+          <p className="mt-2 text-muted">{topup ? "Your new luggage allowance is on your ticket. Show it to the driver when you board." : "Your ticket is ready. You'll also find it in My tickets."}</p>
           <div className="mt-8 w-full">{ticket ? <TicketCard ticket={ticket} reveal /> : <RouteLoader label="Loading your ticket…" />}</div>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/tickets" className={buttonClass("primary", "lg")}>Go to My tickets <ArrowRight className="size-4.5" /></Link>
@@ -105,11 +106,17 @@ export function PaymentStatusView({ reference }: { reference: string }) {
 
       {payment.status === "failed" && (
         <Outcome tone="error" Icon={XCircle} title="Payment wasn't completed.">
-          You haven't been charged for this booking.{" "}
-          {data.seatStillHeld ? "Your seat is still held, so you can try again." : "Your seat hold has ended, so you'll need to choose a seat again."}
-          {data.seatStillHeld && data.lockExpiresAt && <HoldTimer expiresAt={data.lockExpiresAt} className="mt-5 text-left" />}
+          {topup ? (
+            "You haven't been charged. Your ticket keeps its current luggage allowance, and you can try adding luggage again."
+          ) : (
+            <>
+              You haven't been charged for this booking.{" "}
+              {data.seatStillHeld ? "Your seat is still held, so you can try again." : "Your seat hold has ended, so you'll need to choose a seat again."}
+            </>
+          )}
+          {!topup && data.seatStillHeld && data.lockExpiresAt && <HoldTimer expiresAt={data.lockExpiresAt} className="mt-5 text-left" />}
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Link href={backToTrip} className={buttonClass("primary", "lg")}>{data.seatStillHeld ? "Try payment again" : "Choose a seat"}</Link>
+            <Link href={backToTrip} className={buttonClass("primary", "lg")}>{topup ? "Back to my ticket" : data.seatStillHeld ? "Try payment again" : "Choose a seat"}</Link>
             <Link href="/help#payments" className={buttonClass("outline", "lg")}>Get help</Link>
           </div>
         </Outcome>

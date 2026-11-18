@@ -43,6 +43,7 @@ export interface Payment {
   luggagePesewas: number;
   amountPesewas: number;
   provider: "paystack" | "test";
+  kind: "booking" | "luggage_topup";
   bookingId: string | null;
 }
 

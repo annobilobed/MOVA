@@ -4,6 +4,7 @@ import { requireRole } from "../lib/auth.js";
 import { query } from "../lib/db.js";
 import { ah } from "../lib/errors.js";
 import { serializeTrip, TRIP_SELECT } from "../lib/trips.js";
+import { LUGGAGE_LABELS, type Luggage } from "../lib/money.js";
 
 export const driver = Router();
 driver.use(requireRole("driver"));
@@ -51,7 +52,7 @@ driver.post(
     );
     const bk = rows[0];
     if (!bk || bk.status === "cancelled") return res.json({ result: "invalid", message: "This isn't a valid MOVA ticket." });
-    const passenger = { name: bk.full_name, seat: bk.seat_number, route: `${bk.origin} → ${bk.destination}` };
+    const passenger = { name: bk.full_name, seat: bk.seat_number, route: `${bk.origin} → ${bk.destination}`, luggage: LUGGAGE_LABELS[bk.luggage as Luggage] };
     if (bk.trip_id !== tripId) {
       return res.json({ result: "wrong_bus", message: "This ticket is for a different trip or bus.", passenger });
     }
@@ -60,6 +61,16 @@ driver.post(
       [bk.id, req.user!.id],
     );
     if (!updated[0]) {
+      // Re-check by the same driver on the same trip (e.g. after a luggage top-up): not a misuse.
+      if (bk.boarded_by === req.user!.id) {
+        const at = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "Africa/Accra" }).format(new Date(bk.boarded_at));
+        return res.json({
+          result: "rechecked",
+          message: `This ticket was scanned at ${at}. Only let this person on if they match the name and seat below — a shared screenshot looks the same.`,
+          passenger,
+          boardedAt: bk.boarded_at,
+        });
+      }
       return res.json({ result: "already_used", message: "This ticket has already been used.", passenger, boardedAt: bk.boarded_at });
     }
     res.json({ result: "valid", message: "Ticket valid. Passenger boarded.", passenger, boardedAt: updated[0].boarded_at });
