@@ -59,10 +59,8 @@ Seat-specific reservation with a server-held ten-minute lock, Paystack Ghana pay
 
 - Name: MOVA. Tagline: "MOVE SMART. TRAVEL EASY." (Final name and UCC branding approval still to be confirmed.)
 - Personality: optimistic, energetic, modern, dependable, distinctly digital — not a generic bus-company site, not a crowded student portal.
-- Palette pinned by the spec: Electric #493BFF, Violet #8655FF, Aqua #12D6C5, Coral #FF6B79, Sun #FFD166, Lavender Mist #F5F5FF, Ink #171936, Slate #626782, Border #E5E7F2, White #FFFFFF.
-- Type pinned by the spec: Poppins or Plus Jakarta Sans for headlines; Inter or DM Sans for body; tabular numerals for fares, seats and figures.
 - Voice: clear, calm, encouraging; payment and security messages direct and unambiguous. Landing headline: "Your journey. Your seat. Your freedom." Search CTA: "Find available trips".
-- Visual direction (user's choice, Nov 2026): the category standard for mobility products, played straight at full craft — no novelty world. Craft bar: Uber/Bolt (search-first confidence), FlixBus/Omio (route search, seat maps, tickets), Revolut/Monzo (fintech polish and trustworthy payment states).
+- Redesign (user decision, 18 Nov 2026): the spec's palette, fonts and the first visual direction are released; the visual world is open and chosen by Claude at its discretion. Binding: a 3D landing page with a bus moving along a road; an animated colour gradient whose background colour changes slowly over time; an interactive, beautiful UI/UX; a powerful modern frontend framework.
 - 3D and motion as a signature layer on the landing page and selected moments only; booking, payment, ticket and operator workflows stay fast and readable.
 
 ## Evidence on Hand

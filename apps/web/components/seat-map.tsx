@@ -41,8 +41,8 @@ function seatGlyph(state: SeatState) {
 function seatClass(state: SeatState, pending = false) {
   return clsx(
     "relative grid place-items-center rounded-[10px] font-semibold tabular select-none",
-    state === "available" && "border-2 border-aqua bg-surface text-fg hover:-translate-y-0.5 hover:shadow-lift hover:border-electric cursor-pointer",
-    state === "selected" && "bg-electric text-white ring-4 ring-electric/25 dark:bg-accent",
+    state === "available" && "border-2 border-aqua bg-surface text-fg hover:-translate-y-0.5 hover:shadow-lift hover:border-accent cursor-pointer",
+    state === "selected" && "bg-accent-solid text-on-accent ring-4 ring-accent/35",
     state === "booked" && "bg-border text-muted cursor-not-allowed",
     state === "locked" && "bg-coral/15 text-coral-ink border border-dashed border-coral/60 cursor-not-allowed dark:text-coral",
     pending && "opacity-60",

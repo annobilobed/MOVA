@@ -4,12 +4,12 @@ export type Variant = "primary" | "secondary" | "outline" | "text" | "danger" | 
 export type Size = "md" | "lg" | "sm";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-electric text-white shadow-soft hover:bg-electric-600 active:bg-electric-700 dark:bg-accent dark:hover:bg-electric",
+  primary: "bg-accent-solid text-on-accent shadow-soft hover:brightness-105 hover:shadow-lift active:brightness-95",
   secondary: "bg-ink text-white hover:bg-ink/90 dark:bg-white dark:text-ink dark:hover:bg-white/90",
   outline: "border border-border bg-surface text-fg hover:border-accent hover:text-accent-fg",
   text: "text-accent-fg hover:bg-info-bg",
   danger: "bg-danger text-white hover:opacity-90 dark:text-ink",
-  light: "bg-white text-electric shadow-soft hover:bg-white/90",
+  light: "bg-white text-ink shadow-soft hover:bg-white/90",
   "ghost-light": "border border-white/50 text-white hover:border-white hover:bg-white/10",
 };
 const sizes: Record<Size, string> = {

@@ -1,18 +1,18 @@
-/* Animated brand gradients. Only palette hues (Electric, Violet, Aqua and their shades);
-   slow, eased loops; frozen by the global prefers-reduced-motion rule in globals.css. */
-@keyframes mova-flow {
-  0% { background-position: 0% 40%; }
-  50% { background-position: 100% 60%; }
-  100% { background-position: 0% 40%; }
+/* "Night ride" sky: the background moves slowly from dusk through deep night to dawn and back.
+   Only sky hues (night indigo, plum, ember, dawn gold, morning blue); frozen under prefers-reduced-motion. */
+@keyframes mova-sky {
+  0% { background-position: 50% 0%; }
+  50% { background-position: 50% 100%; }
+  100% { background-position: 50% 0%; }
 }
 @keyframes mova-drift-a {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-12%, 10%, 0) scale(1.12); }
+  50% { transform: translate3d(-10%, 8%, 0) scale(1.12); }
   100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 @keyframes mova-drift-b {
   0% { transform: translate3d(0, 0, 0) scale(1.05); }
-  50% { transform: translate3d(14%, -8%, 0) scale(0.95); }
+  50% { transform: translate3d(12%, -6%, 0) scale(0.95); }
   100% { transform: translate3d(0, 0, 0) scale(1.05); }
 }
 @keyframes mova-ambient {
@@ -22,31 +22,43 @@
   100% { transform: translate3d(0, 0, 0) rotate(0deg); }
 }
 
-/* Hero and auth panel: the Electric → Violet field slowly breathes through its own shades. */
+/* A tall sky strip: scrolling it vertically walks the visible window from dusk to night to dawn. */
+.mova-sky,
 .mova-flow {
-  background-color: #493bff;
-  background-image: linear-gradient(120deg, #493bff 0%, #5a3dff 22%, #8655ff 45%, #6c48ff 62%, #3f33e6 80%, #493bff 100%);
-  background-size: 260% 260%;
-  animation: mova-flow 22s ease-in-out infinite;
+  background-color: #151b3d;
+  background-image: linear-gradient(180deg,
+    #2a1d4f 0%,   /* dusk violet */
+    #5b2e6b 12%,  /* plum */
+    #b4506a 22%,  /* rose */
+    #f0803c 30%,  /* ember */
+    #3a2a63 42%,
+    #151b3d 55%,  /* midnight */
+    #0b1026 66%,  /* deep night */
+    #1c2a5e 76%,
+    #6b4a8a 84%,  /* first light */
+    #f2a35e 92%,  /* dawn */
+    #ffc46b 100%  /* sunrise gold */
+  );
+  background-size: 100% 600%;
+  animation: mova-sky 120s ease-in-out infinite;
 }
-:root[data-theme="dark"] .mova-flow {
-  background-color: #2b20c4;
-  background-image: linear-gradient(120deg, #2b20c4 0%, #3a23b8 22%, #5a2fd6 45%, #4326c9 62%, #241a9e 80%, #2b20c4 100%);
-}
-
-/* Call-to-action band: Electric drifting toward an aqua horizon. */
+/* Closing band: ember horizon into deep night. */
 .mova-flow-cta {
-  background-color: #493bff;
-  background-image: linear-gradient(120deg, #493bff 0%, #3a2df0 30%, #5a3dff 50%, #2f8fe6 78%, #12d6c5 100%);
+  background-color: #151b3d;
+  background-image: linear-gradient(115deg, #0b1026 0%, #2a1d4f 35%, #5b2e6b 60%, #f0803c 92%, #ffc46b 120%);
   background-size: 220% 220%;
-  animation: mova-flow 26s ease-in-out infinite;
+  animation: mova-flow-x 40s ease-in-out infinite;
+}
+@keyframes mova-flow-x {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Soft colour glows drifting over a brand field. */
 .mova-drift-a { animation: mova-drift-a 28s ease-in-out infinite; will-change: transform; }
 .mova-drift-b { animation: mova-drift-b 34s ease-in-out infinite; will-change: transform; }
 
-/* Page ground: a faint violet / aqua / electric wash drifting behind the content. */
+/* Page ground: a faint ember / plum / morning wash drifting behind the content. */
 body::before {
   content: "";
   position: fixed;
@@ -54,18 +66,27 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(38% 32% at 18% 22%, rgb(134 85 255 / 0.13), transparent 70%),
-    radial-gradient(34% 30% at 82% 30%, rgb(18 214 197 / 0.11), transparent 70%),
-    radial-gradient(42% 36% at 55% 85%, rgb(73 59 255 / 0.1), transparent 70%);
+    radial-gradient(38% 32% at 18% 18%, rgb(240 128 60 / 0.10), transparent 70%),
+    radial-gradient(34% 30% at 84% 28%, rgb(91 46 107 / 0.10), transparent 70%),
+    radial-gradient(42% 36% at 55% 88%, rgb(169 216 255 / 0.22), transparent 70%);
   animation: mova-ambient 60s ease-in-out infinite;
   will-change: transform;
 }
 :root[data-theme="dark"] body::before {
   background:
-    radial-gradient(38% 32% at 18% 22%, rgb(134 85 255 / 0.18), transparent 70%),
-    radial-gradient(34% 30% at 82% 30%, rgb(18 214 197 / 0.1), transparent 70%),
-    radial-gradient(42% 36% at 55% 85%, rgb(73 59 255 / 0.16), transparent 70%);
+    radial-gradient(38% 32% at 18% 18%, rgb(240 128 60 / 0.10), transparent 70%),
+    radial-gradient(34% 30% at 84% 28%, rgb(91 46 107 / 0.28), transparent 70%),
+    radial-gradient(42% 36% at 55% 88%, rgb(28 42 94 / 0.55), transparent 70%);
 }
 @media print {
   body::before { display: none; }
 }
+
+/* Scroll cue: a road stud gliding down the lane, eased out, then fading. */
+@keyframes mova-cue {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  80% { transform: translateY(9px); opacity: 0; }
+  100% { transform: translateY(9px); opacity: 0; }
+}
+.mova-cue { animation: mova-cue 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite; }

@@ -57,7 +57,7 @@ export function LuggageChoice({
           <label
             key={o.id}
             className={clsx(
-              "flex cursor-pointer items-start gap-3 rounded-xl border border-border p-3 transition-colors has-[:checked]:border-electric has-[:checked]:bg-info-bg",
+              "flex cursor-pointer items-start gap-3 rounded-xl border border-border p-3 transition-colors has-[:checked]:border-accent has-[:checked]:bg-info-bg",
               (disabled || owned) && "cursor-not-allowed opacity-60",
             )}
           >

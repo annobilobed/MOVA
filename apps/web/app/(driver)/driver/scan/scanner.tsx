@@ -13,10 +13,10 @@ import type { Trip } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
 type ResultCode = "valid" | "rechecked" | "already_used" | "wrong_bus" | "invalid" | "not_your_trip" | "network";
-interface ScanResult { result: ResultCode; message: string; passenger?: { name: string; seat: string; route: string; luggage?: string } }
+interface ScanResult { result: ResultCode; message: string; passenger?: { name: string; studentId?: string | null; seat: string; route: string; luggage?: string } }
 
 const RESULT: Record<ResultCode, { title: string; cls: string; Icon: typeof CheckCircle2; vibrate: number[] }> = {
-  valid: { title: "Valid ticket", cls: "bg-[#0a7f75] text-white", Icon: CheckCircle2, vibrate: [80] },
+  valid: { title: "Valid ticket", cls: "bg-[#0e7c5a] text-white", Icon: CheckCircle2, vibrate: [80] },
   rechecked: { title: "Scanned before", cls: "bg-[#2f23c9] text-white", Icon: AlertTriangle, vibrate: [60, 60, 60] },
   already_used: { title: "Already used", cls: "bg-[#8a5a00] text-white", Icon: Ban, vibrate: [200, 100, 200] },
   wrong_bus: { title: "Wrong bus", cls: "bg-[#8a5a00] text-white", Icon: AlertTriangle, vibrate: [200, 100, 200] },
@@ -198,9 +198,10 @@ function ResultScreen({ result, onDismiss }: { result: ScanResult; onDismiss: ()
       <h2 id="scan-title" className="mt-6 font-display text-5xl font-extrabold">{r.title}</h2>
       <p id="scan-desc" className="mt-3 max-w-sm text-lg text-white/90">{result.message}</p>
       {result.passenger && (
-        <div className="mt-8 rounded-2xl bg-white/15 px-6 py-4 text-left">
+        <div className="mt-8 w-full max-w-sm rounded-2xl bg-white/15 px-6 py-4 text-left break-words">
           <p className="text-sm text-white/80">Passenger</p>
           <p className="text-xl font-bold">{result.passenger.name}</p>
+          {result.passenger.studentId && <p className="tabular text-sm text-white/85">Student ID {result.passenger.studentId} — check it matches their UCC ID card</p>}
           <p className="tabular mt-1 text-lg">Seat {result.passenger.seat} · {result.passenger.route}</p>
           {result.passenger.luggage && (
             <p className="mt-3 border-t border-white/25 pt-3 text-sm text-white/80">

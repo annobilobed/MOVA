@@ -2,6 +2,7 @@
 
 import { Route, ScanLine, Users } from "lucide-react";
 import Link from "next/link";
+import { DriverPassengers } from "@/components/driver-passengers";
 import { LoadState } from "@/components/load-state";
 import { Card, DemoBadge, EmptyState, PageHeader } from "@/components/ui";
 import { formatDate, formatTime } from "@/lib/format";
@@ -38,6 +39,7 @@ export default function DriverHome() {
               </p>
               <Link href={`/driver/scan?trip=${t.id}`} className={buttonClass("primary", "lg")}><ScanLine className="size-5" /> Scan tickets</Link>
             </div>
+            <DriverPassengers tripId={t.id} />
           </Card>
         ))}
       </div>

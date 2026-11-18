@@ -25,6 +25,7 @@ export interface Trip {
   status: TripStatus;
   bookable: boolean;
   isDemo: boolean;
+  cancelReason?: string | null;
 }
 
 export type SeatState = "available" | "selected" | "booked" | "locked";
@@ -67,5 +68,6 @@ export interface Ticket {
   reference: string;
   amountPesewas: number;
   upcoming: boolean;
+  cancelReason?: string | null;
   qrSvg?: string;
 }

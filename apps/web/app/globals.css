@@ -2,24 +2,105 @@
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* MOVA tokens. Raw brand values live here only; components use the semantic names. */
+/* MOVA "night ride" tokens. The sky from dusk to dawn is the palette; headlight amber owns every action.
+   Raw values live here only; components use the semantic names. */
 @theme {
-  --color-electric: #493bff;
-  --color-electric-600: #3a2df0;
-  --color-electric-700: #2f23c9;
-  --color-violet: #8655ff;
-  --color-aqua: #12d6c5;
-  --color-aqua-ink: #0a7f75; /* aqua dark enough for text and icons on light grounds */
-  --color-coral: #ff6b79;
-  --color-coral-ink: #c4283b;
-  --color-sun: #ffd166;
-  --color-sun-ink: #8a5a00;
-  --color-ink: #171936;
-  --color-slate: #626782;
-  --color-mist: #f5f5ff;
-  --color-line: #e5e7f2;
+  --color-night: #0b1026;
+  --color-midnight: #151b3d;
+  --color-plum: #5b2e6b;
+  --color-ember: #f0803c;
+  --color-dawn: #ffc46b;
+  --color-morning: #a9d8ff;
+  --color-amber: #ffb547;      /* headlight amber: actions, selection */
+  --color-stud: #ffe3a3;       /* reflective road stud */
+  --color-ink: #0e1330;
 
-  /* Semantic surfaces (light). Dark values are set under [data-theme="dark"]. */
+  /* Legacy names remapped into the new world so older markup follows it. */
+  --color-electric: #ffb547;
+  --color-electric-600: #f5a62f;
+  --color-electric-700: #e8901a;
+  --color-violet: #5b2e6b;
+  --color-aqua: #3ddc97;       /* signal green: available, valid, confirmed */
+  --color-aqua-ink: #0e7c5a;
+  --color-coral: #ff5a67;      /* tail-light red: held, errors */
+  --color-coral-ink: #c42b3a;
+  --color-sun: #ffc46b;
+  --color-sun-ink: #8a5a00;
+  --color-slate: #4a5274;
+  --color-mist: #eef1f8;
+  --color-line: #dce1ee;
+
+  /* Semantic surfaces. Light = morning haze; [data-theme="dark"] = night. */
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-solid: #ffb547;
+  --color-on-accent: #1a1203;
+  --color-route: var(--route);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-info-bg: var(--info-bg);
+
+  --font-display: "Overpass Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-control: 12px;
+  --radius-card: 20px;
+
+  --shadow-soft: 0 1px 2px rgb(14 19 48 / 0.08), 0 10px 28px -14px rgb(14 19 48 / 0.28);
+  --shadow-lift: 0 2px 4px rgb(14 19 48 / 0.08), 0 22px 44px -20px rgb(240 128 60 / 0.45);
+  --shadow-float: 0 28px 64px -26px rgb(6 9 28 / 0.6);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --ground: #eef1f8;
+  --surface: #ffffff;
+  --raised: #ffffff;
+  --fg: #0e1330;
+  --muted: #4a5274;
+  --border: #dce1ee;
+  --accent: #e8901a;
+  --accent-fg: #8a4b00;
+  --route: #b86e00;
+  --success: #0e7c5a;
+  --success-bg: #ddf6eb;
+  --warning: #8a5a00;
+  --warning-bg: #fff1d6;
+  --danger: #c42b3a;
+  --danger-bg: #ffe6e9;
+  --info-bg: #e8ecfa;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --ground: #0b1026;
+  --surface: #141a3a;
+  --raised: #1b2250;
+  --fg: #eef1ff;
+  --muted: #a3abd0;
+  --border: #262e5c;
+  --accent: #ffb547;
+  --accent-fg: #ffc978;
+  --route: #ffd27a;
+  --success: #3ddc97;
+  --success-bg: #0f2f2a;
+  --warning: #ffc46b;
+  --warning-bg: #3a2c12;
+  --danger: #ff6b76;
+  --danger-bg: #3a1622;
+  --info-bg: #1e2650;
+  /* Re-resolve the semantic aliases here so a nested data-theme="dark" (like the hero) truly flips its subtree. */
   --color-ground: var(--ground);
   --color-surface: var(--surface);
   --color-raised: var(--raised);
@@ -36,57 +117,6 @@
   --color-danger: var(--danger);
   --color-danger-bg: var(--danger-bg);
   --color-info-bg: var(--info-bg);
-
-  --font-display: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-
-  --radius-control: 12px;
-  --radius-card: 18px;
-
-  --shadow-soft: 0 1px 2px rgb(23 25 54 / 0.06), 0 8px 24px -12px rgb(23 25 54 / 0.18);
-  --shadow-lift: 0 2px 4px rgb(23 25 54 / 0.06), 0 18px 40px -18px rgb(73 59 255 / 0.35);
-  --shadow-float: 0 24px 60px -24px rgb(23 25 54 / 0.45);
-
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-:root {
-  --ground: #f5f5ff;
-  --surface: #ffffff;
-  --raised: #ffffff;
-  --fg: #171936;
-  --muted: #565b78;
-  --border: #e5e7f2;
-  --accent: #493bff;
-  --accent-fg: #3a2df0;
-  --route: #0a7f75;
-  --success: #0a7f75;
-  --success-bg: #e3faf7;
-  --warning: #8a5a00;
-  --warning-bg: #fff4d9;
-  --danger: #c4283b;
-  --danger-bg: #ffe9ec;
-  --info-bg: #ecebff;
-  color-scheme: light;
-}
-
-[data-theme="dark"] {
-  --ground: #0d0e22;
-  --surface: #171936;
-  --raised: #1f2246;
-  --fg: #f1f1ff;
-  --muted: #a6aacb;
-  --border: #2c2f5a;
-  --accent: #6a5fff;
-  --accent-fg: #a49dff;
-  --route: #3fe6d7;
-  --success: #3fe6d7;
-  --success-bg: #0e2f33;
-  --warning: #ffd166;
-  --warning-bg: #3a2e12;
-  --danger: #ff8b96;
-  --danger-bg: #3d1720;
-  --info-bg: #231f5c;
   color-scheme: dark;
 }
 
@@ -109,7 +139,7 @@
     text-wrap: balance;
   }
   p { text-wrap: pretty; }
-  ::selection { background: rgb(73 59 255 / 0.22); color: inherit; }
+  ::selection { background: rgb(255 181 71 / 0.35); color: inherit; }
   input, textarea { caret-color: var(--accent); }
   a { text-underline-offset: 0.2em; text-decoration-thickness: 1.5px; }
   :focus-visible {

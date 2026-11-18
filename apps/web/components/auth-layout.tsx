@@ -5,12 +5,12 @@ export function AuthLayout({ title, subtitle, children }: { title: string; subti
   return (
     <div className="grid min-h-dvh lg:grid-cols-[1fr_minmax(0,560px)]">
       <aside aria-hidden className="relative hidden overflow-hidden mova-flow lg:block">
-        <div className="absolute -right-24 -bottom-24 size-[520px] rounded-full mova-drift-a bg-[radial-gradient(circle,rgba(18,214,197,0.35),transparent_62%)]" />
+        <div className="absolute -right-24 -bottom-24 size-[520px] rounded-full mova-drift-a bg-[radial-gradient(circle,rgba(255,181,71,0.28),transparent_62%)]" />
         <div className="relative flex h-full flex-col justify-between p-12 text-white">
           <Logo tone="light" />
           <div>
             <p className="max-w-md font-display text-5xl leading-[1.05] font-extrabold tracking-[-0.03em]">Your journey. Your seat. Your freedom.</p>
-            <svg viewBox="0 0 400 60" className="mt-10 w-80 text-aqua">
+            <svg viewBox="0 0 400 60" className="mt-10 w-80 text-amber">
               <path d="M8 40 C 90 10, 150 50, 230 28 S 360 12, 392 22" fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray="12 10" strokeLinecap="round" />
               <circle cx="8" cy="40" r="7" fill="none" stroke="currentColor" strokeWidth="4" />
               <circle cx="392" cy="22" r="8" fill="currentColor" />

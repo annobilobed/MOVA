@@ -9,7 +9,7 @@ import { TripSearch } from "@/components/trip-search";
 import { EmptyState } from "@/components/ui";
 import { buttonClass } from "@/lib/styles";
 import { serverApi } from "@/lib/api";
-import { cedis, formatDateTime } from "@/lib/format";
+import { cedis, formatDateTime, formatTime } from "@/lib/format";
 import type { Trip } from "@/lib/types";
 
 export const revalidate = 30;
@@ -35,40 +35,51 @@ export default async function Home() {
 
   return (
     <>
-      <div className="relative isolate overflow-hidden mova-flow text-white">
-        <div aria-hidden className="pointer-events-none absolute -top-40 right-[-10%] -z-10 size-[720px] rounded-full mova-drift-a bg-[radial-gradient(circle,rgba(18,214,197,0.28),transparent_62%)]" />
-        <div aria-hidden className="pointer-events-none absolute bottom-[-30%] left-[-15%] -z-10 size-[640px] rounded-full mova-drift-b bg-[radial-gradient(circle,rgba(255,255,255,0.14),transparent_65%)]" />
+      {/* Hero: the night highway. The 3D scene (or its static picture) fills the frame; the search works on top of it. */}
+      <div className="relative isolate overflow-hidden bg-night text-white" data-theme="dark">
+        <HeroVisual />
+        {/* legibility scrim: night on the left where the words sit, open road on the right */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-[5] bg-[linear-gradient(90deg,rgba(11,16,38,0.92)_0%,rgba(11,16,38,0.72)_34%,rgba(11,16,38,0.15)_62%,transparent_80%)] max-lg:bg-[linear-gradient(180deg,rgba(11,16,38,0.88)_0%,rgba(11,16,38,0.6)_55%,rgba(11,16,38,0.2)_100%)]" />
         <SiteHeader overHero />
         <main id="main">
-          <section className="container-page grid items-center gap-8 pt-8 pb-6 sm:pt-12 sm:pb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-6 lg:pt-14 lg:pb-24">
-            <div className="max-w-xl">
-              <h1 className="text-[clamp(2.4rem,5.6vw,4.25rem)] leading-[1.04] font-extrabold tracking-[-0.02em] [word-spacing:0.04em]">
-                Your journey<span className="-ml-[0.07em]">.</span> Your seat<span className="-ml-[0.07em]">.</span> Your freedom<span className="-ml-[0.07em]">.</span>
+          <section className="container-page flex min-h-[min(92svh,860px)] flex-col justify-center pt-6 pb-10 lg:pb-16">
+            <div className="max-w-[560px]">
+              <h1 className="font-display text-[clamp(2.6rem,6vw,4.6rem)] leading-[0.98] font-black tracking-[-0.02em] text-balance">
+                Your journey<span className="text-amber">.</span> Your seat<span className="text-amber">.</span> Your freedom<span className="text-amber">.</span>
               </h1>
-              <p className="mt-5 max-w-md text-lg text-white/85">
-                Book student travel from UCC in minutes: pick your exact seat, pay with mobile money or card, and board with a QR ticket on your phone.
+              <p className="mt-5 max-w-md text-lg text-white/80">
+                The bus home from UCC, booked in minutes. Pick your exact seat, pay with mobile money or card, and board with a QR ticket on your phone.
               </p>
-              <div className="mt-8 rounded-[22px] bg-surface p-5 text-fg shadow-float sm:p-6">
+              <div className="mt-8 rounded-[24px] border border-white/10 bg-[#0e1330]/88 p-5 shadow-float backdrop-blur-sm sm:p-6">
                 <TripSearch defaultOrigin={defaultOrigin} />
               </div>
-              <Link href="#how-it-works" className="mt-5 inline-flex items-center gap-1.5 rounded-lg font-semibold text-white/90 underline-offset-4 hover:text-white hover:underline">
-                How MOVA works <ArrowRight aria-hidden className="size-4" />
-              </Link>
+              {trips.length > 0 && (
+                <div className="mt-6">
+                  <p className="text-sm font-semibold text-white/70">Leaving soon</p>
+                  <ul className="mt-2 flex flex-wrap gap-2">
+                    {trips.slice(0, 3).map((t) => (
+                      <li key={t.id}>
+                        <Link href={`/trips/${t.id}`} className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/6 py-1.5 pr-3.5 pl-1.5 text-sm transition-colors hover:border-amber/60 hover:bg-white/10">
+                          <span className="tabular rounded-full bg-amber px-2 py-0.5 text-xs font-bold text-on-accent">{formatTime(t.departureAt)}</span>
+                          <span className="font-semibold">{t.destination}</span>
+                          <span className="tabular text-white/60">{cedis(t.farePesewas)}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
-            <div className="relative -mx-4 sm:mx-0 lg:-mr-16 [mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)]">
-              <HeroVisual />
-              <div aria-hidden className="absolute top-[6%] left-[10%] flex items-center gap-2.5 sm:top-[10%] sm:left-[14%] rounded-2xl border border-white/25 bg-white/14 px-3.5 py-2.5 shadow-float backdrop-blur-md sm:flex">
-                <span className="tabular grid size-8 place-items-center rounded-lg bg-electric text-sm font-bold">14</span>
-                <span className="text-sm leading-tight"><span className="block font-semibold">Seat selected</span><span className="text-white/75">Held for 10 minutes</span></span>
-              </div>
-              <div aria-hidden className="absolute right-[14%] bottom-[8%] hidden items-center gap-2.5 rounded-2xl border border-white/25 bg-white/14 px-3.5 py-2.5 shadow-float backdrop-blur-md sm:flex">
-                <span className="grid size-8 place-items-center rounded-lg bg-aqua text-ink"><QrCode className="size-4.5" /></span>
-                <span className="text-sm leading-tight"><span className="block font-semibold">Ticket ready</span><span className="text-white/75">Show it when you board</span></span>
-              </div>
-            </div>
+            <a href="#how-it-works" className="mt-10 inline-flex items-center gap-2 self-start rounded-lg text-sm font-semibold text-white/70 hover:text-white">
+              <span aria-hidden className="flex h-8 w-5 justify-center rounded-full border-2 border-white/40 pt-1.5"><span className="mova-cue h-2 w-0.5 rounded-full bg-amber" /></span>
+              Scroll to ride along
+            </a>
           </section>
         </main>
       </div>
+
+      {/* Sunrise: the night hero gives way to the morning page below. */}
+      <div aria-hidden className="h-20 bg-[linear-gradient(180deg,#0b1026_0%,#2a1d4f_30%,#b4506a_58%,#f0803c_78%,var(--ground)_100%)] dark:bg-[linear-gradient(180deg,#0b1026_0%,#2a1d4f_45%,#5b2e6b_70%,var(--ground)_100%)]" />
 
       {/* Trust strip: only claims the service actually delivers. */}
       <section aria-label="Why students book with MOVA" className="border-b border-border bg-surface">

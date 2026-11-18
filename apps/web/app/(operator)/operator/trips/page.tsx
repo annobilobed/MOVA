@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { CancelTripButton } from "@/components/cancel-trip";
 import { LoadState } from "@/components/load-state";
 import { Alert, Badge, Button, Card, DemoBadge, Field, PageHeader, SelectField, inputClass } from "@/components/ui";
 import { api, ApiError } from "@/lib/api";
@@ -88,7 +89,7 @@ export default function OperatorTrips() {
                       <td className="tabular px-4 py-3 text-right">{cedis(t.farePesewas)}</td>
                       <td className="tabular px-4 py-3 text-right">{t.booked} / {t.bus.capacity}</td>
                       <td className="px-4 py-3">{statusBadge[t.status]}</td>
-                      <td className="px-4 py-3 text-right"><Link href={`/operator/manifests/${t.id}`} className={buttonClass("outline", "sm")}>Manifest</Link></td>
+                      <td className="px-4 py-3 text-right"><div className="flex justify-end gap-1"><CancelTripButton trip={t} booked={t.booked} onDone={trips.reload} /><Link href={`/operator/manifests/${t.id}`} className={buttonClass("outline", "sm")}>Manifest</Link></div></td>
                     </tr>
                   ))}
                 </tbody>

@@ -24,7 +24,7 @@ export function TicketRow({ ticket }: { ticket: Ticket }) {
           {formatDate(ticket.departureAt)} · <span className="tabular">{formatTime(ticket.departureAt)}</span> · {ticket.busPlate}
         </p>
       </div>
-      <StatusBadge status={ticket.status === "boarded" ? "boarded" : "confirmed"} />
+      {ticket.status === "cancelled" ? <StatusBadge status="refunded" /> : <StatusBadge status={ticket.status === "boarded" ? "boarded" : "confirmed"} />}
       <ChevronRight aria-hidden className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5" />
     </Link>
   );

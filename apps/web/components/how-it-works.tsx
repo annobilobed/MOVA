@@ -47,7 +47,7 @@ export function HowItWorks() {
                 <span
                   className={clsx(
                     "relative z-10 grid size-[34px] shrink-0 translate-x-[7px] place-items-center rounded-full border-2 text-sm font-bold transition-colors duration-200",
-                    on ? "border-electric bg-electric text-white dark:border-accent dark:bg-accent" : done ? "border-route bg-surface text-route" : "border-border bg-surface text-muted",
+                    on ? "border-accent bg-accent-solid text-on-accent" : done ? "border-route bg-surface text-route" : "border-border bg-surface text-muted",
                   )}
                 >
                   {done ? <CheckCircle2 aria-hidden className="size-4" /> : i + 1}
@@ -109,7 +109,7 @@ function SeatDemo() {
               key={n}
               className={clsx(
                 "tabular grid h-8 place-items-center rounded-lg text-xs font-semibold",
-                sel ? "bg-electric text-white ring-4 ring-electric/25" : taken.has(n) ? "bg-border text-muted line-through" : "border border-aqua bg-surface text-fg",
+                sel ? "bg-accent-solid text-on-accent ring-4 ring-accent/35" : taken.has(n) ? "bg-border text-muted line-through" : "border border-aqua bg-surface text-fg",
               )}
             >
               {n}
@@ -136,7 +136,7 @@ function PayDemo() {
         <div className="flex justify-between border-t border-border pt-2 font-semibold"><dt>Total</dt><dd className="tabular">GH₵ —</dd></div>
       </dl>
       <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
-        <span className="rounded-xl border-2 border-electric bg-surface p-3 font-semibold">Mobile money</span>
+        <span className="rounded-xl border-2 border-accent bg-surface p-3 font-semibold">Mobile money</span>
         <span className="rounded-xl border border-border bg-surface p-3 text-muted">Card</span>
       </div>
       <div className="mt-auto flex items-center gap-2 rounded-xl bg-info-bg p-3 text-sm font-medium text-accent-fg">

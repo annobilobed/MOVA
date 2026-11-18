@@ -1,4 +1,4 @@
-import "@fontsource-variable/plus-jakarta-sans";
+import "@fontsource-variable/overpass";
 import "@fontsource-variable/inter";
 import "./globals.css";
 import "./flow.css";
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#493BFF" },
-    { media: "(prefers-color-scheme: dark)", color: "#0d0e22" },
+    { media: "(prefers-color-scheme: light)", color: "#eef1f8" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b1026" },
   ],
 };
 
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-dvh">
-        <a href="#main" className="sr-only z-50 rounded-lg bg-electric px-4 py-2 font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3">
+        <a href="#main" className="sr-only z-50 rounded-lg bg-accent-solid px-4 py-2 font-semibold text-on-accent focus:not-sr-only focus:fixed focus:top-3 focus:left-3">
           Skip to content
         </a>
         <SessionProvider>{children}</SessionProvider>

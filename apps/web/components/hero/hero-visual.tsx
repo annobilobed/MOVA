@@ -2,9 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { BusFallback } from "./bus-fallback";
+import { RoadFallback } from "./road-fallback";
 
-const BusScene = dynamic(() => import("./bus-scene"), { ssr: false });
+const RoadScene = dynamic(() => import("./road-scene"), { ssr: false });
 
 function canRun3D() {
   if (typeof window === "undefined") return false;
@@ -20,8 +20,8 @@ function canRun3D() {
 }
 
 /**
- * The static illustration renders immediately (fast first paint); the 3D coach loads
- * after the page is idle, only on capable devices, and stays still under reduced motion.
+ * Full-bleed hero backdrop. The static night road paints immediately; the 3D highway loads
+ * after the page is idle on capable devices, and holds still under reduced motion.
  */
 export function HeroVisual() {
   const [mode, setMode] = useState<"static" | "3d">("static");
@@ -29,22 +29,21 @@ export function HeroVisual() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const reduce = matchMedia("(prefers-reduced-motion: reduce)");
-    setAnimate(!reduce.matches);
+    setAnimate(!matchMedia("(prefers-reduced-motion: reduce)").matches);
     if (!canRun3D()) return;
     const start = () => setMode("3d");
-    const idle = (window as any).requestIdleCallback?.(start, { timeout: 2500 }) ?? window.setTimeout(start, 1200);
+    const idle = (window as any).requestIdleCallback?.(start, { timeout: 2000 }) ?? window.setTimeout(start, 900);
     return () => ((window as any).cancelIdleCallback ? (window as any).cancelIdleCallback(idle) : clearTimeout(idle));
   }, []);
 
   return (
-    <div className="relative aspect-[16/11] w-full">
-      <div className={`absolute inset-0 transition-opacity duration-700 ${ready ? "opacity-0" : "opacity-100"}`}>
-        <BusFallback />
+    <div aria-hidden className="absolute inset-0 -z-10">
+      <div className={`absolute inset-0 transition-opacity duration-1000 ${ready ? "opacity-0" : "opacity-100"}`}>
+        <RoadFallback />
       </div>
       {mode === "3d" && (
-        <div className={`absolute inset-0 transition-opacity duration-700 ${ready ? "opacity-100" : "opacity-0"}`}>
-          <BusScene animate={animate} onReady={() => setReady(true)} />
+        <div className={`absolute inset-0 transition-opacity duration-1000 ${ready ? "opacity-100" : "opacity-0"}`}>
+          <RoadScene animate={animate} onReady={() => setReady(true)} />
         </div>
       )}
     </div>

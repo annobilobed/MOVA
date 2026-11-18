@@ -78,7 +78,7 @@ export function TripResults() {
                 aria-pressed={type === f.id}
                 className={clsx(
                   "rounded-full border px-4 py-2 text-sm font-semibold whitespace-nowrap transition-colors",
-                  type === f.id ? "border-electric bg-electric text-white dark:border-accent dark:bg-accent" : "border-border bg-surface text-muted hover:border-accent hover:text-fg",
+                  type === f.id ? "border-accent bg-accent-solid text-on-accent" : "border-border bg-surface text-muted hover:border-accent hover:text-fg",
                 )}
               >
                 {f.label}

@@ -19,7 +19,7 @@ export function TicketCard({ ticket, reveal = false }: { ticket: Ticket; reveal?
       style={{ transformPerspective: 900 }}
       className="mx-auto w-full max-w-sm overflow-hidden rounded-[24px] bg-surface text-left shadow-float ring-1 ring-border"
     >
-      <div className="bg-[linear-gradient(120deg,#493BFF_0%,#8655FF_100%)] px-6 pt-5 pb-6 text-white">
+      <div className="bg-[linear-gradient(160deg,#2a1d4f_0%,#151b3d_55%,#0b1026_100%)] px-6 pt-5 pb-6 text-white">
         <div className="flex items-center justify-between text-sm">
           <span className="font-display font-extrabold tracking-[-0.02em]">MOVA</span>
           <span className="text-white/80">{tripTypeLabel(ticket.tripType)}</span>
@@ -68,7 +68,11 @@ export function TicketCard({ ticket, reveal = false }: { ticket: Ticket; reveal?
           <div className="skeleton size-52" />
         )}
         <p className="mt-3 text-center text-sm text-muted">
-          {ticket.status === "boarded" ? "This ticket has been used." : "Show this QR code to the driver of your bus when you board."}
+          {ticket.status === "boarded"
+            ? "This ticket has been used."
+            : ticket.status === "cancelled"
+              ? `This trip was cancelled${ticket.cancelReason ? `: ${ticket.cancelReason}` : ""}. Your payment has been refunded.`
+              : "Show this QR code and your UCC student ID to the driver of your bus when you board."}
         </p>
         <dl className="mt-4 grid w-full grid-cols-2 gap-3 border-t border-border pt-4 text-sm">
           <Detail label="Booking reference" value={ticket.reference} mono small />
