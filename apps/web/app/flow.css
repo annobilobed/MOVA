@@ -102,3 +102,7 @@ body::before {
 .rf-coach { transform-box: fill-box; transform-origin: 50% 100%; animation: rf-approach 7s ease-in-out infinite; }
 .rf-beam { animation: rf-beam 3.5s ease-in-out infinite; }
 @keyframes rf-beam { 50% { opacity: 0.9; } }
+
+/* Paused by the visitor: freeze every CSS loop in the hero. */
+.motion-paused,
+.motion-paused * { animation-play-state: paused !important; }

@@ -1,9 +1,9 @@
 "use client";
 
 import clsx from "clsx";
-import { AlertTriangle, CheckCircle2, Info, Loader2, WifiOff, XCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Eye, EyeOff, Info, Loader2, WifiOff, XCircle } from "lucide-react";
 import Link from "next/link";
-import { forwardRef, useId } from "react";
+import { forwardRef, useId, useState } from "react";
 import { buttonClass, inputClass, type Size, type Variant } from "@/lib/styles";
 import type { PaymentStatus } from "@/lib/types";
 
@@ -47,18 +47,43 @@ interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactNode;
 }
 
-export const Field = forwardRef<HTMLInputElement, FieldProps>(function Field({ label, error, helper, icon, id, className, ...props }, ref) {
+export const Field = forwardRef<HTMLInputElement, FieldProps>(function Field({ label, error, helper, icon, id, className, type, required, ...props }, ref) {
   const autoId = useId();
   const inputId = id ?? autoId;
+  const [show, setShow] = useState(false);
+  const isPassword = type === "password";
   const describedBy = [error && `${inputId}-error`, helper && `${inputId}-help`].filter(Boolean).join(" ") || undefined;
   return (
     <div className={clsx("flex flex-col gap-1.5", className)}>
       <label htmlFor={inputId} className="text-sm font-semibold text-fg">
         {label}
+        {required && <span aria-hidden className="ml-0.5 text-danger">*</span>}
       </label>
       <div className="relative">
         {icon && <span aria-hidden className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-muted [&_svg]:size-4.5">{icon}</span>}
-        <input ref={ref} id={inputId} aria-invalid={error ? true : undefined} aria-describedby={describedBy} className={inputClass(!!error, !!icon)} {...props} />
+        <input
+          ref={ref}
+          id={inputId}
+          type={isPassword && show ? "text" : type}
+          required={required}
+          aria-required={required || undefined}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
+          className={clsx(inputClass(!!error, !!icon), isPassword && "pr-12")}
+          {...props}
+        />
+        {isPassword && (
+          <button
+            type="button"
+            onClick={() => setShow((v) => !v)}
+            aria-label={show ? "Hide password" : "Show password"}
+            aria-pressed={show}
+            aria-controls={inputId}
+            className="absolute top-1/2 right-1 grid size-10 -translate-y-1/2 place-items-center rounded-lg text-muted hover:text-fg"
+          >
+            {show ? <EyeOff aria-hidden className="size-4.5" /> : <Eye aria-hidden className="size-4.5" />}
+          </button>
+        )}
       </div>
       {helper && !error && <p id={`${inputId}-help`} className="text-[13px] text-muted">{helper}</p>}
       {error && (
@@ -70,6 +95,11 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(function Field({ l
     </div>
   );
 });
+
+/** After a failed submit, move keyboard and screen-reader focus to the first field with an error. */
+export function focusFirstInvalid(form?: HTMLElement | null) {
+  setTimeout(() => (form ?? document).querySelector<HTMLElement>('[aria-invalid="true"]')?.focus(), 0);
+}
 
 export function SelectField({ label, error, helper, id, children, className, ...props }: React.SelectHTMLAttributes<HTMLSelectElement> & { label: string; error?: string; helper?: string }) {
   const autoId = useId();

@@ -72,7 +72,7 @@
   --border: #dce1ee;
   --accent: #e8901a;
   --accent-fg: #8a4b00;
-  --route: #b86e00;
+  --route: #9a5b00;
   --success: #0e7c5a;
   --success-bg: #ddf6eb;
   --warning: #8a5a00;
@@ -139,6 +139,8 @@
     text-wrap: balance;
   }
   p { text-wrap: pretty; }
+  button:not(:disabled), [role="button"], [role="radio"], [role="tab"], summary, label[for], select { cursor: pointer; }
+  a, button, input, select, textarea, summary, [role="button"] { touch-action: manipulation; }
   ::selection { background: rgb(255 181 71 / 0.35); color: inherit; }
   input, textarea { caret-color: var(--accent); }
   a { text-underline-offset: 0.2em; text-decoration-thickness: 1.5px; }

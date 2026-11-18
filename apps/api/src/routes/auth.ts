@@ -70,4 +70,5 @@ auth.post("/logout", (_req, res) => {
   res.json({ ok: true });
 });
 
-auth.get("/me", requireAuth, (req, res) => res.json({ user: req.user }));
+// Signed out is a normal state, not an error: answer 200 with user null so public pages log no failed request.
+auth.get("/me", (req, res) => res.json({ user: req.user ?? null }));

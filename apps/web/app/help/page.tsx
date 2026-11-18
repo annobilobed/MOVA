@@ -44,7 +44,7 @@ export default function HelpPage() {
         <p className="mt-3 text-lg text-muted">Answers about booking, payments and boarding.</p>
         <nav aria-label="Help topics" className="mt-6 flex flex-wrap gap-2">
           {[...sections, { id: "contact", title: "Contact support" }].map((s) => (
-            <a key={s.id} href={`#${s.id}`} className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-semibold hover:border-accent hover:text-accent-fg">{s.title}</a>
+            <a key={s.id} href={`#${s.id}`} className="inline-flex min-h-11 items-center rounded-full border border-border bg-surface px-4 text-sm font-semibold hover:border-accent hover:text-accent-fg">{s.title}</a>
           ))}
         </nav>
         {sections.map((s) => (

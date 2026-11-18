@@ -51,7 +51,7 @@ describe("accounts", () => {
     const agent = await newStudent("new@student.test");
     expect((await agent.get("/api/auth/me")).body.user.role).toBe("student");
     await agent.post("/api/auth/logout");
-    expect((await agent.get("/api/auth/me")).status).toBe(401);
+    expect((await agent.get("/api/auth/me")).body.user).toBeNull();
     const again = await agent.post("/api/auth/login").send({ email: "NEW@student.test", password: "longenough1" });
     expect(again.status).toBe(200);
     const dup = await request(app).post("/api/auth/register").send({

@@ -35,13 +35,13 @@ export default async function Home() {
 
   return (
     <>
+      <main id="main">
       {/* Hero: the night highway. The 3D scene (or its static picture) fills the frame; the search works on top of it. */}
       <div className="relative isolate overflow-hidden bg-night text-white" data-theme="dark">
         <HeroVisual />
         {/* legibility scrim: night on the left where the words sit, open road on the right */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-[5] bg-[linear-gradient(90deg,rgba(11,16,38,0.92)_0%,rgba(11,16,38,0.72)_34%,rgba(11,16,38,0.15)_62%,transparent_80%)] max-lg:bg-[linear-gradient(180deg,rgba(11,16,38,0.9)_0%,rgba(11,16,38,0.55)_30%,rgba(11,16,38,0.05)_45%,rgba(11,16,38,0.05)_58%,rgba(11,16,38,0.7)_72%,rgba(11,16,38,0.9)_100%)]" />
         <SiteHeader overHero />
-        <main id="main">
           <section className="container-page flex min-h-[min(92svh,860px)] flex-col justify-center pt-6 pb-10 lg:pb-16">
             <div className="max-w-[560px]">
               <h1 className="font-display text-[clamp(2.6rem,6vw,4.6rem)] leading-[0.98] font-black tracking-[-0.02em] text-balance">
@@ -76,7 +76,6 @@ export default async function Home() {
               Scroll to ride along
             </a>
           </section>
-        </main>
       </div>
 
       {/* Sunrise: the night hero gives way to the morning page below. */}
@@ -195,6 +194,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      </main>
       <SiteFooter />
     </>
   );

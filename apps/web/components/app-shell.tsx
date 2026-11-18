@@ -52,7 +52,13 @@ export function AppShell({ roles, children }: { roles: Role[]; children: React.R
     if (!loading && !user) router.replace(`/auth/sign-in?next=${encodeURIComponent(pathname)}`);
   }, [loading, user, pathname, router]);
 
-  if (loading || !user) return <div className="grid min-h-dvh place-items-center"><RouteLoader label="Loading your account…" /></div>;
+  if (loading || !user)
+    return (
+      <main id="main" className="grid min-h-dvh place-items-center">
+        <h1 className="sr-only">MOVA</h1>
+        <RouteLoader label="Loading your account…" />
+      </main>
+    );
 
   const items = NAV[user.role];
   const isActive = (i: NavItem) => (i.exact ? pathname === i.href : pathname.startsWith(i.href));

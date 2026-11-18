@@ -41,7 +41,7 @@ export default function Manifest({ params }: { params: Promise<{ tripId: string 
             <EmptyState icon={<Users />} title="No passengers yet">Bookings for this trip will appear here.</EmptyState>
           ) : (
             <Card className="overflow-hidden print:rounded-none print:border-0 print:shadow-none">
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
                 <table className="w-full min-w-[720px] text-left text-[15px] print:min-w-0 print:text-[12px]">
                   <thead className="border-b border-border bg-ground text-xs font-semibold text-muted uppercase print:bg-white print:text-black">
                     <tr>

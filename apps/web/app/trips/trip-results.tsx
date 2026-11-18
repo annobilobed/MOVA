@@ -61,7 +61,8 @@ export function TripResults() {
           </div>
         </div>
       </section>
-      <section className="container-page py-8">
+      <section className="container-page py-8" aria-labelledby="results-heading">
+        <h2 id="results-heading" className="sr-only">Available trips</h2>
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p aria-live="polite" className="text-[15px] text-muted">
             {trips ? (

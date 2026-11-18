@@ -42,7 +42,7 @@ export default function OperatorTrips() {
     <div className="container-page py-8 sm:py-10">
       <PageHeader title="Trips" description="Create departures and open passenger manifests." />
 
-      <div className="grid items-start gap-8 2xl:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-8 2xl:grid-cols-[minmax(0,1fr)_340px]">
         <Card as="section" className="overflow-hidden">
           <div className="flex flex-col gap-3 border-b border-border p-4 sm:flex-row sm:items-center">
             <div role="tablist" aria-label="Trip period" className="inline-flex rounded-xl bg-ground p-1">
@@ -67,7 +67,7 @@ export default function OperatorTrips() {
           <LoadState loading={trips.loading} error={trips.error} reload={trips.reload} label="Loading trips…" />
           {trips.data && !filtered.length && <p className="px-5 py-10 text-center text-muted">{trips.data.trips.length ? "No trips match your filters." : `No ${when} trips.`}</p>}
           {filtered.length > 0 && (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
               <table className="w-full min-w-[720px] text-left text-[15px]">
                 <thead className="border-b border-border bg-ground text-xs font-semibold text-muted uppercase">
                   <tr>

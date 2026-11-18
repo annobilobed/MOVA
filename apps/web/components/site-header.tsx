@@ -80,7 +80,7 @@ export function SiteHeader({ overHero = false }: { overHero?: boolean }) {
             ))}
         </div>
         <button
-          className={clsx("grid size-10 place-items-center rounded-xl md:hidden", light ? "text-white" : "text-fg")}
+          className={clsx("grid size-11 place-items-center rounded-xl md:hidden", light ? "text-white" : "text-fg")}
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}

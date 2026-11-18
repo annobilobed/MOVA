@@ -35,7 +35,7 @@ export default function ProfilePage() {
         <ThemeSwitcher />
       </Card>
       <p className="mt-6 text-sm text-muted">To change your details or password, contact support. Self-service editing and password reset are coming later.</p>
-      <button onClick={signOut} className="mt-6 rounded-lg text-sm font-semibold text-danger hover:underline">Sign out</button>
+      <button onClick={signOut} className="mt-6 inline-flex min-h-11 items-center rounded-lg px-1 text-sm font-semibold text-danger hover:underline">Sign out</button>
     </div>
   );
 }

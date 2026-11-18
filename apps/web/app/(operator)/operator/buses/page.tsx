@@ -45,12 +45,12 @@ export default function OperatorBuses() {
   return (
     <div className="container-page py-8 sm:py-10">
       <PageHeader title="Buses" description="Each bus gets the standard coach layout for its capacity (rows of 2 + 2 with a back row of 5)." />
-      <div className="grid items-start gap-8 2xl:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-8 2xl:grid-cols-[minmax(0,1fr)_340px]">
         <Card as="section" className="overflow-hidden">
           <LoadState loading={buses.loading} error={buses.error} reload={buses.reload} label="Loading buses…" />
           {buses.data && !buses.data.buses.length && <div className="p-5"><EmptyState icon={<Bus />} title="No buses yet">Add your first bus with the form.</EmptyState></div>}
           {buses.data && buses.data.buses.length > 0 && (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
               <table className="w-full min-w-[520px] text-left text-[15px]">
                 <thead className="border-b border-border bg-ground text-xs font-semibold text-muted uppercase">
                   <tr>

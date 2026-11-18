@@ -46,7 +46,7 @@ export function ThemeSwitcher({ compact = false }: { compact?: boolean }) {
           aria-checked={pref === id}
           onClick={() => choose(id)}
           title={label}
-          className="flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-1.5 text-sm text-muted transition-colors aria-checked:bg-accent aria-checked:text-white"
+          className="flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-1.5 text-sm text-muted transition-colors aria-checked:bg-accent-solid aria-checked:text-on-accent"
         >
           <Icon aria-hidden className="size-4" />
           {compact ? <span className="sr-only">{label}</span> : label}

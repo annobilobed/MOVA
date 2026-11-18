@@ -64,7 +64,7 @@ export function TripSearch({
         onClick={swap}
         aria-label="Swap origin and destination"
         className={clsx(
-          "z-10 grid size-10 place-items-center rounded-full border border-border bg-surface text-muted shadow-soft transition-colors hover:border-accent hover:text-accent-fg",
+          "z-10 grid size-11 place-items-center rounded-full border border-border bg-surface text-muted shadow-soft transition-colors hover:border-accent hover:text-accent-fg",
           bar ? "justify-self-center md:mb-1" : "absolute top-[3.1rem] left-1/2 hidden -translate-x-1/2 sm:grid",
         )}
       >

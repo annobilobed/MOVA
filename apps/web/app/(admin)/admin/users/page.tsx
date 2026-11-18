@@ -50,7 +50,7 @@ export default function AdminUsers() {
         </div>
         <LoadState loading={users.loading && !users.data} error={users.error} reload={users.reload} label="Loading users…" />
         {users.data && (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
             <table className="w-full min-w-[760px] text-left text-[15px]">
               <thead className="border-b border-border bg-ground text-xs font-semibold text-muted uppercase">
                 <tr>

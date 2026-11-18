@@ -8,7 +8,7 @@ import { api, ApiError } from "@/lib/api";
 import { roleHome } from "@/lib/format";
 import type { User } from "@/lib/types";
 import { useSession } from "./session";
-import { Alert, Button, Field } from "./ui";
+import { Alert, Button, Field, focusFirstInvalid } from "./ui";
 
 type Errors = Record<string, string | undefined>;
 
@@ -32,7 +32,7 @@ export function SignInForm() {
     if (!data.password) next.password = "Enter your password";
     setErrors(next);
     setFormError(null);
-    if (Object.keys(next).length) return;
+    if (Object.keys(next).length) return focusFirstInvalid(e.currentTarget);
     setLoading(true);
     try {
       const { user } = await api<{ user: User }>("/auth/login", { method: "POST", json: data });
@@ -46,12 +46,13 @@ export function SignInForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+      <p className="text-sm text-muted">Fields marked <span aria-hidden className="text-danger">*</span><span className="sr-only">with an asterisk</span> are required.</p>
       {formError && <Alert tone="error">{formError}</Alert>}
-      <Field label="Email address" name="email" type="email" autoComplete="email" icon={<Mail />} error={errors.email} />
-      <Field label="Password" name="password" type="password" autoComplete="current-password" icon={<Lock />} error={errors.password} />
+      <Field label="Email address" name="email" type="email" autoComplete="email" required icon={<Mail />} error={errors.email} />
+      <Field label="Password" name="password" type="password" autoComplete="current-password" required icon={<Lock />} error={errors.password} />
       <Button type="submit" size="lg" loading={loading} loadingText="Signing in…">Sign in</Button>
       <p className="text-center text-[15px] text-muted">
-        New to MOVA? <Link href={`/auth/register${params.get("next") ? `?next=${encodeURIComponent(params.get("next")!)}` : ""}`} className="font-semibold text-accent-fg hover:underline">Create a student account</Link>
+        New to MOVA? <Link href={`/auth/register${params.get("next") ? `?next=${encodeURIComponent(params.get("next")!)}` : ""}`} className="inline-block py-1 font-semibold text-accent-fg hover:underline">Create a student account</Link>
       </p>
       <p className="text-center text-sm text-muted">Forgot your password? Password reset isn't available yet — contact support from the Help page.</p>
     </form>
@@ -77,7 +78,7 @@ export function RegisterForm() {
     if ((data.password ?? "").length < 8) next.password = "Use at least 8 characters";
     setErrors(next);
     setFormError(null);
-    if (Object.keys(next).length) return;
+    if (Object.keys(next).length) return focusFirstInvalid(e.currentTarget);
     setLoading(true);
     try {
       await api("/auth/register", { method: "POST", json: data });
@@ -86,6 +87,7 @@ export function RegisterForm() {
     } catch (err) {
       if (err instanceof ApiError && err.fields) {
         setErrors(Object.fromEntries(Object.entries(err.fields).map(([k, v]) => [k, v?.[0]])));
+        focusFirstInvalid();
       }
       setFormError(err instanceof ApiError ? err.message : "Something went wrong. Please try again.");
       setLoading(false);
@@ -94,17 +96,18 @@ export function RegisterForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+      <p className="text-sm text-muted">Fields marked <span aria-hidden className="text-danger">*</span><span className="sr-only">with an asterisk</span> are required.</p>
       {formError && <Alert tone="error">{formError}</Alert>}
-      <Field label="Full name" name="fullName" autoComplete="name" icon={<UserIcon />} error={errors.fullName} />
-      <Field label="Email address" name="email" type="email" autoComplete="email" icon={<Mail />} error={errors.email} />
+      <Field label="Full name" name="fullName" autoComplete="name" required icon={<UserIcon />} error={errors.fullName} />
+      <Field label="Email address" name="email" type="email" autoComplete="email" required icon={<Mail />} error={errors.email} />
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Phone number" name="phone" type="tel" inputMode="tel" autoComplete="tel" icon={<Phone />} error={errors.phone} helper="Ghana number" />
-        <Field label="UCC student ID" name="studentId" icon={<IdCard />} error={errors.studentId} helper="As on your student card" />
+        <Field label="Phone number" name="phone" type="tel" inputMode="tel" autoComplete="tel" required icon={<Phone />} error={errors.phone} helper="Ghana number" />
+        <Field label="UCC student ID" name="studentId" required icon={<IdCard />} error={errors.studentId} helper="As on your student card" />
       </div>
-      <Field label="Password" name="password" type="password" autoComplete="new-password" icon={<Lock />} error={errors.password} helper="At least 8 characters" />
+      <Field label="Password" name="password" type="password" autoComplete="new-password" required icon={<Lock />} error={errors.password} helper="At least 8 characters" />
       <Button type="submit" size="lg" loading={loading} loadingText="Creating account…">Create account</Button>
       <p className="text-center text-[15px] text-muted">
-        Already have an account? <Link href="/auth/sign-in" className="font-semibold text-accent-fg hover:underline">Sign in</Link>
+        Already have an account? <Link href="/auth/sign-in" className="inline-block py-1 font-semibold text-accent-fg hover:underline">Sign in</Link>
       </p>
       <p className="text-center text-xs text-muted">By creating an account you agree to the <Link href="/terms" className="underline">Terms of travel</Link> and <Link href="/privacy" className="underline">Privacy notice</Link>.</p>
     </form>

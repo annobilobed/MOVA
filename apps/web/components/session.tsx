@@ -19,7 +19,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
 
   const refresh = useCallback(async () => {
     try {
-      const { user } = await api<{ user: User }>("/auth/me");
+      const { user } = await api<{ user: User | null }>("/auth/me");
       setUser(user);
       return user;
     } catch (e) {

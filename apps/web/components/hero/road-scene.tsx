@@ -432,8 +432,10 @@ function Phase({ motion, onReady }: { motion: React.MutableRefObject<Motion>; on
 export default function RoadScene({ animate = true, onReady }: { animate?: boolean; onReady?: () => void }) {
   const motion = useRef<Motion>({ scroll: 0, speed: 1, animate, phase: 0.12 });
 
+  const invalidate = useRef<(() => void) | null>(null);
   useEffect(() => {
     motion.current.animate = animate;
+    invalidate.current?.();
     const onScroll = () => {
       const s = Math.min(1, window.scrollY / Math.max(1, window.innerHeight * 0.9));
       motion.current.scroll = s;
@@ -450,7 +452,7 @@ export default function RoadScene({ animate = true, onReady }: { animate?: boole
       camera={{ position: [3.2, 3.1, 12], fov: 40, near: 0.1, far: 400 }}
       gl={{ antialias: true, powerPreference: "high-performance" }}
       frameloop={animate ? "always" : "demand"}
-      onCreated={({ scene }) => { scene.fog = new THREE.Fog("#5b2e6b", 22, 105); }}
+      onCreated={({ scene, invalidate: inv }) => { scene.fog = new THREE.Fog("#5b2e6b", 22, 105); invalidate.current = inv; }}
       aria-hidden
     >
       <Phase motion={motion} onReady={onReady} />

@@ -136,7 +136,7 @@ export function TripBooking({ tripId }: { tripId: string }) {
 
   return (
     <div className="container-page py-6 sm:py-10">
-      <Link href="/trips" className="inline-flex items-center gap-1.5 rounded-lg text-sm font-semibold text-muted hover:text-fg">
+      <Link href="/trips" className="inline-flex min-h-11 items-center gap-1.5 rounded-lg text-sm font-semibold text-muted hover:text-fg">
         <ArrowLeft aria-hidden className="size-4" /> All trips
       </Link>
 
@@ -213,7 +213,7 @@ export function TripBooking({ tripId }: { tripId: string }) {
                 <Link href={`/auth/sign-in?next=${encodeURIComponent(`/trips/${tripId}`)}`} className={buttonClass("primary", "lg")}>Sign in to book</Link>
               )}
               {hold && !paying && (
-                <button onClick={releaseSeat} className="rounded-lg text-sm font-semibold text-muted hover:text-fg hover:underline">Release this seat</button>
+                <button onClick={releaseSeat} className="min-h-11 rounded-lg text-sm font-semibold text-muted hover:text-fg hover:underline">Release this seat</button>
               )}
               <p className="flex items-start gap-2 text-xs text-muted">
                 <Ticket aria-hidden className="mt-0.5 size-3.5 shrink-0" />

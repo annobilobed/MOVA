@@ -37,7 +37,7 @@ export default function Companies() {
   return (
     <div className="container-page py-8 sm:py-10">
       <PageHeader title="Transport operators" description="Companies that run MOVA trips. Operators only ever see their own company's data." />
-      <div className="grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-8 xl:grid-cols-[minmax(0,1fr)_360px]">
         <Card className="overflow-hidden">
           <LoadState loading={loading} error={error} reload={reload} label="Loading companies…" />
           {data && !data.companies.length && <div className="p-5"><EmptyState icon={<Building2 />} title="No companies yet" /></div>}
