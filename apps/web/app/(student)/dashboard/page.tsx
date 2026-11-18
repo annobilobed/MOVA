@@ -34,7 +34,7 @@ export default function Dashboard() {
           <section>
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-bold">Upcoming tickets</h2>
-              <Link href="/tickets" className="inline-flex items-center gap-1 rounded-lg text-sm font-semibold text-accent-fg hover:underline">All tickets <ArrowRight className="size-4" /></Link>
+              <Link href="/tickets" className="inline-flex min-h-11 items-center gap-1 rounded-lg text-sm font-semibold text-accent-fg hover:underline">All tickets <ArrowRight className="size-4" /></Link>
             </div>
             <LoadState loading={loading} error={error} reload={reload} label="Loading your tickets…" />
             {data && (upcoming.length ? (

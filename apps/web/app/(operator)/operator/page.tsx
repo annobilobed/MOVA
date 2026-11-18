@@ -40,7 +40,7 @@ export default function OperatorOverview() {
       <Card as="section" className="mt-8 overflow-hidden">
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <h2 className="text-lg font-bold">Next departures</h2>
-          <Link href="/operator/trips" className="inline-flex items-center gap-1 rounded-lg text-sm font-semibold text-accent-fg hover:underline">All trips <ArrowRight className="size-4" /></Link>
+          <Link href="/operator/trips" className="inline-flex min-h-11 items-center gap-1 rounded-lg text-sm font-semibold text-accent-fg hover:underline">All trips <ArrowRight className="size-4" /></Link>
         </div>
         <LoadState loading={trips.loading} error={trips.error} reload={trips.reload} label="Loading trips…" />
         {trips.data && !soon.length && <p className="px-5 py-8 text-center text-muted">No upcoming departures. Create a trip to get started.</p>}

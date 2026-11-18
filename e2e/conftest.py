@@ -46,6 +46,7 @@ def sign_in(page, email):
     page.fill("input[name=email]", email)
     page.fill("input[name=password]", DEMO_PASSWORD)
     page.click("button[type=submit]")
+    page.wait_for_url(lambda url: "/auth/sign-in" not in url, timeout=20000)
     page.wait_for_load_state("networkidle")
 
 

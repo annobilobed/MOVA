@@ -10,7 +10,7 @@ def register(page, email):
     page.fill("input[name=fullName]", "Esi Test")
     page.fill("input[name=email]", email)
     page.fill("input[name=phone]", "024 555 7788")
-    page.fill("input[name=studentId]", "PS/E2E/" + email[-8:])
+    page.fill("input[name=studentId]", "PS/E2E/" + email.split("@")[0][-10:])
     page.fill("input[name=password]", "strongpass1")
     page.click("button[type=submit]")
     page.wait_for_url("**/dashboard")

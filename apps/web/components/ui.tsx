@@ -79,7 +79,7 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(function Field({ l
             aria-label={show ? "Hide password" : "Show password"}
             aria-pressed={show}
             aria-controls={inputId}
-            className="absolute top-1/2 right-1 grid size-10 -translate-y-1/2 place-items-center rounded-lg text-muted hover:text-fg"
+            className="absolute top-1/2 right-0.5 grid size-11 -translate-y-1/2 place-items-center rounded-lg text-muted hover:text-fg"
           >
             {show ? <EyeOff aria-hidden className="size-4.5" /> : <Eye aria-hidden className="size-4.5" />}
           </button>
@@ -189,7 +189,7 @@ export function EmptyState({ icon, title, children, action }: { icon: React.Reac
   return (
     <div className="flex flex-col items-center rounded-[var(--radius-card)] border border-dashed border-border bg-surface px-6 py-12 text-center">
       <div aria-hidden className="mb-4 grid size-14 place-items-center rounded-2xl bg-info-bg text-accent-fg [&_svg]:size-6">{icon}</div>
-      <h3 className="text-lg font-bold">{title}</h3>
+      <h2 className="text-lg font-bold">{title}</h2>
       {children && <p className="mt-1.5 max-w-sm text-[15px] text-muted">{children}</p>}
       {action && <div className="mt-5">{action}</div>}
     </div>

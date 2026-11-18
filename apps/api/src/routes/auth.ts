@@ -11,7 +11,7 @@ export const auth = Router();
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: config.isTest ? 1000 : 20,
+  limit: config.isProd ? 20 : 1000, // strict in production; relaxed for local development and automated tests
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: { code: "rate_limited", message: "Too many attempts. Please wait a few minutes and try again." } },
