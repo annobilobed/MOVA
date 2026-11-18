@@ -45,7 +45,7 @@ export default function OperatorBuses() {
   return (
     <div className="container-page py-8 sm:py-10">
       <PageHeader title="Buses" description="Each bus gets the standard coach layout for its capacity (rows of 2 + 2 with a back row of 5)." />
-      <div className="grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="grid items-start gap-8 2xl:grid-cols-[minmax(0,1fr)_340px]">
         <Card as="section" className="overflow-hidden">
           <LoadState loading={buses.loading} error={buses.error} reload={buses.reload} label="Loading buses…" />
           {buses.data && !buses.data.buses.length && <div className="p-5"><EmptyState icon={<Bus />} title="No buses yet">Add your first bus with the form.</EmptyState></div>}
@@ -72,7 +72,7 @@ export default function OperatorBuses() {
             </div>
           )}
         </Card>
-        <Card as="section" className="p-5 xl:sticky xl:top-8">
+        <Card as="section" className="p-5 2xl:sticky 2xl:top-8">
           <h2 className="flex items-center gap-2 text-lg font-bold"><Plus aria-hidden className="size-5 text-route" /> Add a bus</h2>
           <form onSubmit={submit} noValidate className="mt-5 flex flex-col gap-4">
             {msg && <Alert tone={msg.tone}>{msg.text}</Alert>}

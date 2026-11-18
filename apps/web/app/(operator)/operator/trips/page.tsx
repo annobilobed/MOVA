@@ -42,7 +42,7 @@ export default function OperatorTrips() {
     <div className="container-page py-8 sm:py-10">
       <PageHeader title="Trips" description="Create departures and open passenger manifests." />
 
-      <div className="grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="grid items-start gap-8 2xl:grid-cols-[minmax(0,1fr)_340px]">
         <Card as="section" className="overflow-hidden">
           <div className="flex flex-col gap-3 border-b border-border p-4 sm:flex-row sm:items-center">
             <div role="tablist" aria-label="Trip period" className="inline-flex rounded-xl bg-ground p-1">
@@ -144,7 +144,7 @@ function NewTripForm({ buses, busesLoading, onCreated }: { buses: BusRow[]; buse
   }
 
   return (
-    <Card as="section" className="p-5 xl:sticky xl:top-8">
+    <Card as="section" className="p-5 2xl:sticky 2xl:top-8">
       <h2 id="new" className="flex scroll-mt-24 items-center gap-2 text-lg font-bold"><Plus aria-hidden className="size-5 text-route" /> New trip</h2>
       <form onSubmit={submit} noValidate className="mt-5 flex flex-col gap-4">
         {msg && <Alert tone={msg.tone}>{msg.text}</Alert>}

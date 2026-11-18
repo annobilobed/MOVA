@@ -202,7 +202,7 @@ function Coach({ motion }: { motion: React.MutableRefObject<Motion> }) {
       {/* light pool the headlights throw on the road ahead */}
       <mesh position={[6.2, -0.28, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[8.5, 3.4]} />
-        <meshBasicMaterial map={beamPool} transparent depthWrite={false} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial map={beamPool} color="#ffcf8a" transparent opacity={0.95} depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
       </mesh>
       {[0.38, -0.38].map((z) => (
         <mesh key={z} position={[-2.152, 0.42, z]}>
@@ -394,10 +394,17 @@ function Rig({ motion }: { motion: React.MutableRefObject<Motion> }) {
   const look = useMemo(() => new THREE.Vector3(), []);
   useFrame(() => {
     const s = THREE.MathUtils.clamp(motion.current.scroll, 0, 1);
+    const cam = camera as THREE.PerspectiveCamera;
+    if (size.width >= size.height) {
+      // Shift the whole picture right on wide screens so the coach always clears the copy and search panel.
+      if (cam.view?.offsetX !== -size.width * 0.16) cam.setViewOffset(size.width, size.height, -size.width * 0.16, 0, size.width, size.height);
+    } else if (cam.view) {
+      cam.clearViewOffset();
+    }
     if (size.width < size.height) {
       // Phones: a high view straight down the road, so the coach sits in the open band between the copy and the search.
       camera.position.lerp(new THREE.Vector3(-1.6 + pointer.x * 0.4 + s * 2, 4.6 - s * 1.5, 17 - s * 3), 0.06);
-      look.lerp(new THREE.Vector3(-1.6, -0.5 + s, 3.5 - s), 0.08);
+      look.lerp(new THREE.Vector3(-1.6, 0.7 + s, 3.5 - s), 0.08);
       camera.lookAt(look);
       return;
     }
@@ -407,7 +414,7 @@ function Rig({ motion }: { motion: React.MutableRefObject<Motion> }) {
     const tz = 2 + Math.cos(a) * r;
     const ty = THREE.MathUtils.lerp(3.4, 2.4, s) + pointer.y * 0.5;
     camera.position.lerp(new THREE.Vector3(tx, ty, tz), 0.06);
-    look.lerp(new THREE.Vector3(-11 + s * 7.5, 1.4, -4 + s * 4), 0.08);
+    look.lerp(new THREE.Vector3(-9 + s * 6, 1.4, -4 + s * 4), 0.08);
     camera.lookAt(look);
   });
   return null;
