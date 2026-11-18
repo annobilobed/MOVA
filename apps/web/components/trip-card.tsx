@@ -27,7 +27,7 @@ export function TripCard({ trip }: { trip: Trip }) {
             <p className="text-[15px] text-muted"><span className="sr-only">From </span>{trip.origin}</p>
             <span aria-hidden className="mt-1.5 size-3 rounded-full bg-route" />
             <h3 className="font-display text-lg leading-snug font-bold">
-              <Link href={`/trips/${trip.id}`} className="rounded-sm after:absolute after:inset-0 after:rounded-[var(--radius-card)]">
+              <Link prefetch={false} href={`/trips/${trip.id}`} className="rounded-sm after:absolute after:inset-0 after:rounded-[var(--radius-card)]">
                 <span className="sr-only">To </span>{trip.destination}
               </Link>
             </h3>

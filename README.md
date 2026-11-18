@@ -81,10 +81,18 @@ Business rules enforced on the server: amounts calculated server-side (GHS, sent
 ## Tests
 
 ```bash
-pnpm --filter @mova/api test     # 24 API tests against a real Postgres + Redis (mova_test DB)
+pnpm --filter @mova/api test     # 24 API tests
+pip install playwright pytest axe-playwright-python
+e2e/run.sh                       # 28 browser tests (starts the servers if needed)
+scripts/dev-up.sh                # start Postgres, Redis, API and website locally against a real Postgres + Redis (mova_test DB)
 ```
 
 They cover the spec's acceptance criteria: registration/login/duplicate email, trip discovery and filters, seat layout vs capacity, 10-minute locks, server-side amounts and tampering, double booking → refund, webhook signature and idempotency, ticket validation (valid / repeat / wrong bus), operator scoping, role security and audited role changes.
+
+## Quality reports
+
+- `docs/AUDIT.md`: accessibility, performance, theming and responsive audit with scores
+- `docs/MOVA-Documentation.pdf`: full project documentation
 
 ## Not built yet (shown honestly in the UI)
 

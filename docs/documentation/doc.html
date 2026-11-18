@@ -4,21 +4,21 @@
 <meta charset="utf-8">
 <title>MOVA — Project Documentation</title>
 <style>
-@font-face { font-family: "Jakarta"; src: url("../../apps/web/node_modules/@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2") format("woff2"); font-weight: 200 800; }
+@font-face { font-family: "Overpass"; src: url("../../apps/web/node_modules/@fontsource-variable/overpass/files/overpass-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
 @font-face { font-family: "InterV"; src: url("../../apps/web/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
 @page { size: A4; margin: 14mm 15mm 17mm; }
 @page :first { margin: 0; }
-:root { --el:#493bff; --vi:#8655ff; --aq:#12d6c5; --aqi:#0a7f75; --ink:#171936; --mut:#565b78; --line:#e5e7f2; --mist:#f5f5ff; --coral:#c4283b; --sun:#8a5a00; }
+:root { --el:#8a4b00; --vi:#5b2e6b; --aq:#ffb547; --aqi:#9a5b00; --ink:#171936; --mut:#565b78; --line:#e5e7f2; --mist:#f5f5ff; --coral:#c4283b; --sun:#8a5a00; }
 * { box-sizing: border-box; }
 body { margin: 0; font: 9.4pt/1.5 "InterV", system-ui, sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-h1, h2, h3, h4 { font-family: "Jakarta", "InterV", sans-serif; letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
+h1, h2, h3, h4 { font-family: "Overpass", "InterV", sans-serif; letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
 h1 { font-size: 24pt; font-weight: 800; margin: 0 0 4mm; }
 h2 { font-size: 13pt; font-weight: 800; margin: 5.5mm 0 2mm; }
 h3 { font-size: 11pt; font-weight: 700; margin: 5mm 0 1.5mm; }
 p { margin: 0 0 2.5mm; }
 .lead { font-size: 10.8pt; color: var(--mut); max-width: 150mm; }
 .chapter { page-break-before: always; }
-.kicker-num { font-family: "Jakarta"; font-weight: 800; color: var(--aqi); font-size: 11pt; margin-bottom: 2mm; display: flex; align-items: center; gap: 3mm; }
+.kicker-num { font-family: "Overpass"; font-weight: 800; color: var(--aqi); font-size: 11pt; margin-bottom: 2mm; display: flex; align-items: center; gap: 3mm; }
 .kicker-num::after { content: ""; flex: 1; height: 0; border-top: 2px dashed var(--aq); }
 table { width: 100%; border-collapse: collapse; margin: 2mm 0 3.5mm; font-size: 8.4pt; page-break-inside: auto; }
 th { text-align: left; background: var(--mist); color: var(--mut); font-weight: 600; font-size: 7.8pt; padding: 2mm 2.5mm; border-bottom: 1px solid var(--line); }
@@ -48,20 +48,20 @@ figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
 .swatch b { display: block; font-size: 8.8pt; } .swatch span { font-size: 7.8pt; color: var(--mut); }
 .toc { columns: 2; column-gap: 10mm; font-size: 10pt; padding: 0; list-style: none; }
 .toc li { display: flex; gap: 3mm; padding: 1.6mm 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
-.toc li span:first-child { font-family: "Jakarta"; font-weight: 800; color: var(--aqi); width: 7mm; }
+.toc li span:first-child { font-family: "Overpass"; font-weight: 800; color: var(--aqi); width: 7mm; }
 /* Cover */
-.cover { height: 297mm; position: relative; overflow: hidden; color: #fff; background: linear-gradient(120deg, #493bff 0%, #5a3dff 30%, #8655ff 100%); padding: 26mm 20mm; display: flex; flex-direction: column; }
-.cover .glow { position: absolute; width: 170mm; height: 170mm; right: -50mm; top: -40mm; border-radius: 50%; background: radial-gradient(circle, rgba(18,214,197,.35), transparent 62%); }
+.cover { height: 297mm; position: relative; overflow: hidden; color: #fff; background: linear-gradient(180deg, #0b1026 0%, #2a1d4f 45%, #b4506a 78%, #f0803c 100%); padding: 26mm 20mm; display: flex; flex-direction: column; }
+.cover .glow { position: absolute; width: 170mm; height: 170mm; right: -50mm; top: -40mm; border-radius: 50%; background: radial-gradient(circle, rgba(255,181,71,.30), transparent 62%); }
 .cover h1 { font-size: 46pt; line-height: 1; margin: 22mm 0 6mm; position: relative; }
 .cover .sub { font-size: 15pt; color: rgba(255,255,255,.88); max-width: 130mm; position: relative; }
 .cover .route { position: relative; margin-top: 14mm; }
 .cover .meta { margin-top: auto; position: relative; display: grid; grid-template-columns: repeat(3, auto); gap: 4mm 14mm; font-size: 9.5pt; justify-content: start; }
 .cover .meta span { display: block; color: rgba(255,255,255,.7); font-size: 8pt; }
-.logo { display: flex; align-items: center; gap: 3mm; font-family: "Jakarta"; font-weight: 800; font-size: 18pt; position: relative; }
+.logo { display: flex; align-items: center; gap: 3mm; font-family: "Overpass"; font-weight: 800; font-size: 18pt; position: relative; }
 .flow { display: flex; align-items: stretch; gap: 0; margin: 4mm 0 5mm; }
 .flow div { flex: 1; text-align: center; font-size: 8pt; padding: 3mm 1.5mm; border: 1px solid var(--line); border-right: 0; position: relative; background: #fff; }
 .flow div:last-child { border-right: 1px solid var(--line); }
-.flow div b { display: block; font-family: "Jakarta"; font-size: 9.5pt; color: var(--el); }
+.flow div b { display: block; font-family: "Overpass"; font-size: 9.5pt; color: var(--el); }
 </style>
 </head>
 <body>
@@ -70,15 +70,15 @@ figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
 <section class="cover">
   <div class="glow"></div>
   <div class="logo">
-    <svg viewBox="0 0 40 40" width="36" height="36"><rect width="40" height="40" rx="11" fill="#fff" fill-opacity=".16"/><path d="M10 28V14.5a2.5 2.5 0 0 1 4.6-1.4L20 21l5.4-7.9a2.5 2.5 0 0 1 4.6 1.4V24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="30" cy="28.5" r="3.2" fill="#12D6C5"/></svg>
+    <svg viewBox="0 0 40 40" width="36" height="36"><rect width="40" height="40" rx="11" fill="#fff" fill-opacity=".16"/><path d="M10 28V14.5a2.5 2.5 0 0 1 4.6-1.4L20 21l5.4-7.9a2.5 2.5 0 0 1 4.6 1.4V24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="30" cy="28.5" r="3.2" fill="#ffb547"/></svg>
     MOVA
   </div>
   <h1>Project Documentation</h1>
   <p class="sub">MOVA — the UCC Student Transit System. Seat booking, Paystack payments, QR tickets, driver ticket scanning and an operator portal.</p>
-  <svg class="route" viewBox="0 0 500 60" width="150mm"><path d="M8 40 C 110 8, 190 52, 290 28 S 440 10, 492 22" fill="none" stroke="#12D6C5" stroke-width="4" stroke-dasharray="12 10" stroke-linecap="round"/><circle cx="8" cy="40" r="7" fill="none" stroke="#12D6C5" stroke-width="4"/><circle cx="492" cy="22" r="8" fill="#12D6C5"/></svg>
+  <svg class="route" viewBox="0 0 500 60" width="150mm"><path d="M8 40 C 110 8, 190 52, 290 28 S 440 10, 492 22" fill="none" stroke="#ffb547" stroke-width="4" stroke-dasharray="12 10" stroke-linecap="round"/><circle cx="8" cy="40" r="7" fill="none" stroke="#ffb547" stroke-width="4"/><circle cx="492" cy="22" r="8" fill="#ffb547"/></svg>
   <div class="meta">
-    <div><span>Version</span>First build (release 1 candidate)</div>
-    <div><span>Date</span>17 November 2026</div>
+    <div><span>Version</span>Night-ride redesign (release 1 candidate)</div>
+    <div><span>Date</span>18 November 2026</div>
     <div><span>Repository</span>github.com/annobilobed/MOVA</div>
     <div><span>Source specification</span>MOVA Complete Website Design and Implementation Specification</div>
     <div><span>Status</span>Built and tested; not yet deployed</div>
@@ -131,7 +131,8 @@ figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
     <tr><td>Web pages / routes</td><td>24</td></tr>
     <tr><td>API endpoints</td><td>35</td></tr>
     <tr><td>Database tables</td><td>8 (plus migration tracking)</td></tr>
-    <tr><td>Automated API tests</td><td>18, all passing</td></tr>
+    <tr><td>Automated API tests</td><td>24, all passing</td></tr>
+    <tr><td>Browser tests</td><td>28, all passing</td></tr>
     <tr><td>Seat hold duration</td><td>10 minutes, held by the server in Redis</td></tr>
     <tr><td>Default bus layout</td><td>49 seats: 11 rows of 2 + aisle + 2, then a back row of 5</td></tr>
     <tr><td>Currency</td><td>Ghana cedis (GHS); Paystack receives pesewas (GHS × 100)</td></tr>
@@ -381,6 +382,20 @@ figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
     <tr><td>SEC-11 Safe errors</td><td>Generic messages; no stack traces, SQL or secrets in responses</td></tr>
     <tr><td>Headers</td><td>helmet on the API; nosniff, Referrer-Policy, X-Frame-Options DENY and Permissions-Policy on the website</td></tr>
   </table>
+  <h3>Abuse and failure protections</h3>
+  <table>
+    <tr><th style="width:38%">Loophole</th><th>Protection</th></tr>
+    <tr><td>Endless seat holds by re-selecting</td><td>A hold always ends 10 minutes after it started</td></tr>
+    <tr><td>Hoarding seats across trips</td><td>At most 2 trips with holds at once; at most 4 new holds per trip per hour</td></tr>
+    <tr><td>Many accounts per student</td><td>One account per UCC student ID</td></tr>
+    <tr><td>Slow mobile money approval</td><td>One 5-minute hold extension when payment starts</td></tr>
+    <tr><td>Payment after departure or cancellation</td><td>Never booked; refunded automatically</td></tr>
+    <tr><td>Trip cancelled by operator</td><td>All tickets cancelled, all payments (incl. luggage) refunded, reason shown, audited</td></tr>
+    <tr><td>Bus double-scheduled</td><td>Trips on the same bus at least 3 hours apart</td></tr>
+    <tr><td>Shared ticket screenshots</td><td>Single use; repeat scans warn; driver checks name, seat and student ID against the UCC ID card</td></tr>
+    <tr><td>Network drop at boarding</td><td>Driver passenger list stays on screen</td></tr>
+    <tr><td>Under-declared luggage</td><td>25 kg included (3 kg margin), extra bags per bag, top-ups until 2 h after departure, allowance shown on scan</td></tr>
+  </table>
   <div class="note warn"><b>Before a public launch</b>Add real Paystack keys and remove <code>ALLOW_TEST_PAYMENTS</code>; replace demo data; publish the approved privacy notice, terms and support contact; switch to paid hosting with daily database backups; run a security review.</div>
 </section>
 
@@ -419,37 +434,37 @@ figcaption { font-size: 8pt; color: var(--mut); margin-top: 1.5mm; }
 <!-- 11 -->
 <section class="chapter">
   <div class="kicker-num">11</div>
-  <h1>Design system</h1>
-  <p class="lead">Full reference in <code>DESIGN.md</code>. Tokens live in <code>apps/web/app/globals.css</code>; animated gradients in <code>apps/web/app/flow.css</code>.</p>
-  <h2>Colour</h2>
+  <h1>Design system: the night ride home</h1>
+  <p class="lead">MOVA is the overnight coach from campus, so the site is the highway at dusk turning into dawn. Full reference in <code>DESIGN.md</code>; tokens in <code>apps/web/app/globals.css</code>; animated gradients in <code>apps/web/app/flow.css</code>.</p>
+  <h2>Colour: the sky is the palette</h2>
   <div class="grid3">
-    <div class="swatch"><i style="background:#493bff"></i><div><b>Electric #493BFF</b><span>Primary actions, links, selected</span></div></div>
-    <div class="swatch"><i style="background:#8655ff"></i><div><b>Violet #8655FF</b><span>Gradient partner, highlights</span></div></div>
-    <div class="swatch"><i style="background:#12d6c5"></i><div><b>Aqua #12D6C5</b><span>Routes, available seats</span></div></div>
-    <div class="swatch"><i style="background:#ff6b79"></i><div><b>Coral #FF6B79</b><span>Held seats, low-seat warnings</span></div></div>
-    <div class="swatch"><i style="background:#ffd166"></i><div><b>Sun #FFD166</b><span>Demo badges, last 2 minutes of hold</span></div></div>
-    <div class="swatch"><i style="background:#f5f5ff"></i><div><b>Lavender Mist #F5F5FF</b><span>Page background</span></div></div>
-    <div class="swatch"><i style="background:#171936"></i><div><b>Ink #171936</b><span>Text, dark surfaces</span></div></div>
-    <div class="swatch"><i style="background:#626782"></i><div><b>Slate #626782</b><span>Secondary text</span></div></div>
-    <div class="swatch"><i style="background:#0a7f75"></i><div><b>Aqua Ink #0A7F75</b><span>Aqua as readable text</span></div></div>
+    <div class="swatch"><i style="background:#0b1026"></i><div><b>Night #0B1026</b><span>Dark ground, hero sky</span></div></div>
+    <div class="swatch"><i style="background:#2a1d4f"></i><div><b>Dusk #2A1D4F</b><span>Sky gradient, ticket header</span></div></div>
+    <div class="swatch"><i style="background:#5b2e6b"></i><div><b>Plum #5B2E6B</b><span>Sky gradient</span></div></div>
+    <div class="swatch"><i style="background:#f0803c"></i><div><b>Ember #F0803C</b><span>Horizon, sunrise band</span></div></div>
+    <div class="swatch"><i style="background:#ffc46b"></i><div><b>Dawn #FFC46B</b><span>Sunrise, last 2 min of hold</span></div></div>
+    <div class="swatch"><i style="background:#ffb547"></i><div><b>Headlight amber #FFB547</b><span>Every action and selection</span></div></div>
+    <div class="swatch"><i style="background:#3ddc97"></i><div><b>Signal green #3DDC97</b><span>Available, valid, confirmed only</span></div></div>
+    <div class="swatch"><i style="background:#ff5a67"></i><div><b>Tail-light red #FF5A67</b><span>Held by others, errors</span></div></div>
+    <div class="swatch"><i style="background:#eef1f8"></i><div><b>Morning haze #EEF1F8</b><span>Light ground</span></div></div>
   </div>
   <h2>Type, shape and motion</h2>
   <table>
-    <tr><td style="width:25%"><b>Headings</b></td><td>Plus Jakarta Sans, 700–800, tight tracking</td></tr>
+    <tr><td style="width:25%"><b>Headings</b></td><td>Overpass (highway-sign lettering), 800–900, tight tracking</td></tr>
     <tr><td><b>Body and UI</b></td><td>Inter, 15–16 px; tabular numerals for times, fares and seats</td></tr>
-    <tr><td><b>Times</b></td><td>12-hour with AM/PM (e.g. 6:00 AM), Africa/Accra time zone</td></tr>
-    <tr><td><b>Corners</b></td><td>Seats 10 px · controls 12 px · cards 18 px · ticket 24 px · panels 28–32 px</td></tr>
-    <tr><td><b>Depth</b></td><td>Soft shadow at rest, Lift (electric-tinted) on hover, Float for objects over colour</td></tr>
-    <tr><td><b>Motion</b></td><td>One easing curve (expo ease-out); 150–550 ms interactions; reduced-motion respected</td></tr>
-    <tr><td><b>Animated gradients</b></td><td>Brand fields slowly flow through Electric/Violet shades (22–26 s loops) with drifting aqua glows; a faint 60 s colour wash behind the page</td></tr>
-    <tr><td><b>Signature</b></td><td>The aqua route line: hero ribbon, trip cards, seat-hold timer, ticket, route panels, how-it-works</td></tr>
-    <tr><td><b>Themes</b></td><td>Light and dark, following the device or chosen by the user</td></tr>
+    <tr><td><b>Times</b></td><td>12-hour with AM/PM, Africa/Accra</td></tr>
+    <tr><td><b>Corners</b></td><td>Seats 10 · controls 12 · cards 20 · hero panel and ticket 24 · panels 28–32 px</td></tr>
+    <tr><td><b>Signature</b></td><td>Lane paint and glowing road studs as dividers and progress: how-it-works rail with a travelling stud, route spines, the seat-hold lane bar, trust-strip separators</td></tr>
+    <tr><td><b>3D landing</b></td><td>React Three Fiber highway: a coach drives toward the viewer with headlights and a light pool on the road, studs, street lights and palms stream past, stars over a sky cycling dusk → night → dawn every ~90 s. Scroll swings the camera and speeds the bus; the pointer shifts the view; a Pause motion button stops it.</td></tr>
+    <tr><td><b>Animated gradients</b></td><td>A 120 s dusk-to-dawn sky strip (static hero, sign-in panel), a 40 s ember closing band, a sunrise seam under the hero, and a faint 60 s colour wash behind the page</td></tr>
+    <tr><td><b>Slow networks</b></td><td>3D is skipped on Save-Data, 2G/3G and low-memory devices; they get an animated SVG road with the same sky</td></tr>
+    <tr><td><b>Themes</b></td><td>Light = morning, dark = night; follows the device or the user's choice</td></tr>
   </table>
   <h2>Honest data rules</h2>
   <ul>
-    <li>Every seeded trip, company and plate carries a "Demo data" badge.</li>
+    <li>Every seeded trip, company and plate carries a "Demo data" badge, including the hero's "Leaving soon" chips.</li>
     <li>Dashboard numbers come only from real data; unknown values show "—".</li>
-    <li>No GPS, SMS, cancellation or password-reset features are promised before they exist.</li>
+    <li>No GPS, SMS, cancellation self-service or password-reset features are promised before they exist.</li>
   </ul>
 </section>
 
@@ -511,7 +526,7 @@ pnpm dev                                   # API on :4000, website on :3000</pre
 <section class="chapter">
   <div class="kicker-num">15</div>
   <h1>Testing</h1>
-  <h2>Automated API tests — 18 passing</h2>
+  <h2>Automated API tests — 24 passing</h2>
   <table>
     <tr><th style="width:22%">Area</th><th>Test</th></tr>
     <tr><td>Accounts</td><td>Registers, logs out and logs back in; rejects duplicate email</td></tr>
@@ -532,11 +547,15 @@ pnpm dev                                   # API on :4000, website on :3000</pre
     <tr><td>Admin</td><td>Super admin can change roles, with audit log entry</td></tr>
     <tr><td>Luggage</td><td>Student adds luggage after paying and is charged only the difference; no downgrades; others' tickets refused</td></tr>
     <tr><td>Luggage</td><td>Driver sees the luggage allowance on scan</td></tr>
+    <tr><td>Loopholes</td><td>No hold extension by re-selecting; holds limited to two trips; one account per student ID; bus double-scheduling refused; trip cancellation refunds paid and late payments; driver passenger list and student ID</td></tr>
   </table>
-  <h2>End-to-end browser run — 19 steps passing</h2>
+  <h2>Browser test suite — 28 passing</h2>
+  <p>Python Playwright tests in <code>e2e/</code> (run with <code>e2e/run.sh</code>): home and 3D controls (pause, reduced motion), search, filters, empty state, dark theme, no horizontal scroll at 375 px and landscape, registration validation and focus, booking with seat hold, test payment, QR ticket and luggage top-up, failed payment, driver scan (valid, repeat warning, invalid) and passenger list, operator create and cancel trip, manifest, admin users, role protection, and axe-core WCAG 2.2 AA checks on public pages (light and dark) and signed-in screens.</p>
+  <h2>Earlier end-to-end run</h2>
   <p>Registration validation → sign-up → dashboard → search → empty state → seat map → seat hold with countdown → test checkout → booking confirmed with QR → My tickets → driver trips → valid scan → repeat scan rejected → operator overview → operator trips → manifest with the new passenger → admin overview → admin users → role guard → dark mode. No page errors.</p>
   <h2>Other checks</h2>
   <ul>
+    <li>Quality audit (docs/AUDIT.md): accessibility 4/4, performance 3/4, theming 4/4, responsive 4/4, anti-patterns 4/4.</li>
     <li>Production build passes; the 3D scene loads separately from the home page's first load (about 170 kB).</li>
     <li>Design review by an independent reviewer (two rounds) with all material fixes applied; design detector clean.</li>
     <li>Render start-up steps tested locally in production mode.</li>

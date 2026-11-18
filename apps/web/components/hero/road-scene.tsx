@@ -1,6 +1,5 @@
 "use client";
 
-import { Stars } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
@@ -50,6 +49,19 @@ function Sky({ motion }: { motion: React.MutableRefObject<Motion> }) {
   );
   const { scene } = useThree();
   const starsRef = useRef<THREE.Points>(null);
+  // A dome of stars above the horizon (no extra library).
+  const starGeo = useMemo(() => {
+    const n = 1400, p = new Float32Array(n * 3);
+    for (let i = 0; i < n; i++) {
+      const theta = Math.random() * Math.PI * 2, phi = Math.acos(0.15 + Math.random() * 0.85), r = 150;
+      p[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      p[i * 3 + 1] = r * Math.cos(phi);
+      p[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(p, 3));
+    return g;
+  }, []);
   useFrame(() => {
     const s = skyAt(motion.current.phase);
     mat.uniforms.top.value.copy(s.top);
@@ -63,7 +75,9 @@ function Sky({ motion }: { motion: React.MutableRefObject<Motion> }) {
       <mesh material={mat}>
         <sphereGeometry args={[180, 32, 16]} />
       </mesh>
-      <Stars ref={starsRef as never} radius={120} depth={30} count={1400} factor={3.5} saturation={0} fade speed={0.4} />
+      <points ref={starsRef} geometry={starGeo}>
+        <pointsMaterial color="#ffffff" size={0.55} sizeAttenuation transparent depthWrite={false} />
+      </points>
     </>
   );
 }

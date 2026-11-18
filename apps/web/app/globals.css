@@ -174,12 +174,14 @@
 @keyframes route-sweep { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  /* Decorative motion stops; state feedback stays: spinners keep turning (slower), state changes become instant. */
+  *:not(.animate-spin), *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .animate-spin { animation-duration: 1.6s !important; }
 }
 
 @media print {

@@ -60,7 +60,7 @@ export default async function Home() {
                   <ul className="mt-2 flex flex-wrap gap-2">
                     {trips.slice(0, 3).map((t) => (
                       <li key={t.id}>
-                        <Link href={`/trips/${t.id}`} className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/6 py-1.5 pr-3.5 pl-1.5 text-sm transition-colors hover:border-amber/60 hover:bg-white/10">
+                        <Link prefetch={false} href={`/trips/${t.id}`} className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/6 py-1.5 pr-3.5 pl-1.5 text-sm transition-colors hover:border-amber/60 hover:bg-white/10">
                           <span className="tabular rounded-full bg-amber px-2 py-0.5 text-xs font-bold text-on-accent">{formatTime(t.departureAt)}</span>
                           <span className="font-semibold">{t.destination}</span>
                           <span className="tabular text-white/60">{cedis(t.farePesewas)}</span>
