@@ -90,3 +90,15 @@ body::before {
   100% { transform: translateY(9px); opacity: 0; }
 }
 .mova-cue { animation: mova-cue 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+
+/* Static hero (3G, data saver, no WebGL): the coach still rolls toward you and the lane still runs. */
+@keyframes rf-lane { to { stroke-dashoffset: -42; } }
+@keyframes rf-approach {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-6px, 10px) scale(1.06); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+.rf-lane { animation: rf-lane 0.9s linear infinite; }
+.rf-coach { transform-box: fill-box; transform-origin: 50% 100%; animation: rf-approach 7s ease-in-out infinite; }
+.rf-beam { animation: rf-beam 3.5s ease-in-out infinite; }
+@keyframes rf-beam { 50% { opacity: 0.9; } }

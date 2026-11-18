@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { TripCard } from "@/components/trip-card";
 import { TripSearch } from "@/components/trip-search";
-import { EmptyState } from "@/components/ui";
+import { DemoBadge, EmptyState } from "@/components/ui";
 import { buttonClass } from "@/lib/styles";
 import { serverApi } from "@/lib/api";
 import { cedis, formatDateTime, formatTime } from "@/lib/format";
@@ -39,7 +39,7 @@ export default async function Home() {
       <div className="relative isolate overflow-hidden bg-night text-white" data-theme="dark">
         <HeroVisual />
         {/* legibility scrim: night on the left where the words sit, open road on the right */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-[5] bg-[linear-gradient(90deg,rgba(11,16,38,0.92)_0%,rgba(11,16,38,0.72)_34%,rgba(11,16,38,0.15)_62%,transparent_80%)] max-lg:bg-[linear-gradient(180deg,rgba(11,16,38,0.88)_0%,rgba(11,16,38,0.6)_55%,rgba(11,16,38,0.2)_100%)]" />
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-[5] bg-[linear-gradient(90deg,rgba(11,16,38,0.92)_0%,rgba(11,16,38,0.72)_34%,rgba(11,16,38,0.15)_62%,transparent_80%)] max-lg:bg-[linear-gradient(180deg,rgba(11,16,38,0.9)_0%,rgba(11,16,38,0.55)_30%,rgba(11,16,38,0.05)_45%,rgba(11,16,38,0.05)_58%,rgba(11,16,38,0.7)_72%,rgba(11,16,38,0.9)_100%)]" />
         <SiteHeader overHero />
         <main id="main">
           <section className="container-page flex min-h-[min(92svh,860px)] flex-col justify-center pt-6 pb-10 lg:pb-16">
@@ -50,12 +50,13 @@ export default async function Home() {
               <p className="mt-5 max-w-md text-lg text-white/80">
                 The bus home from UCC, booked in minutes. Pick your exact seat, pay with mobile money or card, and board with a QR ticket on your phone.
               </p>
+              <div aria-hidden className="h-52 sm:h-0 lg:hidden" />
               <div className="mt-8 rounded-[24px] border border-white/10 bg-[#0e1330]/88 p-5 shadow-float backdrop-blur-sm sm:p-6">
                 <TripSearch defaultOrigin={defaultOrigin} />
               </div>
               {trips.length > 0 && (
                 <div className="mt-6">
-                  <p className="text-sm font-semibold text-white/70">Leaving soon</p>
+                  <p className="flex items-center gap-2 text-sm font-semibold text-white/70">Leaving soon {trips.some((t) => t.isDemo) && <DemoBadge />}</p>
                   <ul className="mt-2 flex flex-wrap gap-2">
                     {trips.slice(0, 3).map((t) => (
                       <li key={t.id}>
@@ -79,17 +80,17 @@ export default async function Home() {
       </div>
 
       {/* Sunrise: the night hero gives way to the morning page below. */}
-      <div aria-hidden className="h-20 bg-[linear-gradient(180deg,#0b1026_0%,#2a1d4f_30%,#b4506a_58%,#f0803c_78%,var(--ground)_100%)] dark:bg-[linear-gradient(180deg,#0b1026_0%,#2a1d4f_45%,#5b2e6b_70%,var(--ground)_100%)]" />
+      <div aria-hidden className="h-44 bg-[linear-gradient(180deg,#0b1026_0%,#2a1d4f_22%,#b4506a_42%,#f0803c_56%,#ffc46b_68%,var(--ground)_100%)] dark:bg-[linear-gradient(180deg,#0b1026_0%,#2a1d4f_40%,#5b2e6b_62%,var(--ground)_100%)]" />
 
       {/* Trust strip: only claims the service actually delivers. */}
-      <section aria-label="Why students book with MOVA" className="border-b border-border bg-surface">
-        <ul className="container-page grid divide-border py-2 sm:grid-cols-3 sm:divide-x">
+      <section aria-label="Why students book with MOVA">
+        <ul className="container-page grid py-2 sm:grid-cols-3">
           {[
             { Icon: Lock, title: "Your exact seat", body: "Held for you while you pay" },
             { Icon: CreditCard, title: "Secure payment", body: "Mobile money or card via Paystack" },
             { Icon: QrCode, title: "QR ticket", body: "On your phone, checked at boarding" },
           ].map(({ Icon, title, body }) => (
-            <li key={title} className="flex items-center gap-3.5 px-1 py-4 sm:px-6 first:sm:pl-0">
+            <li key={title} className="relative flex items-center gap-3.5 px-1 py-4 sm:px-6 first:sm:pl-0 sm:[&:not(:first-child)]:before:absolute sm:[&:not(:first-child)]:before:top-1/2 sm:[&:not(:first-child)]:before:left-0 sm:[&:not(:first-child)]:before:size-2 sm:[&:not(:first-child)]:before:-translate-y-1/2 sm:[&:not(:first-child)]:before:rounded-full sm:[&:not(:first-child)]:before:bg-amber sm:[&:not(:first-child)]:before:shadow-[0_0_10px_2px_rgba(255,181,71,0.55)] sm:[&:not(:first-child)]:before:content-['']">
               <Icon aria-hidden className="size-6 shrink-0 text-route" />
               <span>
                 <span className="block font-semibold">{title}</span>
@@ -141,7 +142,7 @@ export default async function Home() {
             <p className="mt-2 max-w-md text-white/75">Inter-regional coaches from campus to cities across Ghana. Book early to get the seat you want.</p>
             <RouteLine stops={regionalStops} from={regional?.trips[0]?.origin} tone="dark" />
             <TripFacts facts={regionalFacts} tone="dark" />
-            <span className="inline-flex items-center gap-1.5 pt-6 font-semibold text-aqua">Find inter-regional trips <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-1" /></span>
+            <span className="inline-flex items-center gap-1.5 pt-6 font-semibold text-amber">Find inter-regional trips <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-1" /></span>
           </Link>
           <Link href="/trips?type=campus_shuttle" className="group relative isolate flex flex-col overflow-hidden rounded-[28px] border border-border bg-surface p-8 sm:p-10">
             <h2 className="text-3xl font-extrabold">Getting around campus</h2>
@@ -187,7 +188,7 @@ export default async function Home() {
               <h2 className="text-3xl font-extrabold sm:text-[2.6rem] sm:leading-[1.1]">Your next trip starts with a seat.</h2>
               <p className="mt-3 text-lg text-white/90">Create a free account with your UCC student ID and book in minutes.</p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link href="/trips" className={buttonClass("light", "lg")}>Find available trips</Link>
+                <Link href="/trips" className={buttonClass("primary", "lg")}>Find available trips</Link>
                 <Link href="/auth/register" className={buttonClass("ghost-light", "lg")}>Create account</Link>
               </div>
             </div>

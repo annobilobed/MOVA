@@ -1,782 +1,323 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-17T13:10:09.525640+00:00",
-  "title": "Design System: MOVA",
+  "generatedAt": "2026-11-18T19:08:07.454638Z",
+  "title": "MOVA: the night ride home",
   "extensions": {
     "colorMeta": {
-      "electric": {
-        "role": "primary",
-        "displayName": "Electric",
-        "canonical": "#493bff",
-        "tonalRamp": [
-          "#100c40",
-          "#150e71",
-          "#170cac",
-          "#1403ec",
-          "#3f31f7",
-          "#7d74f1",
-          "#b5b0f2",
-          "#ecebfa"
-        ]
+      "night": {
+        "value": "#0b1026",
+        "purpose": "Dark ground; hero sky zenith."
       },
-      "electric-600": {
-        "role": "primary",
-        "displayName": "Electric 600 (hover)",
-        "canonical": "#3a2df0",
-        "tonalRamp": [
-          "#13103d",
-          "#1b156b",
-          "#2016a1",
-          "#2013dd",
-          "#493eea",
-          "#837ce9",
-          "#b9b5ed",
-          "#edecf9"
-        ]
+      "midnight": {
+        "value": "#151b3d",
+        "purpose": "Sky / semantic token"
       },
-      "electric-700": {
-        "role": "primary",
-        "displayName": "Electric 700 (press)",
-        "canonical": "#2f23c9",
-        "tonalRamp": [
-          "#161439",
-          "#221d63",
-          "#2c2394",
-          "#3226ca",
-          "#584eda",
-          "#8d86df",
-          "#bdbae8",
-          "#eeedf8"
-        ]
+      "dusk": {
+        "value": "#2a1d4f",
+        "purpose": "Sky / semantic token"
       },
-      "violet": {
-        "role": "primary",
-        "displayName": "Violet (field end)",
-        "canonical": "#8655ff",
-        "tonalRamp": [
-          "#1b0c40",
-          "#2b0e71",
-          "#3a0cac",
-          "#4603ec",
-          "#6a31f7",
-          "#9874f1",
-          "#c3b0f2",
-          "#efebfa"
-        ]
+      "plum": {
+        "value": "#5b2e6b",
+        "purpose": "Sky / semantic token"
       },
-      "aqua": {
-        "role": "secondary",
-        "displayName": "Route Aqua",
-        "canonical": "#12d6c5",
-        "tonalRamp": [
-          "#103c39",
-          "#166962",
-          "#18a094",
-          "#15dac9",
-          "#40e8d9",
-          "#7ee7de",
-          "#b5ede8",
-          "#ecf9f8"
-        ]
+      "rose": {
+        "value": "#b4506a",
+        "purpose": "Sky / semantic token"
       },
-      "aqua-ink": {
-        "role": "secondary",
-        "displayName": "Aqua Ink",
-        "canonical": "#0a7f75",
-        "tonalRamp": [
-          "#103d39",
-          "#166a63",
-          "#17a095",
-          "#14dbca",
-          "#3fe9da",
-          "#7de8df",
-          "#b5ede8",
-          "#ecf9f8"
-        ]
+      "ember": {
+        "value": "#f0803c",
+        "purpose": "Sky / semantic token"
       },
-      "coral": {
-        "role": "tertiary",
-        "displayName": "Scarcity Coral",
-        "canonical": "#ff6b79",
-        "tonalRamp": [
-          "#400c11",
-          "#710e18",
-          "#ac0c1b",
-          "#ec0319",
-          "#f73143",
-          "#f17480",
-          "#f2b0b7",
-          "#faebec"
-        ]
+      "dawn": {
+        "value": "#ffc46b",
+        "purpose": "Sky / semantic token"
       },
-      "coral-ink": {
-        "role": "tertiary",
-        "displayName": "Coral Ink",
-        "canonical": "#c4283b",
-        "tonalRamp": [
-          "#381519",
-          "#601f27",
-          "#912734",
-          "#c52b3e",
-          "#d65262",
-          "#dc8993",
-          "#e7bbc1",
-          "#f7edee"
-        ]
+      "morning": {
+        "value": "#a9d8ff",
+        "purpose": "Sky / semantic token"
       },
-      "sun": {
-        "role": "tertiary",
-        "displayName": "Demo Sun",
-        "canonical": "#ffd166",
-        "tonalRamp": [
-          "#40310c",
-          "#71530e",
-          "#ac7c0c",
-          "#eca603",
-          "#f7bc31",
-          "#f1cc74",
-          "#f2deb0",
-          "#faf5eb"
-        ]
+      "amber": {
+        "value": "#ffb547",
+        "purpose": "Headlight amber: every primary action and selection; ink text on it."
       },
-      "sun-ink": {
-        "role": "tertiary",
-        "displayName": "Sun Ink",
-        "canonical": "#8a5a00",
-        "tonalRamp": [
-          "#402e0c",
-          "#714f0e",
-          "#ac740c",
-          "#ec9b03",
-          "#f7b231",
-          "#f1c674",
-          "#f2dbb0",
-          "#faf5eb"
-        ]
+      "amber-600": {
+        "value": "#f5a62f",
+        "purpose": "Sky / semantic token"
+      },
+      "amber-700": {
+        "value": "#e8901a",
+        "purpose": "Sky / semantic token"
+      },
+      "stud": {
+        "value": "#ffe3a3",
+        "purpose": "Road studs, progress markers, scroll cue."
       },
       "ink": {
-        "role": "neutral",
-        "displayName": "Ink",
-        "canonical": "#171936",
-        "tonalRamp": [
-          "#1c1d31",
-          "#2c2e54",
-          "#3b407c",
-          "#494fa7",
-          "#6c71bc",
-          "#999dcc",
-          "#c4c6de",
-          "#eff0f5"
-        ]
+        "value": "#0e1330",
+        "purpose": "Sky / semantic token"
       },
-      "slate": {
-        "role": "neutral",
-        "displayName": "Slate",
-        "canonical": "#626782",
-        "tonalRamp": [
-          "#23242a",
-          "#393b47",
-          "#515467",
-          "#676d88",
-          "#868aa2",
-          "#aaacbb",
-          "#cdced6",
-          "#f1f2f3"
-        ]
+      "on-accent": {
+        "value": "#1a1203",
+        "purpose": "Sky / semantic token"
       },
-      "lavender-mist": {
-        "role": "neutral",
-        "displayName": "Lavender Mist",
-        "canonical": "#f5f5ff",
-        "tonalRamp": [
-          "#0c0c40",
-          "#0e0e71",
-          "#0c0cac",
-          "#0303ec",
-          "#3131f7",
-          "#7474f1",
-          "#b0b0f2",
-          "#ebebfa"
-        ]
+      "signal-green": {
+        "value": "#3ddc97",
+        "purpose": "Available, valid, confirmed only."
       },
-      "line": {
-        "role": "neutral",
-        "displayName": "Hairline",
-        "canonical": "#e5e7f2",
-        "tonalRamp": [
-          "#1e202f",
-          "#2f3450",
-          "#414977",
-          "#515d9f",
-          "#737db5",
-          "#9ea4c7",
-          "#c6cadc",
-          "#f0f0f5"
-        ]
+      "signal-green-ink": {
+        "value": "#0e7c5a",
+        "purpose": "Sky / semantic token"
+      },
+      "tail-red": {
+        "value": "#ff5a67",
+        "purpose": "Held by others, errors."
+      },
+      "tail-red-ink": {
+        "value": "#c42b3a",
+        "purpose": "Sky / semantic token"
+      },
+      "glass": {
+        "value": "#3b4596",
+        "purpose": "Sky / semantic token"
+      },
+      "first-light": {
+        "value": "#6b4a8a",
+        "purpose": "Sky / semantic token"
+      },
+      "night-blue": {
+        "value": "#1c2a5e",
+        "purpose": "Sky / semantic token"
+      },
+      "dusk-mid": {
+        "value": "#3a2a63",
+        "purpose": "Sky / semantic token"
+      },
+      "dawn-mid": {
+        "value": "#f2a35e",
+        "purpose": "Sky / semantic token"
       },
       "ground": {
-        "role": "neutral",
-        "displayName": "Ground (light)",
-        "canonical": "#f5f5ff",
-        "tonalRamp": [
-          "#0c0c40",
-          "#0e0e71",
-          "#0c0cac",
-          "#0303ec",
-          "#3131f7",
-          "#7474f1",
-          "#b0b0f2",
-          "#ebebfa"
-        ],
-        "cssVar": "--ground (:root)"
+        "value": "#eef1f8",
+        "purpose": "Sky / semantic token"
       },
       "surface": {
-        "role": "neutral",
-        "displayName": "Surface White",
-        "canonical": "#ffffff",
-        "tonalRamp": [
-          "#262626",
-          "#404040",
-          "#5c5c5c",
-          "#787878",
-          "#949494",
-          "#b2b2b2",
-          "#d1d1d1",
-          "#f2f2f2"
-        ],
-        "cssVar": "--surface (:root)"
+        "value": "#ffffff",
+        "purpose": "Sky / semantic token"
       },
       "raised": {
-        "role": "neutral",
-        "displayName": "Raised (light)",
-        "canonical": "#ffffff",
-        "tonalRamp": [
-          "#262626",
-          "#404040",
-          "#5c5c5c",
-          "#787878",
-          "#949494",
-          "#b2b2b2",
-          "#d1d1d1",
-          "#f2f2f2"
-        ],
-        "cssVar": "--raised (:root)"
+        "value": "#ffffff",
+        "purpose": "Sky / semantic token"
       },
       "fg": {
-        "role": "neutral",
-        "displayName": "Foreground Ink",
-        "canonical": "#171936",
-        "tonalRamp": [
-          "#1c1d31",
-          "#2c2e54",
-          "#3b407c",
-          "#494fa7",
-          "#6c71bc",
-          "#999dcc",
-          "#c4c6de",
-          "#eff0f5"
-        ],
-        "cssVar": "--fg (:root)"
+        "value": "#0e1330",
+        "purpose": "Sky / semantic token"
       },
       "muted": {
-        "role": "neutral",
-        "displayName": "Muted Slate",
-        "canonical": "#565b78",
-        "tonalRamp": [
-          "#22232b",
-          "#383a48",
-          "#4f5269",
-          "#656a8b",
-          "#8388a4",
-          "#a8abbd",
-          "#cccdd6",
-          "#f1f1f4"
-        ],
-        "cssVar": "--muted (:root)"
+        "value": "#4a5274",
+        "purpose": "Sky / semantic token"
       },
       "border": {
-        "role": "neutral",
-        "displayName": "Border Hairline",
-        "canonical": "#e5e7f2",
-        "tonalRamp": [
-          "#1e202f",
-          "#2f3450",
-          "#414977",
-          "#515d9f",
-          "#737db5",
-          "#9ea4c7",
-          "#c6cadc",
-          "#f0f0f5"
-        ],
-        "cssVar": "--border (:root)"
+        "value": "#dce1ee",
+        "purpose": "Sky / semantic token"
       },
       "accent": {
-        "role": "primary",
-        "displayName": "Accent (light)",
-        "canonical": "#493bff",
-        "tonalRamp": [
-          "#100c40",
-          "#150e71",
-          "#170cac",
-          "#1403ec",
-          "#3f31f7",
-          "#7d74f1",
-          "#b5b0f2",
-          "#ecebfa"
-        ],
-        "cssVar": "--accent (:root)"
+        "value": "#e8901a",
+        "purpose": "Sky / semantic token"
       },
       "accent-fg": {
-        "role": "primary",
-        "displayName": "Accent text (light)",
-        "canonical": "#3a2df0",
-        "tonalRamp": [
-          "#13103d",
-          "#1b156b",
-          "#2016a1",
-          "#2013dd",
-          "#493eea",
-          "#837ce9",
-          "#b9b5ed",
-          "#edecf9"
-        ],
-        "cssVar": "--accent-fg (:root)"
+        "value": "#8a4b00",
+        "purpose": "Sky / semantic token"
       },
       "route": {
-        "role": "secondary",
-        "displayName": "Route (light)",
-        "canonical": "#0a7f75",
-        "tonalRamp": [
-          "#103d39",
-          "#166a63",
-          "#17a095",
-          "#14dbca",
-          "#3fe9da",
-          "#7de8df",
-          "#b5ede8",
-          "#ecf9f8"
-        ],
-        "cssVar": "--route (:root)"
+        "value": "#b86e00",
+        "purpose": "Sky / semantic token"
       },
       "success": {
-        "role": "secondary",
-        "displayName": "Success (light)",
-        "canonical": "#0a7f75",
-        "tonalRamp": [
-          "#103d39",
-          "#166a63",
-          "#17a095",
-          "#14dbca",
-          "#3fe9da",
-          "#7de8df",
-          "#b5ede8",
-          "#ecf9f8"
-        ],
-        "cssVar": "--success (:root)"
+        "value": "#0e7c5a",
+        "purpose": "Sky / semantic token"
       },
       "success-bg": {
-        "role": "neutral",
-        "displayName": "Success tint",
-        "canonical": "#e3faf7",
-        "tonalRamp": [
-          "#143934",
-          "#1d6259",
-          "#249485",
-          "#27c9b4",
-          "#4fd9c7",
-          "#87ded3",
-          "#bae8e2",
-          "#edf8f6"
-        ],
-        "cssVar": "--success-bg (:root)"
+        "value": "#ddf6eb",
+        "purpose": "Sky / semantic token"
       },
       "warning": {
-        "role": "tertiary",
-        "displayName": "Warning (light)",
-        "canonical": "#8a5a00",
-        "tonalRamp": [
-          "#402e0c",
-          "#714f0e",
-          "#ac740c",
-          "#ec9b03",
-          "#f7b231",
-          "#f1c674",
-          "#f2dbb0",
-          "#faf5eb"
-        ],
-        "cssVar": "--warning (:root)"
+        "value": "#8a5a00",
+        "purpose": "Sky / semantic token"
       },
       "warning-bg": {
-        "role": "neutral",
-        "displayName": "Warning tint",
-        "canonical": "#fff4d9",
-        "tonalRamp": [
-          "#40310c",
-          "#71550e",
-          "#ac7e0c",
-          "#eca903",
-          "#f7be31",
-          "#f1cd74",
-          "#f2dfb0",
-          "#faf5eb"
-        ],
-        "cssVar": "--warning-bg (:root)"
+        "value": "#fff1d6",
+        "purpose": "Sky / semantic token"
       },
       "danger": {
-        "role": "tertiary",
-        "displayName": "Danger (light)",
-        "canonical": "#c4283b",
-        "tonalRamp": [
-          "#381519",
-          "#601f27",
-          "#912734",
-          "#c52b3e",
-          "#d65262",
-          "#dc8993",
-          "#e7bbc1",
-          "#f7edee"
-        ],
-        "cssVar": "--danger (:root)"
+        "value": "#c42b3a",
+        "purpose": "Sky / semantic token"
       },
       "danger-bg": {
-        "role": "neutral",
-        "displayName": "Danger tint",
-        "canonical": "#ffe9ec",
-        "tonalRamp": [
-          "#400c13",
-          "#710e1c",
-          "#ac0c21",
-          "#ec0323",
-          "#f7314c",
-          "#f17485",
-          "#f2b0b9",
-          "#faebed"
-        ],
-        "cssVar": "--danger-bg (:root)"
+        "value": "#ffe6e9",
+        "purpose": "Sky / semantic token"
       },
       "info-bg": {
-        "role": "neutral",
-        "displayName": "Info tint",
-        "canonical": "#ecebff",
-        "tonalRamp": [
-          "#0f0c40",
-          "#130e71",
-          "#140cac",
-          "#0f03ec",
-          "#3a31f7",
-          "#7a74f1",
-          "#b4b0f2",
-          "#ebebfa"
-        ],
-        "cssVar": "--info-bg (:root)"
+        "value": "#e8ecfa",
+        "purpose": "Sky / semantic token"
       },
       "dark-ground": {
-        "role": "neutral",
-        "displayName": "Ground (dark, Ink-navy)",
-        "canonical": "#0d0e22",
-        "tonalRamp": [
-          "#1b1c32",
-          "#2a2c56",
-          "#383b80",
-          "#4449ac",
-          "#676cc0",
-          "#9699cf",
-          "#c2c4e0",
-          "#efeff6"
-        ],
-        "cssVar": "--ground ([data-theme=\"dark\"])"
+        "value": "#0b1026",
+        "purpose": "Sky / semantic token"
       },
       "dark-surface": {
-        "role": "neutral",
-        "displayName": "Surface (dark)",
-        "canonical": "#171936",
-        "tonalRamp": [
-          "#1c1d31",
-          "#2c2e54",
-          "#3b407c",
-          "#494fa7",
-          "#6c71bc",
-          "#999dcc",
-          "#c4c6de",
-          "#eff0f5"
-        ],
-        "cssVar": "--surface ([data-theme=\"dark\"])"
+        "value": "#141a3a",
+        "purpose": "Sky / semantic token"
       },
       "dark-raised": {
-        "role": "neutral",
-        "displayName": "Raised (dark)",
-        "canonical": "#1f2246",
-        "tonalRamp": [
-          "#1c1e30",
-          "#2d3053",
-          "#3d427b",
-          "#4b52a5",
-          "#6e73ba",
-          "#9a9ecb",
-          "#c4c6de",
-          "#eff0f5"
-        ],
-        "cssVar": "--raised ([data-theme=\"dark\"])"
+        "value": "#1b2250",
+        "purpose": "Sky / semantic token"
       },
       "dark-fg": {
-        "role": "neutral",
-        "displayName": "Foreground (dark)",
-        "canonical": "#f1f1ff",
-        "tonalRamp": [
-          "#0c0c40",
-          "#0e0e71",
-          "#0c0cac",
-          "#0303ec",
-          "#3131f7",
-          "#7474f1",
-          "#b0b0f2",
-          "#ebebfa"
-        ],
-        "cssVar": "--fg ([data-theme=\"dark\"])"
+        "value": "#eef1ff",
+        "purpose": "Sky / semantic token"
       },
       "dark-muted": {
-        "role": "neutral",
-        "displayName": "Muted (dark)",
-        "canonical": "#a6aacb",
-        "tonalRamp": [
-          "#1f212d",
-          "#33364d",
-          "#474b71",
-          "#596096",
-          "#7a7fae",
-          "#a2a6c3",
-          "#c9cada",
-          "#f0f1f4"
-        ],
-        "cssVar": "--muted ([data-theme=\"dark\"])"
+        "value": "#a3abd0",
+        "purpose": "Sky / semantic token"
       },
       "dark-border": {
-        "role": "neutral",
-        "displayName": "Border (dark)",
-        "canonical": "#2c2f5a",
-        "tonalRamp": [
-          "#1d1e2f",
-          "#2f3151",
-          "#404477",
-          "#5055a0",
-          "#7276b6",
-          "#9da0c8",
-          "#c6c7dc",
-          "#f0f0f5"
-        ],
-        "cssVar": "--border ([data-theme=\"dark\"])"
+        "value": "#262e5c",
+        "purpose": "Sky / semantic token"
       },
       "dark-accent": {
-        "role": "primary",
-        "displayName": "Accent (dark)",
-        "canonical": "#6a5fff",
-        "tonalRamp": [
-          "#100c40",
-          "#150e71",
-          "#170cac",
-          "#1303ec",
-          "#3e31f7",
-          "#7c74f1",
-          "#b5b0f2",
-          "#ecebfa"
-        ],
-        "cssVar": "--accent ([data-theme=\"dark\"])"
+        "value": "#ffb547",
+        "purpose": "Sky / semantic token"
       },
       "dark-accent-fg": {
-        "role": "primary",
-        "displayName": "Accent text (dark)",
-        "canonical": "#a49dff",
-        "tonalRamp": [
-          "#100c40",
-          "#150e71",
-          "#170cac",
-          "#1403ec",
-          "#3f31f7",
-          "#7d74f1",
-          "#b5b0f2",
-          "#ecebfa"
-        ],
-        "cssVar": "--accent-fg ([data-theme=\"dark\"])"
+        "value": "#ffc978",
+        "purpose": "Sky / semantic token"
       },
       "dark-route": {
-        "role": "secondary",
-        "displayName": "Route (dark)",
-        "canonical": "#3fe6d7",
-        "tonalRamp": [
-          "#123a37",
-          "#1a665f",
-          "#1e9a8e",
-          "#1ed2c1",
-          "#47e0d3",
-          "#82e3da",
-          "#b8eae6",
-          "#ecf8f7"
-        ],
-        "cssVar": "--route ([data-theme=\"dark\"])"
+        "value": "#ffd27a",
+        "purpose": "Sky / semantic token"
       },
       "dark-success-bg": {
-        "role": "neutral",
-        "displayName": "Success tint (dark)",
-        "canonical": "#0e2f33",
-        "tonalRamp": [
-          "#173235",
-          "#24565c",
-          "#2e8089",
-          "#35acba",
-          "#5bc0cc",
-          "#8fced6",
-          "#bee0e4",
-          "#eef6f7"
-        ],
-        "cssVar": "--success-bg ([data-theme=\"dark\"])"
+        "value": "#0f2f2a",
+        "purpose": "Sky / semantic token"
+      },
+      "dark-warning": {
+        "value": "#ffc46b",
+        "purpose": "Sky / semantic token"
       },
       "dark-warning-bg": {
-        "role": "neutral",
-        "displayName": "Warning tint (dark)",
-        "canonical": "#3a2e12",
-        "tonalRamp": [
-          "#342c18",
-          "#5a4a26",
-          "#866d32",
-          "#b5903a",
-          "#c8a960",
-          "#d4c091",
-          "#e2d8c0",
-          "#f6f4ee"
-        ],
-        "cssVar": "--warning-bg ([data-theme=\"dark\"])"
+        "value": "#3a2c12",
+        "purpose": "Sky / semantic token"
       },
       "dark-danger": {
-        "role": "tertiary",
-        "displayName": "Danger (dark)",
-        "canonical": "#ff8b96",
-        "tonalRamp": [
-          "#400c11",
-          "#710e18",
-          "#ac0c1b",
-          "#ec0319",
-          "#f73143",
-          "#f17480",
-          "#f2b0b7",
-          "#faebec"
-        ],
-        "cssVar": "--danger ([data-theme=\"dark\"])"
+        "value": "#ff6b76",
+        "purpose": "Sky / semantic token"
       },
       "dark-danger-bg": {
-        "role": "neutral",
-        "displayName": "Danger tint (dark)",
-        "canonical": "#3d1720",
-        "tonalRamp": [
-          "#321a20",
-          "#562934",
-          "#803849",
-          "#ad435c",
-          "#c1677c",
-          "#cf96a4",
-          "#e0c2c9",
-          "#f6eff0"
-        ],
-        "cssVar": "--danger-bg ([data-theme=\"dark\"])"
+        "value": "#3a1622",
+        "purpose": "Sky / semantic token"
       },
       "dark-info-bg": {
-        "role": "neutral",
-        "displayName": "Info tint (dark)",
-        "canonical": "#231f5c",
-        "tonalRamp": [
-          "#1b1933",
-          "#2a2758",
-          "#393484",
-          "#463eb2",
-          "#6963c5",
-          "#9793d2",
-          "#c3c1e1",
-          "#efeef6"
-        ],
-        "cssVar": "--info-bg ([data-theme=\"dark\"])"
+        "value": "#1e2650",
+        "purpose": "Sky / semantic token"
       }
     },
     "typographyMeta": {
       "display": {
-        "displayName": "Display",
-        "purpose": "Landing hero headline only."
+        "fontFamily": "Overpass Variable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "clamp(2.6rem, 6vw, 4.6rem)",
+        "fontWeight": 900,
+        "lineHeight": 0.98,
+        "letterSpacing": "-0.02em"
       },
       "headline": {
-        "displayName": "Headline",
-        "purpose": "Landing section headings; app page titles at 1.5 to 1.875rem."
+        "fontFamily": "Overpass Variable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "2.6rem",
+        "fontWeight": 800,
+        "lineHeight": 1.1,
+        "letterSpacing": "-0.02em"
       },
       "title": {
-        "displayName": "Title",
-        "purpose": "Destinations, step titles, FAQ questions, card headings."
+        "fontFamily": "Overpass Variable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "1.125rem",
+        "fontWeight": 700,
+        "lineHeight": 1.25
       },
       "numeral": {
-        "displayName": "Numeral",
-        "purpose": "Departure times, fares, seat numbers, countdowns; always tabular."
+        "fontFamily": "Overpass Variable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "1.65rem",
+        "fontWeight": 800,
+        "fontFeature": "tnum"
       },
       "body": {
-        "displayName": "Body",
-        "purpose": "App copy, descriptions, alerts."
+        "fontFamily": "Inter Variable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": 400,
+        "lineHeight": 1.5
       },
-      "body-lead": {
-        "displayName": "Lead",
-        "purpose": "Intro paragraphs under section headings."
+      "lead": {
+        "fontFamily": "Inter Variable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "1.125rem",
+        "fontWeight": 400,
+        "lineHeight": 1.55
       },
       "label": {
-        "displayName": "Label",
-        "purpose": "Form labels, badges (12px), nav, button text."
+        "fontFamily": "Inter Variable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": 600
+      },
+      "small": {
+        "fontFamily": "Inter Variable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": 500
+      },
+      "micro": {
+        "fontFamily": "Inter Variable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": 600
+      },
+      "caption": {
+        "fontFamily": "Inter Variable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": 400
       }
     },
     "shadows": [
       {
         "name": "soft",
-        "value": "0 1px 2px rgb(23 25 54 / 0.06), 0 8px 24px -12px rgb(23 25 54 / 0.18)",
-        "purpose": "Resting cards, primary buttons, active step."
+        "value": "0 1px 2px rgb(14 19 48 / 0.08), 0 10px 28px -14px rgb(14 19 48 / 0.28)",
+        "purpose": "Resting cards and buttons."
       },
       {
         "name": "lift",
-        "value": "0 2px 4px rgb(23 25 54 / 0.06), 0 18px 40px -18px rgb(73 59 255 / 0.35)",
-        "purpose": "Hover on actionable cards and available seats."
+        "value": "0 2px 4px rgb(14 19 48 / 0.08), 0 22px 44px -20px rgb(240 128 60 / 0.45)",
+        "purpose": "Hover on actionable cards and seats."
       },
       {
         "name": "float",
-        "value": "0 24px 60px -24px rgb(23 25 54 / 0.45)",
-        "purpose": "Hero search panel, ticket, phone frame, hero glass chips."
+        "value": "0 28px 64px -26px rgb(6 9 28 / 0.6)",
+        "purpose": "Hero search panel, ticket, phone frame."
       },
       {
         "name": "focus",
         "value": "outline: 3px solid var(--accent); outline-offset: 2px",
-        "purpose": "Global focus-visible ring."
-      },
-      {
-        "name": "input-focus",
-        "value": "0 0 0 4px rgb(73 59 255 / 0.15)",
-        "purpose": "Field focus ring with Accent border."
+        "purpose": "Global focus ring."
       }
     ],
     "motion": [
       {
         "name": "ease-out-expo",
         "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Signature curve: seat pulse 220ms, step panels 240ms, route spine 450ms, ticket reveal 550ms, RouteLoader sweep."
+        "purpose": "All interaction motion, 150-550ms."
       },
       {
-        "name": "state",
-        "value": "150-200ms ease-out",
-        "purpose": "Colour, border and shadow state changes on buttons, inputs, cards."
+        "name": "sky-cycle",
+        "value": "90s (3D) / 120s (CSS)",
+        "purpose": "Dusk to night to dawn."
       },
       {
         "name": "hold-drain",
         "value": "1000ms linear",
-        "purpose": "Seat-hold route line width per tick."
-      },
-      {
-        "name": "route-sweep",
-        "value": "1.1s ease-out-expo infinite",
-        "purpose": "RouteLoader in place of spinners for page loads."
-      },
-      {
-        "name": "reduced-motion",
-        "value": "@media (prefers-reduced-motion: reduce) collapses animation and transition to 0.01ms",
-        "purpose": "Global; components also branch on useReducedMotion; the 3D hero stays static."
+        "purpose": "Seat-hold lane bar per tick."
       }
     ],
     "breakpoints": [
@@ -799,139 +340,50 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The one main action per screen: Find available trips, Choose seat, Pay.",
-      "html": "<button class=\"ds-btn-primary\">Find available trips <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
-      "css": ".ds-btn-primary { display:inline-flex; align-items:center; gap:8px; height:44px; padding:0 20px; border:none; border-radius:12px; background:#493bff; color:#fff; font-family: var(--font-sans, 'Inter Variable', system-ui, sans-serif); font-size:15px; font-weight:600; box-shadow:0 1px 2px rgb(23 25 54 / 0.06), 0 8px 24px -12px rgb(23 25 54 / 0.18); cursor:pointer; transition:background-color 150ms ease-out, transform 150ms ease-out; } .ds-btn-primary:hover { background:#3a2df0; } .ds-btn-primary:active { background:#2f23c9; transform:scale(0.98); } .ds-btn-primary:focus-visible { outline:3px solid #493bff; outline-offset:2px; }"
+      "description": "The one main action per screen, in headlight amber.",
+      "html": "<button style=\"background:#ffb547;color:#1a1203;border-radius:12px;min-height:44px;padding:0 20px;font:600 15px Inter,sans-serif;border:0\">Find available trips</button>"
     },
     {
-      "name": "Outline Button",
-      "kind": "button",
-      "refersTo": "button-outline",
-      "description": "Secondary navigation actions such as See all trips and Visit Help.",
-      "html": "<button class=\"ds-btn-outline\">See all trips</button>",
-      "css": ".ds-btn-outline { display:inline-flex; align-items:center; height:44px; padding:0 20px; border:1px solid #e5e7f2; border-radius:12px; background:#fff; color:#171936; font-family: var(--font-sans, 'Inter Variable', system-ui, sans-serif); font-size:15px; font-weight:600; cursor:pointer; transition:border-color 150ms ease-out, color 150ms ease-out; } .ds-btn-outline:hover { border-color:#493bff; color:#3a2df0; } .ds-btn-outline:active { transform:scale(0.98); } .ds-btn-outline:focus-visible { outline:3px solid #493bff; outline-offset:2px; }"
+      "name": "Seat Tiles",
+      "kind": "control",
+      "refersTo": "seat-tile",
+      "description": "Available, yours, held by another.",
+      "html": "<div style=\"display:flex;gap:8px;font:600 14px Inter,sans-serif\"><span style=\"width:40px;height:40px;display:grid;place-items:center;border:2px solid #3ddc97;border-radius:10px\">7</span><span style=\"width:40px;height:40px;display:grid;place-items:center;background:#ffb547;color:#1a1203;border-radius:10px;box-shadow:0 0 0 4px rgb(232 144 26/.35)\">8</span><span style=\"width:40px;height:40px;display:grid;place-items:center;border:1px dashed rgb(255 90 103/.6);background:rgb(255 90 103/.15);color:#c42b3a;border-radius:10px\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg></span></div>"
     },
     {
-      "name": "Field",
-      "kind": "input",
-      "refersTo": "input",
-      "description": "Labelled text field with optional icon; Accent border and soft ring on focus.",
-      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">From</span><input class=\"ds-input\" placeholder=\"Cape Coast (UCC)\"></label>",
-      "css": ".ds-field { display:flex; flex-direction:column; gap:6px; font-family: var(--font-sans, 'Inter Variable', system-ui, sans-serif); } .ds-field-label { font-size:14px; font-weight:600; color:#171936; } .ds-input { height:48px; padding:0 14px; border:1px solid #e5e7f2; border-radius:12px; background:#fff; color:#171936; font:inherit; font-size:15px; outline:none; caret-color:#493bff; transition:border-color 150ms, box-shadow 150ms; } .ds-input::placeholder { color:rgb(86 91 120 / 0.8); } .ds-input:focus { border-color:#493bff; box-shadow:0 0 0 4px rgb(73 59 255 / 0.15); }"
-    },
-    {
-      "name": "Badges",
-      "kind": "chip",
-      "refersTo": "badge-demo",
-      "description": "Pill badges for trip type, status and the mandatory Demo data label.",
-      "html": "<div class=\"ds-badges\"><span class=\"ds-badge ds-badge-info\">Campus shuttle</span><span class=\"ds-badge ds-badge-demo\">Demo data</span><span class=\"ds-badge ds-badge-success\">Confirmed</span><span class=\"ds-badge ds-badge-danger\">Fully booked</span></div>",
-      "css": ".ds-badges { display:flex; flex-wrap:wrap; gap:8px; } .ds-badge { display:inline-flex; align-items:center; padding:2px 10px; border-radius:9999px; font-family: var(--font-sans, 'Inter Variable', system-ui, sans-serif); font-size:12px; font-weight:600; white-space:nowrap; } .ds-badge-info { background:#ecebff; color:#3a2df0; box-shadow:inset 0 0 0 1px rgb(73 59 255 / 0.2); } .ds-badge-demo { background:rgb(255 209 102 / 0.25); color:#8a5a00; box-shadow:inset 0 0 0 1px rgb(255 209 102 / 0.6); } .ds-badge-success { background:#e3faf7; color:#0a7f75; box-shadow:inset 0 0 0 1px rgb(10 127 117 / 0.25); } .ds-badge-danger { background:#ffe9ec; color:#c4283b; box-shadow:inset 0 0 0 1px rgb(196 40 59 / 0.25); }"
-    },
-    {
-      "name": "Trip Card",
-      "kind": "card",
-      "refersTo": "card",
-      "description": "Live trip with departure time, the route line from origin to destination, seats left and fare; lifts on hover.",
-      "html": "<article class=\"ds-trip\"><div class=\"ds-trip-main\"><span class=\"ds-badge-demo\">Demo data</span><p class=\"ds-trip-time\">06:00 <span>Fri 19 Dec</span></p><div class=\"ds-route\"><span class=\"ds-dot-o\"></span><span class=\"ds-from\">Cape Coast (UCC)</span><span class=\"ds-dot-d\"></span><span class=\"ds-to\">Accra</span></div><p class=\"ds-seats\">4 seats left</p></div><div class=\"ds-trip-fare\"><span>GH₵ —</span></div></article>",
-      "css": ".ds-trip { display:flex; gap:24px; align-items:center; padding:20px; border:1px solid #e5e7f2; border-radius:18px; background:#fff; font-family: var(--font-sans, 'Inter Variable', system-ui, sans-serif); color:#171936; box-shadow:0 1px 2px rgb(23 25 54 / 0.06), 0 8px 24px -12px rgb(23 25 54 / 0.18); transition:transform 200ms ease-out, box-shadow 200ms ease-out, border-color 200ms ease-out; } .ds-trip:hover { transform:translateY(-4px); border-color:rgb(73 59 255 / 0.4); box-shadow:0 2px 4px rgb(23 25 54 / 0.06), 0 18px 40px -18px rgb(73 59 255 / 0.35); } .ds-trip-main { flex:1; } .ds-badge-demo { display:inline-block; padding:2px 10px; border-radius:9999px; font-size:12px; font-weight:600; background:rgb(255 209 102 / 0.25); color:#8a5a00; box-shadow:inset 0 0 0 1px rgb(255 209 102 / 0.6); } .ds-trip-time { margin:12px 0 0; font-family: var(--font-display, 'Plus Jakarta Sans Variable', system-ui, sans-serif); font-size:1.65rem; font-weight:800; line-height:1; font-variant-numeric:tabular-nums; } .ds-trip-time span { font-size:1rem; font-weight:600; color:#565b78; } .ds-route { display:grid; grid-template-columns:12px 1fr; column-gap:12px; row-gap:6px; margin-top:12px; align-items:center; } .ds-dot-o { position:relative; width:12px; height:12px; box-sizing:border-box; border:2px solid #0a7f75; border-radius:50%; } .ds-dot-o::after { content:''; position:absolute; left:3px; top:12px; width:2px; height:16px; background:repeating-linear-gradient(180deg,#0a7f75 0 3px,transparent 3px 6px); } .ds-dot-d { width:12px; height:12px; border-radius:50%; background:#0a7f75; } .ds-from { font-size:15px; color:#565b78; } .ds-to { font-family: var(--font-display, 'Plus Jakarta Sans Variable', system-ui, sans-serif); font-size:1.125rem; font-weight:700; } .ds-seats { margin:12px 0 0; font-size:14px; font-weight:600; color:#c4283b; } .ds-trip-fare { padding-left:24px; border-left:1px solid #e5e7f2; font-family: var(--font-display, 'Plus Jakarta Sans Variable', system-ui, sans-serif); font-size:1.5rem; font-weight:800; font-variant-numeric:tabular-nums; }"
-    },
-    {
-      "name": "Seat Map Seats",
-      "kind": "custom",
-      "refersTo": "seat-available",
-      "description": "Seat states: available (aqua outline), selected (electric with ring), held (dashed coral), booked (muted).",
-      "html": "<div class=\"ds-seats-row\"><button class=\"ds-seat ds-seat-available\">12</button><button class=\"ds-seat ds-seat-selected\" aria-pressed=\"true\">14</button><span class=\"ds-seat ds-seat-locked\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg></span><span class=\"ds-seat ds-seat-booked\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m5.7 5.7 12.6 12.6\"/></svg></span></div>",
-      "css": ".ds-seats-row { display:flex; gap:8px; } .ds-seat { display:grid; place-items:center; width:48px; height:48px; border-radius:10px; font-family: var(--font-sans, 'Inter Variable', system-ui, sans-serif); font-size:14px; font-weight:600; font-variant-numeric:tabular-nums; transition:transform 200ms ease-out, box-shadow 200ms ease-out, border-color 200ms ease-out; } .ds-seat-available { border:2px solid #12d6c5; background:#fff; color:#171936; cursor:pointer; } .ds-seat-available:hover { transform:translateY(-2px); border-color:#493bff; box-shadow:0 2px 4px rgb(23 25 54 / 0.06), 0 18px 40px -18px rgb(73 59 255 / 0.35); } .ds-seat-available:focus-visible { outline:3px solid #493bff; outline-offset:2px; } .ds-seat-selected { border:none; background:#493bff; color:#fff; box-shadow:0 0 0 4px rgb(73 59 255 / 0.25); } .ds-seat-locked { border:1px dashed rgb(255 107 121 / 0.6); background:rgb(255 107 121 / 0.15); color:#c4283b; } .ds-seat-booked { background:#e5e7f2; color:#565b78; }"
-    },
-    {
-      "name": "Seat Hold Timer",
-      "kind": "custom",
-      "refersTo": "",
-      "description": "Server-confirmed hold countdown; the aqua route line drains toward the stop and turns sun in the last two minutes.",
-      "html": "<div class=\"ds-hold\"><div class=\"ds-hold-top\"><span class=\"ds-hold-copy\"><b>Your seat is held</b> while you complete payment.</span><span class=\"ds-hold-time\">08:42</span></div><div class=\"ds-hold-line\"><span class=\"ds-hold-track\"></span><span class=\"ds-hold-fill\"></span><span class=\"ds-hold-dot\"></span><span class=\"ds-hold-stop\"></span></div></div>",
-      "css": ".ds-hold { padding:14px; border-radius:16px; background:#e3faf7; font-family: var(--font-sans, 'Inter Variable', system-ui, sans-serif); color:#171936; } .ds-hold-top { display:flex; align-items:center; gap:12px; } .ds-hold-copy { flex:1; font-size:14px; } .ds-hold-time { font-family: var(--font-display, 'Plus Jakarta Sans Variable', system-ui, sans-serif); font-size:1.25rem; font-weight:800; color:#0a7f75; font-variant-numeric:tabular-nums; } .ds-hold-line { position:relative; height:8px; margin:12px 0 0 32px; } .ds-hold-track { position:absolute; inset:3px 0; border-radius:9999px; background:repeating-linear-gradient(90deg,#e5e7f2 0 5px,transparent 5px 9px); } .ds-hold-fill { position:absolute; top:2px; bottom:2px; left:0; width:87%; border-radius:9999px; background:#12d6c5; transition:width 1s linear; } .ds-hold-dot { position:absolute; top:50%; left:87%; width:12px; height:12px; box-sizing:border-box; transform:translate(-50%,-50%); border:2px solid #12d6c5; border-radius:50%; background:#fff; } .ds-hold-stop { position:absolute; top:50%; right:0; width:10px; height:10px; transform:translateY(-50%); border-radius:50%; background:rgb(23 25 54 / 0.3); }"
-    },
-    {
-      "name": "Ticket Header",
-      "kind": "custom",
-      "refersTo": "",
-      "description": "Electric-to-Violet ticket head with the dashed aqua route arrow between origin and destination; sits on a Float card.",
-      "html": "<article class=\"ds-ticket\"><div class=\"ds-ticket-head\"><div class=\"ds-ticket-brand\"><b>MOVA</b><span>Inter-regional</span></div><div class=\"ds-ticket-route\"><div><small>From</small><p>Cape Coast</p></div><svg viewBox=\"0 0 48 12\" width=\"48\"><path d=\"M2 6h40\" stroke=\"#12d6c5\" stroke-width=\"2\" stroke-dasharray=\"4 3\"/><circle cx=\"44\" cy=\"6\" r=\"3.5\" fill=\"#12d6c5\"/></svg><div class=\"ds-r\"><small>To</small><p>Accra</p></div></div></div><div class=\"ds-ticket-body\"><small>Seat</small><p class=\"ds-ticket-seat\">14</p></div></article>",
-      "css": ".ds-ticket { width:320px; overflow:hidden; border-radius:24px; background:#fff; box-shadow:0 24px 60px -24px rgb(23 25 54 / 0.45), 0 0 0 1px #e5e7f2; font-family: var(--font-sans, 'Inter Variable', system-ui, sans-serif); color:#171936; } .ds-ticket-head { padding:20px 24px 24px; background:linear-gradient(120deg,#493bff 0%,#8655ff 100%); color:#fff; } .ds-ticket-brand { display:flex; justify-content:space-between; font-size:14px; } .ds-ticket-brand b { font-family: var(--font-display, 'Plus Jakarta Sans Variable', system-ui, sans-serif); font-weight:800; letter-spacing:-0.02em; } .ds-ticket-brand span { color:rgb(255 255 255 / 0.8); } .ds-ticket-route { display:grid; grid-template-columns:1fr auto 1fr; align-items:end; gap:12px; margin-top:16px; } .ds-ticket-route small { font-size:12px; color:rgb(255 255 255 / 0.75); } .ds-ticket-route p { margin:0; font-family: var(--font-display, 'Plus Jakarta Sans Variable', system-ui, sans-serif); font-size:1.125rem; font-weight:700; } .ds-r { text-align:right; } .ds-ticket-body { padding:20px 24px; } .ds-ticket-body small { font-size:12px; color:#565b78; } .ds-ticket-seat { margin:0; font-family: var(--font-display, 'Plus Jakarta Sans Variable', system-ui, sans-serif); font-size:1.5rem; font-weight:800; line-height:1; color:#3a2df0; font-variant-numeric:tabular-nums; }"
-    },
-    {
-      "name": "App Navigation",
-      "kind": "nav",
-      "refersTo": "nav-item-active",
-      "description": "Sidebar items for signed-in roles; active uses the Info tint with Accent text.",
-      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-item is-active\" href=\"#\">Home</a><a class=\"ds-nav-item\" href=\"#\">Find trips</a><a class=\"ds-nav-item\" href=\"#\">My tickets</a></nav>",
-      "css": ".ds-nav { display:flex; flex-direction:column; gap:4px; width:228px; padding:16px; background:#fff; border-right:1px solid #e5e7f2; font-family: var(--font-sans, 'Inter Variable', system-ui, sans-serif); } .ds-nav-item { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:12px; font-size:15px; font-weight:500; color:#565b78; text-decoration:none; transition:background-color 150ms, color 150ms; } .ds-nav-item:hover { background:#f5f5ff; color:#171936; } .ds-nav-item.is-active { background:#ecebff; color:#3a2df0; font-weight:600; } .ds-nav-item:focus-visible { outline:3px solid #493bff; outline-offset:2px; }"
+      "name": "Lane Bar",
+      "kind": "progress",
+      "refersTo": "hold-timer",
+      "description": "Draining amber lane toward an end stud.",
+      "html": "<div style=\"height:8px;width:240px;position:relative\"><span style=\"position:absolute;inset:3px 0;background:repeating-linear-gradient(90deg,#dce1ee 0 5px,transparent 5px 9px)\"></span><span style=\"position:absolute;inset:2px auto 2px 0;width:60%;background:#ffb547;border-radius:99px\"></span></div>"
     }
   ],
   "narrative": {
-    "northStar": "The Route Line",
-    "overview": "**Creative North Star: \"The Route Line\"**\n\nMOVA plays the mobility category straight, at the craft level of the best ride-hailing, coach-booking and neobank apps: search first, product at work, nothing ornamental standing between a student and a seat. The world is a cool Lavender Mist ground with Ink text, an Electric-to-Violet field that owns the hero and the ticket header, and one aqua route line that runs through everything a traveller touches. Coral and Sun appear only as small, meaningful highlights: scarcity, holds about to lapse, demo data.\n\nDensity is moderate and phone-first. Cards are solid white on the lavender ground, softly lifted, with generous 18px corners; controls are 44 to 52px tall. Glass exists in exactly one place, the floating chips over the hero coach. The dark theme mirrors the light one on an Ink-navy ground rather than inverting it: same roles, brighter route and accent so they hold contrast.\n\nThe system is honest by construction. Every figure shown comes from the API, seed records wear a \"Demo data\" badge, illustrations say \"Illustration\", and features that are not built (GPS, SMS, cancellation) are never drawn.",
+    "northStar": "The night ride home: the overnight coach from campus, dusk turning to dawn.",
+    "overview": "A live 3D highway landing with a coach driving toward you under a cycling sky; app screens are working tools in the same world.",
     "keyCharacteristics": [
-      "Lavender Mist ground, white solid cards, Ink text; Electric is the single action colour.",
-      "An aqua route line (hollow origin dot, dashed track, solid destination dot) links hero, trip cards, trip-type panels, how-it-works steps, seat-hold timer and ticket.",
-      "Plus Jakarta Sans ExtraBold for headlines, times, fares and seat numbers; Inter for everything read.",
-      "Tabular numerals on every time, fare, countdown, seat and count.",
-      "Soft ink-tinted shadows; electric-tinted lift on hover; one deep float shadow for panels that sit above a field.",
-      "Expo ease-out motion, short and purposeful, fully disabled under reduced motion."
+      "Sky palette",
+      "Headlight amber owns action",
+      "Overpass highway lettering",
+      "Lane paint and road studs as dividers and progress",
+      "Light = night, dark = night"
     ],
     "rules": [
-      {
-        "name": "The Semantic Name Rule",
-        "body": "Components use the semantic names (`ground`, `surface`, `fg`, `muted`, `border`, `accent`, `route`, status pairs) so light and dark resolve from one class. Raw brand values (`electric`, `aqua`, `coral`, `sun`) appear only where the brand role itself is meant: seats, route dots, the hero field, badges.",
-        "section": "colors"
-      },
-      {
-        "name": "The Aqua Means Route Rule",
-        "body": "Aqua marks where you go and what is open: routes, stops, available seats, hold remaining, ticket readiness. It is never a generic decoration or a second button colour.",
-        "section": "colors"
-      },
-      {
-        "name": "The Small Warmth Rule",
-        "body": "Coral and Sun are signals, never fields. They occupy a badge, a dot, a seat or a line, never a section background.",
-        "section": "colors"
-      },
-      {
-        "name": "The Tabular Rule",
-        "body": "Every time, fare, count, countdown, seat number and booking reference uses tabular numerals (`.tabular`). Columns of numbers must not jitter.",
-        "section": "typography"
-      },
-      {
-        "name": "The Sentence Case Rule",
-        "body": "Headings, buttons and labels are sentence case. Uppercase is reserved for data-table column headers in operator and admin tables.",
-        "section": "typography"
-      },
-      {
-        "name": "The Earned Lift Rule",
-        "body": "Rest is Soft; Lift appears only in response to hover on something you can act on; Float is reserved for objects that sit above a coloured field or carry the transaction (search, ticket).",
-        "section": "elevation"
-      },
-      {
-        "name": "The One Glass Rule",
-        "body": "Backdrop blur appears on the floating hero chips (white 14%, white 25% border) and on sticky bars over scrolling content. Nowhere else.",
-        "section": "elevation"
-      }
+      "Amber for actions only",
+      "Green for valid only",
+      "Red for problems only",
+      "Label demo data",
+      "State never by colour alone"
     ],
     "dos": [
-      "**Do** use Electric for the one primary action on a screen, and Aqua only for routes, stops, availability and hold remaining.",
-      "**Do** draw any origin-to-destination relationship with the route line: hollow aqua origin, dashed aqua track, solid aqua destination.",
-      "**Do** set every time, fare, seat number, count and countdown in tabular numerals; promote departure time and fare to Plus Jakarta ExtraBold.",
-      "**Do** badge every seed record \"Demo data\" (Sun tint) and label illustrative mock-ups \"Illustration\".",
-      "**Do** pair every status colour with an icon or word; seats pair colour with a glyph and an accessible label.",
-      "**Do** use semantic tokens so dark mode resolves from the same class; test both themes.",
-      "**Do** honour reduced motion and slow connections: static fallbacks first, motion as enhancement."
+      "Use the sky gradient as the ground for brand moments",
+      "Keep forms solid and legible"
     ],
     "donts": [
-      "**Don't** show invented fares, schedules, testimonials, ratings, counts or promises; when a value is unavailable show \"—\" or hide the block.",
-      "**Don't** draw or imply features that are not built: live GPS tracking, SMS notifications, cancellation, password reset.",
-      "**Don't** use Coral or Sun as section backgrounds or decoration; they are scarcity, hold-lapse and demo signals.",
-      "**Don't** add glass or backdrop blur beyond the hero chips and sticky bars.",
-      "**Don't** use hard offset shadows or heavy outlines; depth is tone first, then soft tinted shadow.",
-      "**Don't** put uppercase eyebrows or kickers above headings; uppercase is for table column headers only."
+      "No second accent",
+      "No gradient text",
+      "No glass on forms",
+      "No eyebrow labels"
     ]
   }
 }

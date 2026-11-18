@@ -23,7 +23,7 @@ export function SeatLegend() {
     <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm" aria-label="Seat legend">
       {items.map((i) => (
         <li key={i.state} className="flex items-center gap-2">
-          <span aria-hidden className={clsx(seatClass(i.state), "size-6 text-[10px]")}>{seatGlyph(i.state)}</span>
+          <span aria-hidden className={clsx(seatClass(i.state), "size-6 text-[11px]")}>{seatGlyph(i.state)}</span>
           {i.label}
         </li>
       ))}

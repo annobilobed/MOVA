@@ -1,7 +1,7 @@
 /** Static night-road picture: shown first, and kept for reduced motion, data saver and no-WebGL devices. */
 export function RoadFallback() {
   const palms = [
-    [70, 330, 1.25], [190, 300, 0.9], [290, 282, 0.7], [1180, 330, 1.25], [1060, 300, 0.9], [960, 282, 0.7],
+    [620, 330, 1.25], [700, 300, 0.9], [770, 282, 0.7], [1250, 330, 1.25], [1170, 300, 0.9], [1100, 282, 0.7],
   ] as const;
   return (
     <svg viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice" aria-hidden className="h-full w-full">
@@ -21,7 +21,7 @@ export function RoadFallback() {
           <stop offset="1" stopColor="#ffe2a8" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <rect width="1280" height="720" fill="url(#rf-sky)" />
+      <rect width="1280" height="720" fill="url(#rf-sky)" opacity="0.35" />
       {Array.from({ length: 60 }, (_, i) => (
         <circle key={i} cx={(i * 211) % 1280} cy={(i * 97) % 300} r={i % 7 === 0 ? 1.6 : 0.9} fill="#fff" opacity={0.35 + ((i * 13) % 10) / 20} />
       ))}
@@ -30,14 +30,12 @@ export function RoadFallback() {
         <circle key={`t${i}`} cx={(i * 53) % 1280} cy={392 + ((i * 7) % 8)} r="1.4" fill="#ffcf8a" opacity="0.8" />
       ))}
       <rect y="398" width="1280" height="322" fill="#0d1424" />
+      <g transform="translate(250 0)">
       {/* road in perspective */}
       <path d="M610 398 L670 398 L1120 720 L160 720 Z" fill="url(#rf-road)" />
       <path d="M612 398 L210 720 M668 398 L1070 720" stroke="#d8dcef" strokeWidth="3" opacity="0.7" />
-      {[0, 1, 2, 3, 4, 5].map((k) => {
-        const y = 410 + k * k * 9 + k * 12;
-        const h = 6 + k * 6;
-        return <rect key={k} x={638 - k} y={y} width={4 + k * 1.6} height={h} fill="#f4f5ff" opacity={0.9} />;
-      })}
+      {/* centre line: dashes that run toward the viewer */}
+      <path className="rf-lane" d="M640 400 L640 720" stroke="#f4f5ff" strokeWidth="6" strokeDasharray="16 26" opacity="0.85" />
       {[0, 1, 2, 3, 4, 5, 6].map((k) => {
         const t = k / 6;
         const y = 405 + t * t * 300;
@@ -48,6 +46,7 @@ export function RoadFallback() {
           </g>
         );
       })}
+      </g>
       {/* palms */}
       {palms.map(([x, y, s], i) => (
         <g key={i} transform={`translate(${x} ${y}) scale(${s})`} fill="#0a0f1e">
@@ -57,9 +56,10 @@ export function RoadFallback() {
           ))}
         </g>
       ))}
+      <g transform="translate(250 0)">
       {/* the coach, head-on, headlights on */}
-      <path d="M430 720 L560 470 L720 470 L850 720 Z" fill="url(#rf-beam)" opacity="0.7" />
-      <g transform="translate(560 430)">
+      <path className="rf-beam" d="M430 720 L560 470 L720 470 L850 720 Z" fill="url(#rf-beam)" opacity="0.7" />
+      <g transform="translate(560 430)"><g className="rf-coach">
         <rect x="0" y="0" width="160" height="150" rx="16" fill="#eef0ff" />
         <rect x="10" y="12" width="140" height="62" rx="9" fill="#3b4596" />
         <rect x="10" y="12" width="140" height="62" rx="9" fill="#ffcf8a" opacity="0.18" />
@@ -70,6 +70,7 @@ export function RoadFallback() {
         <rect x="60" y="118" width="40" height="10" rx="2" fill="#0e1330" />
         <rect x="6" y="150" width="26" height="20" rx="4" fill="#0e1330" />
         <rect x="128" y="150" width="26" height="20" rx="4" fill="#0e1330" />
+      </g></g>
       </g>
     </svg>
   );

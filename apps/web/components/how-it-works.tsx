@@ -22,13 +22,20 @@ export function HowItWorks() {
   return (
     <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
       <ol className="relative flex flex-col gap-2" aria-label="How MOVA works">
-        {/* the route line that ties the steps together */}
-        <span aria-hidden className="absolute top-8 bottom-8 left-[27px] w-0.5 bg-border" />
+        {/* the lane line that ties the steps together: dashed road paint, with a glowing stud travelling to the active step */}
+        <span aria-hidden className="absolute top-8 bottom-8 left-[27px] w-0.5 bg-[repeating-linear-gradient(180deg,var(--border)_0_7px,transparent_7px_13px)]" />
         <motion.span
           aria-hidden
-          className="absolute top-8 left-[27px] w-0.5 origin-top bg-route"
+          className="absolute top-8 left-[27px] w-0.5 origin-top bg-[repeating-linear-gradient(180deg,var(--route)_0_7px,transparent_7px_13px)]"
           animate={{ height: `calc(${(index / (steps.length - 1)) * 100}% - ${index === steps.length - 1 ? 64 : 0}px)` }}
           transition={{ duration: reduce ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
+        />
+        <motion.span
+          aria-hidden
+          className="absolute left-[23px] z-0 size-2.5 rounded-full bg-amber shadow-[0_0_12px_3px_rgba(255,181,71,0.6)]"
+          style={{ top: 28 }}
+          animate={{ top: `calc(${(index / (steps.length - 1)) * 100}% - ${index === steps.length - 1 ? 40 : -28}px)` }}
+          transition={{ duration: reduce ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
         />
         {steps.map((s, i) => {
           const on = s.id === active;

@@ -42,7 +42,7 @@ export default function OperatorTrips() {
     <div className="container-page py-8 sm:py-10">
       <PageHeader title="Trips" description="Create departures and open passenger manifests." />
 
-      <div className="grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_340px]">
         <Card as="section" className="overflow-hidden">
           <div className="flex flex-col gap-3 border-b border-border p-4 sm:flex-row sm:items-center">
             <div role="tablist" aria-label="Trip period" className="inline-flex rounded-xl bg-ground p-1">
@@ -83,9 +83,9 @@ export default function OperatorTrips() {
                 <tbody className="divide-y divide-border">
                   {filtered.map((t) => (
                     <tr key={t.id} className="hover:bg-ground/60">
-                      <td className="px-4 py-3"><span className="tabular font-semibold">{formatTime(t.departureAt)}</span><br /><span className="text-sm text-muted">{formatDate(t.departureAt)}</span></td>
+                      <td className="px-4 py-3 whitespace-nowrap"><span className="tabular font-semibold">{formatTime(t.departureAt)}</span><br /><span className="text-sm text-muted">{formatDate(t.departureAt)}</span></td>
                       <td className="px-4 py-3"><span className="font-semibold">{t.origin} → {t.destination}</span><br /><span className="text-sm text-muted">{tripTypeLabel(t.tripType)} {t.isDemo && <DemoBadge className="ml-1" />}</span></td>
-                      <td className="px-4 py-3 text-sm">{t.bus.plate}</td>
+                      <td className="px-4 py-3 text-sm whitespace-nowrap">{t.bus.plate}</td>
                       <td className="tabular px-4 py-3 text-right">{cedis(t.farePesewas)}</td>
                       <td className="tabular px-4 py-3 text-right">{t.booked} / {t.bus.capacity}</td>
                       <td className="px-4 py-3">{statusBadge[t.status]}</td>

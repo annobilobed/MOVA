@@ -53,7 +53,7 @@ export default function OperatorOverview() {
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate font-semibold">{t.origin} → {t.destination}</p>
-                <p className="text-sm text-muted">{t.bus.plate}</p>
+                <p className="text-sm whitespace-nowrap text-muted">{t.bus.plate}</p>
               </div>
               <p className="tabular text-sm"><span className="font-semibold">{t.booked}</span><span className="text-muted"> / {t.bus.capacity} booked</span></p>
               {t.status === "fully_booked" && <Badge tone="danger">Full</Badge>}

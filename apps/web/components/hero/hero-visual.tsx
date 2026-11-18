@@ -38,7 +38,7 @@ export function HeroVisual() {
 
   return (
     <div aria-hidden className="absolute inset-0 -z-10">
-      <div className={`absolute inset-0 transition-opacity duration-1000 ${ready ? "opacity-0" : "opacity-100"}`}>
+      <div className={`mova-sky absolute inset-0 transition-opacity duration-1000 ${ready ? "opacity-0" : "opacity-100"}`}>
         <RoadFallback />
       </div>
       {mode === "3d" && (

@@ -45,7 +45,7 @@ export default function OperatorBuses() {
   return (
     <div className="container-page py-8 sm:py-10">
       <PageHeader title="Buses" description="Each bus gets the standard coach layout for its capacity (rows of 2 + 2 with a back row of 5)." />
-      <div className="grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_340px]">
         <Card as="section" className="overflow-hidden">
           <LoadState loading={buses.loading} error={buses.error} reload={buses.reload} label="Loading buses…" />
           {buses.data && !buses.data.buses.length && <div className="p-5"><EmptyState icon={<Bus />} title="No buses yet">Add your first bus with the form.</EmptyState></div>}
@@ -62,7 +62,7 @@ export default function OperatorBuses() {
                 <tbody className="divide-y divide-border">
                   {buses.data.buses.map((b) => (
                     <tr key={b.id}>
-                      <td className="px-4 py-3 font-semibold">{b.plate}</td>
+                      <td className="px-4 py-3 font-semibold whitespace-nowrap">{b.plate}</td>
                       <td className="tabular px-4 py-3 text-right">{b.capacity}</td>
                       <td className="px-4 py-3">{b.driver?.name ?? <span className="text-muted">Not assigned</span>}</td>
                     </tr>

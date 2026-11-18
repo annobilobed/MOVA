@@ -66,7 +66,7 @@ export default function AdminUsers() {
                 {users.data.users.map((u) => (
                   <tr key={u.id}>
                     <td className="px-4 py-3"><span className="font-semibold">{u.fullName}</span>{u.studentId && <><br /><span className="tabular text-sm text-muted">{u.studentId}</span></>}</td>
-                    <td className="px-4 py-3 text-sm">{u.email}</td>
+                    <td className="px-4 py-3 text-sm whitespace-nowrap">{u.email}</td>
                     <td className="px-4 py-3"><Badge tone={u.role === "super_admin" ? "info" : "neutral"}>{roleName[u.role]}</Badge></td>
                     <td className="px-4 py-3 text-sm">{u.company?.name ?? <span className="text-muted">—</span>}</td>
                     <td className="px-4 py-3">{u.isActive ? <Badge tone="success">Active</Badge> : <Badge tone="danger">Deactivated</Badge>}</td>

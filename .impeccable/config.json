@@ -4,70 +4,10 @@
     "ignoreFiles": [],
     "ignoreValues": [
       {
-        "rule": "design-system-font",
-        "value": "inter",
-        "createdAt": "2026-11-17T13:44:33.925Z",
-        "reason": "spec-pinned fonts; DESIGN.md lists the self-hosted variable builds (Plus Jakarta Sans Variable, Inter Variable); the demo loads the same families from Google Fonts"
-      },
-      {
-        "rule": "design-system-font",
-        "value": "plus jakarta sans",
-        "createdAt": "2026-11-17T13:44:33.939Z",
-        "reason": "spec-pinned fonts; DESIGN.md lists the self-hosted variable builds (Plus Jakarta Sans Variable, Inter Variable); the demo loads the same families from Google Fonts"
-      },
-      {
         "rule": "overused-font",
         "value": "inter",
         "createdAt": "2026-11-17T13:45:54.515Z",
-        "reason": "spec-pinned body face (MOVA spec 3.5: Inter or DM Sans); recorded in DESIGN.md"
-      },
-      {
-        "rule": "overused-font",
-        "value": "plus jakarta sans",
-        "createdAt": "2026-11-17T13:45:54.521Z",
-        "reason": "spec-pinned display face (MOVA spec 3.5: Poppins or Plus Jakarta Sans); recorded in DESIGN.md"
-      },
-      {
-        "rule": "design-system-color",
-        "value": "#5a3dff",
-        "createdAt": "2026-11-17T15:01:30.236Z",
-        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
-      },
-      {
-        "rule": "design-system-color",
-        "value": "#6c48ff",
-        "createdAt": "2026-11-17T15:01:30.246Z",
-        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
-      },
-      {
-        "rule": "design-system-color",
-        "value": "#3f33e6",
-        "createdAt": "2026-11-17T15:01:30.255Z",
-        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
-      },
-      {
-        "rule": "design-system-color",
-        "value": "#3a23b8",
-        "createdAt": "2026-11-17T15:01:30.262Z",
-        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
-      },
-      {
-        "rule": "design-system-color",
-        "value": "#5a2fd6",
-        "createdAt": "2026-11-17T15:01:30.271Z",
-        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
-      },
-      {
-        "rule": "design-system-color",
-        "value": "#4326c9",
-        "createdAt": "2026-11-17T15:01:30.278Z",
-        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
-      },
-      {
-        "rule": "design-system-color",
-        "value": "#2f8fe6",
-        "createdAt": "2026-11-17T15:01:30.287Z",
-        "reason": "user-requested animated brand gradient: intermediate stops blending Electric, Violet and Aqua (documented in DESIGN.md, Animated gradients)"
+        "reason": "Inter is the workhorse body/UI face of the night-ride system (Overpass carries the display voice); recorded in DESIGN.md"
       }
     ]
   }

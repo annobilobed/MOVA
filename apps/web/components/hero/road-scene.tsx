@@ -122,6 +122,20 @@ function Coach({ motion }: { motion: React.MutableRefObject<Motion> }) {
   const beamR = useRef<THREE.SpotLight>(null);
   const targetL = useMemo(() => new THREE.Object3D(), []);
   const targetR = useMemo(() => new THREE.Object3D(), []);
+  const beamPool = useMemo(() => {
+    const c = document.createElement("canvas");
+    c.width = 256; c.height = 128;
+    const g = c.getContext("2d")!;
+    const grad = g.createRadialGradient(40, 64, 4, 90, 64, 170);
+    grad.addColorStop(0, "rgba(255,226,168,0.55)");
+    grad.addColorStop(0.45, "rgba(255,200,120,0.22)");
+    grad.addColorStop(1, "rgba(255,190,110,0)");
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 256, 128);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }, []);
 
   useFrame(({ clock }, dt) => {
     const m = motion.current;
@@ -185,6 +199,11 @@ function Coach({ motion }: { motion: React.MutableRefObject<Motion> }) {
           </mesh>
         </group>
       ))}
+      {/* light pool the headlights throw on the road ahead */}
+      <mesh position={[6.2, -0.28, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[8.5, 3.4]} />
+        <meshBasicMaterial map={beamPool} transparent depthWrite={false} blending={THREE.AdditiveBlending} />
+      </mesh>
       {[0.38, -0.38].map((z) => (
         <mesh key={z} position={[-2.152, 0.42, z]}>
           <boxGeometry args={[0.02, 0.22, 0.1]} />
@@ -205,7 +224,7 @@ const ROAD_LEN = 150;
 const START = -115; // horizon end
 const NEAR = 32;    // behind the camera
 
-function useStream(count: number, gap: number, place: (o: THREE.Object3D, i: number, z: number) => void, motion: React.MutableRefObject<Motion>, mult = 1) {
+function useStream(count: number, gap: number, place: (o: THREE.Object3D, i: number, z: number) => void, motion: React.MutableRefObject<Motion>, hideNear = false) {
   const ref = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const offset = useRef(0);
@@ -213,7 +232,7 @@ function useStream(count: number, gap: number, place: (o: THREE.Object3D, i: num
     const mesh = ref.current;
     if (!mesh) return;
     const m = motion.current;
-    if (m.animate) offset.current = (offset.current + dt * m.speed * 9 * mult) % (count * gap);
+    if (m.animate) offset.current = (offset.current + dt * m.speed * 9) % (count * gap);
     for (let i = 0; i < count; i++) {
       // The coach drives toward the camera, so the road streams away from it, into the distance.
       const z = NEAR - ((i * gap + offset.current) % (count * gap));
@@ -221,6 +240,7 @@ function useStream(count: number, gap: number, place: (o: THREE.Object3D, i: num
       dummy.rotation.set(0, 0, 0);
       dummy.scale.set(1, 1, 1);
       place(dummy, i, z);
+      if (hideNear && z > 6) dummy.scale.set(0, 0, 0); // never let a pole or palm slice the camera
       dummy.updateMatrix();
       mesh.setMatrixAt(i, dummy.matrix);
     }
@@ -233,22 +253,22 @@ function Road({ motion }: { motion: React.MutableRefObject<Motion> }) {
   const DASHES = 36, STUDS = 60, LIGHTS = 12, PALMS = 26;
   const dashes = useStream(DASHES, 4, (o, _i, z) => { o.position.set(0, 0.011, z); }, motion);
   const studs = useStream(STUDS, 2.4, (o, i, z) => { o.position.set(i % 2 ? 3.15 : -3.15, 0.03, z); }, motion);
-  const poles = useStream(LIGHTS, 12, (o, i, z) => { o.position.set(i % 2 ? 5.2 : -5.2, 2.2, z); }, motion);
-  const lamps = useStream(LIGHTS, 12, (o, i, z) => { o.position.set(i % 2 ? 4.45 : -4.45, 4.3, z); }, motion);
-  const glows = useStream(LIGHTS, 12, (o, i, z) => { o.position.set(i % 2 ? 4.45 : -4.45, 4.3, z); }, motion);
+  const poles = useStream(LIGHTS, 12, (o, i, z) => { o.position.set(i % 2 ? 5.2 : -5.2, 2.2, z); }, motion, true);
+  const lamps = useStream(LIGHTS, 12, (o, i, z) => { o.position.set(i % 2 ? 4.45 : -4.45, 4.3, z); }, motion, true);
+  const glows = useStream(LIGHTS, 12, (o, i, z) => { o.position.set(i % 2 ? 4.45 : -4.45, 4.3, z); }, motion, true);
   const trunks = useStream(PALMS, 5.2, (o, i, z) => {
     const side = i % 2 ? 1 : -1;
     o.position.set(side * (7.6 + ((i * 37) % 5) * 0.9), 1.9, z + ((i * 13) % 3));
     o.rotation.z = side * -0.12;
     o.scale.setScalar(0.85 + ((i * 7) % 5) * 0.08);
-  }, motion);
+  }, motion, true);
   const crowns = useStream(PALMS, 5.2, (o, i, z) => {
     const side = i % 2 ? 1 : -1;
     const s = 0.85 + ((i * 7) % 5) * 0.08;
     o.position.set(side * (7.6 + ((i * 37) % 5) * 0.9) - side * 0.45 * s, 3.85 * s, z + ((i * 13) % 3));
     o.rotation.y = i;
     o.scale.setScalar(s);
-  }, motion);
+  }, motion, true);
 
   const crownGeo = useMemo(() => {
     // Six drooping fronds as flattened cones fanned around the top.
@@ -370,10 +390,17 @@ function Lights({ motion }: { motion: React.MutableRefObject<Motion> }) {
 
 /* Camera: chase view in front of the oncoming coach → swings to the roadside as you scroll; the pointer nudges it. */
 function Rig({ motion }: { motion: React.MutableRefObject<Motion> }) {
-  const { camera, pointer } = useThree();
+  const { camera, pointer, size } = useThree();
   const look = useMemo(() => new THREE.Vector3(), []);
   useFrame(() => {
     const s = THREE.MathUtils.clamp(motion.current.scroll, 0, 1);
+    if (size.width < size.height) {
+      // Phones: a high view straight down the road, so the coach sits in the open band between the copy and the search.
+      camera.position.lerp(new THREE.Vector3(-1.6 + pointer.x * 0.4 + s * 2, 4.6 - s * 1.5, 17 - s * 3), 0.06);
+      look.lerp(new THREE.Vector3(-1.6, -0.5 + s, 3.5 - s), 0.08);
+      camera.lookAt(look);
+      return;
+    }
     const a = THREE.MathUtils.lerp(0.62, 1.3, s); // angle around the bus
     const r = THREE.MathUtils.lerp(14, 10, s);
     const tx = -1.6 + Math.sin(a) * r + pointer.x * 0.9;
