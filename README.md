@@ -62,10 +62,26 @@ The first deploy takes about 5–10 minutes. Free services sleep after 15 minute
 
 Business rules enforced on the server: amounts calculated server-side (GHS, sent to Paystack in pesewas); one active booking per trip and seat (unique index); a booking only after confirmed payment; if the seat is gone when payment completes, the payment is refunded; mismatched amounts are flagged for review; drivers validate only tickets for their assigned bus, and each ticket only once; operators see only their own company's data.
 
+
+## Abuse and failure protections
+
+| Loophole | Protection |
+|---|---|
+| Holding a seat forever by re-selecting it | Re-selecting never extends a hold; it always ends 10 minutes after it started |
+| Hoarding seats on many trips | At most 2 trips with held seats per student, and 4 new holds per trip per hour |
+| Many accounts for one student | One account per UCC student ID (case-insensitive) |
+| Mobile money approval slower than the hold | When payment starts with under 5 minutes left, the hold is extended once to 5 minutes |
+| Payment arriving after the bus left or the trip was cancelled | Never booked; automatically refunded |
+| Operator cancels a trip | Every ticket cancelled and every payment (including luggage top-ups) refunded, with the reason shown to students; audited |
+| A bus scheduled twice at once | Trips on the same bus must be at least 3 hours apart |
+| Shared screenshot of a ticket | Single use; repeat scans warn the driver and show name, seat and student ID to check against the UCC ID card |
+| Network drops at the bus door | Drivers can open a passenger list (seat, name, student ID, luggage) that stays on screen |
+| Under-declared luggage | 25 kg included, 3 kg margin, extra bags paid per bag; students can top up until 2 hours after departure; drivers see the allowance on scan |
+
 ## Tests
 
 ```bash
-pnpm --filter @mova/api test     # 18 API tests against a real Postgres + Redis (mova_test DB)
+pnpm --filter @mova/api test     # 24 API tests against a real Postgres + Redis (mova_test DB)
 ```
 
 They cover the spec's acceptance criteria: registration/login/duplicate email, trip discovery and filters, seat layout vs capacity, 10-minute locks, server-side amounts and tampering, double booking → refund, webhook signature and idempotency, ticket validation (valid / repeat / wrong bus), operator scoping, role security and audited role changes.

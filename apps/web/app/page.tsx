@@ -226,9 +226,9 @@ function TripFacts({ facts, tone }: { facts: { fromFare: number; next: string; c
   if (!facts) return null;
   const label = tone === "dark" ? "text-white/70" : "text-muted";
   return (
-    <dl className={`mt-auto grid grid-cols-3 gap-4 border-t pt-5 ${tone === "dark" ? "border-white/15" : "border-border"}`}>
+    <dl className={`mt-auto grid grid-cols-[1fr_1.4fr_1fr] gap-4 border-t pt-5 ${tone === "dark" ? "border-white/15" : "border-border"}`}>
       <div><dt className={`text-sm ${label}`}>Fares from</dt><dd className="tabular font-display text-lg font-bold">{cedis(facts.fromFare)}</dd></div>
-      <div><dt className={`text-sm ${label}`}>Next departure</dt><dd className="tabular font-display text-lg font-bold">{formatDateTime(facts.next)}</dd></div>
+      <div><dt className={`text-sm ${label}`}>Next departure</dt><dd className="font-display text-lg leading-snug font-bold [font-variant-numeric:tabular-nums]">{formatDateTime(facts.next)}</dd></div>
       <div><dt className={`text-sm ${label}`}>Departures</dt><dd className="tabular font-display text-lg font-bold">{facts.count}</dd></div>
     </dl>
   );
