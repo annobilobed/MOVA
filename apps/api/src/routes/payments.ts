@@ -7,7 +7,7 @@ import { ah, conflict, forbidden, HttpError, notFound } from "../lib/errors.js";
 import { quote } from "../lib/money.js";
 import { callbackUrl, finalizePayment, newReference, refreshFromProvider } from "../lib/payments.js";
 import * as paystack from "../lib/paystack.js";
-import { getSeatLock } from "../lib/redis.js";
+import { getSeatLock, graceForPayment } from "../lib/redis.js";
 import { getTripRow, serializeTrip } from "../lib/trips.js";
 
 export const payments = Router();
@@ -63,6 +63,7 @@ payments.post(
       return res.json({ payment: serializePayment(open[0]), authorizationUrl: open[0].authorization_url, lockExpiresAt: lock.expiresAt });
     }
 
+    const lockExpiresAt = (await graceForPayment(row.id, input.seat, user.id)) ?? lock.expiresAt;
     const amounts = quote(row.fare_pesewas, input.luggage);
     const reference = newReference();
     const testMode = paymentsInTestMode();
@@ -86,7 +87,7 @@ payments.post(
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
       [reference, user.id, row.id, input.seat, input.luggage, amounts.farePesewas, amounts.luggagePesewas, amounts.amountPesewas, testMode ? "test" : "paystack", authorizationUrl],
     );
-    res.status(201).json({ payment: serializePayment(rows[0]), authorizationUrl, lockExpiresAt: lock.expiresAt });
+    res.status(201).json({ payment: serializePayment(rows[0]), authorizationUrl, lockExpiresAt });
   }),
 );
 

@@ -28,7 +28,7 @@ async function newStudent(email: string) {
     fullName: "Test Student",
     email,
     phone: "024 123 4567",
-    studentId: "PS/TST/22/0099",
+    studentId: `PS/TST/${email.replace(/[^a-z0-9]/gi, "").slice(0, 12)}`,
     password: "longenough1",
   });
   expect(res.status).toBe(201);
@@ -294,5 +294,82 @@ describe("luggage top-ups", () => {
     const res = await d.post("/api/driver/validate").send({ code: `MOVA1:${bk.qr_token}`, tripId: trip.id });
     expect(res.body.result).toBe("valid");
     expect(res.body.passenger.luggage).toBe("25 kg included + 1 extra bag");
+  });
+});
+
+describe("loophole fixes", () => {
+  it("does not extend a hold when the same seat is selected again", async () => {
+    const trip = await firstTrip("Accra");
+    const s = await newStudent("noextend@student.test");
+    const a = await s.post(`/api/trips/${trip.id}/locks`).send({ seat: "30" });
+    await new Promise((r) => setTimeout(r, 1200));
+    const b = await s.post(`/api/trips/${trip.id}/locks`).send({ seat: "30" });
+    expect(new Date(b.body.lock.expiresAt).getTime()).toBeLessThanOrEqual(new Date(a.body.lock.expiresAt).getTime() + 50);
+  });
+
+  it("limits seat holds to two trips at a time", async () => {
+    const trips = (await request(app).get("/api/trips?type=inter_regional")).body.trips;
+    const s = await newStudent("hoarder@student.test");
+    expect((await s.post(`/api/trips/${trips[0].id}/locks`).send({ seat: "40" })).status).toBe(201);
+    expect((await s.post(`/api/trips/${trips[1].id}/locks`).send({ seat: "40" })).status).toBe(201);
+    const third = await s.post(`/api/trips/${trips[2].id}/locks`).send({ seat: "40" });
+    expect(third.status).toBe(409);
+    expect(third.body.error.code).toBe("too_many_holds");
+  });
+
+  it("allows one account per student ID", async () => {
+    const body = { fullName: "Twin", phone: "0241234567", studentId: "PS/DUP/22/0001", password: "longenough1" };
+    expect((await request(app).post("/api/auth/register").send({ ...body, email: "twin1@student.test" })).status).toBe(201);
+    const dup = await request(app).post("/api/auth/register").send({ ...body, email: "twin2@student.test", studentId: "ps/dup/22/0001" });
+    expect(dup.status).toBe(409);
+    expect(dup.body.error.code).toBe("student_id_taken");
+  });
+
+  it("refuses to schedule a bus twice within three hours", async () => {
+    const op = await login("operator@demo.mova");
+    const bus = await op.post("/api/operator/buses").send({ plate: "busy-gr 1-26", capacity: 33 });
+    const at = new Date(Date.now() + 5 * 86400_000);
+    const base = { busId: bus.body.bus.id, origin: "Cape Coast", destination: "Accra", fareGhs: 90, tripType: "inter_regional" };
+    expect((await op.post("/api/operator/trips").send({ ...base, departureAt: at.toISOString() })).status).toBe(201);
+    const clash = await op.post("/api/operator/trips").send({ ...base, departureAt: new Date(at.getTime() + 2 * 3600_000).toISOString() });
+    expect(clash.status).toBe(400);
+    expect(clash.body.error.code).toBe("bus_busy");
+    expect((await op.post("/api/operator/trips").send({ ...base, departureAt: new Date(at.getTime() + 4 * 3600_000).toISOString() })).status).toBe(201);
+  });
+
+  it("cancelling a trip cancels tickets, refunds payments, and refunds late payments", async () => {
+    const op = await login("operator@demo.mova");
+    const bus = await op.post("/api/operator/buses").send({ plate: "cancel-gr 2-26", capacity: 33 });
+    const t = await op.post("/api/operator/trips").send({ busId: bus.body.bus.id, origin: "Cape Coast", destination: "Winneba", departureAt: new Date(Date.now() + 6 * 86400_000).toISOString(), fareGhs: 40, tripType: "inter_regional" });
+    const tripId = t.body.trip.id;
+    const paid = await newStudent("paid@student.test");
+    await paid.post(`/api/trips/${tripId}/locks`).send({ seat: "1" });
+    const p1 = await paid.post("/api/payments").send({ tripId, seat: "1" });
+    await paid.post(`/api/payments/${p1.body.payment.reference}/test-outcome`).send({ outcome: "success" });
+    const late = await newStudent("late@student.test");
+    await late.post(`/api/trips/${tripId}/locks`).send({ seat: "2" });
+    const p2 = await late.post("/api/payments").send({ tripId, seat: "2" });
+
+    expect((await op.post(`/api/operator/trips/${tripId}/cancel`).send({ reason: "Bus breakdown" })).body.paymentsRefunded).toBe(1);
+    const ticket = (await paid.get("/api/tickets")).body.tickets[0];
+    expect(ticket.status).toBe("cancelled");
+    expect(ticket.cancelReason).toBe("Bus breakdown");
+    expect((await paid.get(`/api/payments/${p1.body.payment.reference}`)).body.payment.status).toBe("refunded");
+    // The pending payment completes after the cancellation: refunded, never booked.
+    expect((await late.post(`/api/payments/${p2.body.payment.reference}/test-outcome`).send({ outcome: "success" })).body.status).toBe("refunded");
+    expect((await late.get("/api/tickets")).body.tickets).toHaveLength(0);
+    // No new holds on a cancelled trip.
+    expect((await late.post(`/api/trips/${tripId}/locks`).send({ seat: "3" })).status).toBe(409);
+  });
+
+  it("gives drivers a passenger list and the student ID on scan", async () => {
+    const trip = await firstTrip("Kumasi");
+    const d = await login("driver2@demo.mova");
+    const list = await d.get(`/api/driver/trips/${trip.id}/passengers`);
+    expect(list.status).toBe(200);
+    expect(list.body.passengers[0]).toMatchObject({ seat: expect.any(String), studentId: expect.any(String) });
+    expect(list.body.passengers[0].phone).toBeUndefined();
+    const other = await login("driver@demo.mova");
+    expect((await other.get(`/api/driver/trips/${trip.id}/passengers`)).status).toBe(404);
   });
 });

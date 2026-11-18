@@ -31,6 +31,7 @@ export function serializeTrip(row: any, lockedCount = 0) {
     status,
     bookable: status === "available" && seatsLeft > 0,
     isDemo: row.is_demo,
+    cancelReason: row.cancel_reason ?? null,
   };
 }
 

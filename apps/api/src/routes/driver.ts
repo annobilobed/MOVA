@@ -45,14 +45,14 @@ driver.post(
       return res.status(403).json({ result: "not_your_trip", message: "This trip isn't assigned to you." });
     }
     const { rows } = await query(
-      `SELECT bk.*, u.full_name, t.bus_id, t.origin, t.destination, t.departure_at
+      `SELECT bk.*, u.full_name, u.student_id, t.bus_id, t.origin, t.destination, t.departure_at
        FROM bookings bk JOIN users u ON u.id = bk.user_id JOIN trips t ON t.id = bk.trip_id
        WHERE bk.qr_token = $1`,
       [token],
     );
     const bk = rows[0];
     if (!bk || bk.status === "cancelled") return res.json({ result: "invalid", message: "This isn't a valid MOVA ticket." });
-    const passenger = { name: bk.full_name, seat: bk.seat_number, route: `${bk.origin} → ${bk.destination}`, luggage: LUGGAGE_LABELS[bk.luggage as Luggage] };
+    const passenger = { name: bk.full_name, studentId: bk.student_id, seat: bk.seat_number, route: `${bk.origin} → ${bk.destination}`, luggage: LUGGAGE_LABELS[bk.luggage as Luggage] };
     if (bk.trip_id !== tripId) {
       return res.json({ result: "wrong_bus", message: "This ticket is for a different trip or bus.", passenger });
     }
@@ -74,5 +74,25 @@ driver.post(
       return res.json({ result: "already_used", message: "This ticket has already been used.", passenger, boardedAt: bk.boarded_at });
     }
     res.json({ result: "valid", message: "Ticket valid. Passenger boarded.", passenger, boardedAt: updated[0].boarded_at });
+  }),
+);
+
+/** Passenger list for a driver's own trip: a reference that keeps working if the network drops after loading. */
+driver.get(
+  "/trips/:id/passengers",
+  ah(async (req, res) => {
+    const { rows: t } = await query(`${TRIP_SELECT} WHERE t.id = $1 AND b.driver_id = $2`, [String(req.params.id), req.user!.id]).catch(() => ({ rows: [] as any[] }));
+    if (!t[0]) return res.status(404).json({ error: { code: "not_found", message: "This trip isn't assigned to you." } });
+    const { rows } = await query(
+      `SELECT bk.seat_number, bk.luggage, bk.status, u.full_name, u.student_id FROM bookings bk JOIN users u ON u.id = bk.user_id
+       WHERE bk.trip_id = $1 AND bk.status IN ('confirmed','boarded')
+       ORDER BY NULLIF(regexp_replace(bk.seat_number, '\\D', '', 'g'), '')::int NULLS LAST`,
+      [String(req.params.id)],
+    );
+    res.set("Cache-Control", "no-store");
+    res.json({
+      trip: serializeTrip(t[0]),
+      passengers: rows.map((r) => ({ seat: r.seat_number, name: r.full_name, studentId: r.student_id, luggage: LUGGAGE_LABELS[r.luggage as Luggage], boarded: r.status === "boarded" })),
+    });
   }),
 );

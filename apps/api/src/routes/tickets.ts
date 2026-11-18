@@ -12,7 +12,7 @@ import * as paystack from "../lib/paystack.js";
 export const tickets = Router();
 
 const TICKET_SELECT = `
-  SELECT bk.*, t.origin, t.destination, t.departure_at, t.trip_type, b.plate, c.name AS company_name,
+  SELECT bk.*, t.origin, t.destination, t.departure_at, t.trip_type, t.cancel_reason, b.plate, c.name AS company_name,
     p.reference, p.amount_pesewas, u.full_name, u.student_id
   FROM bookings bk
   JOIN trips t ON t.id = bk.trip_id
@@ -41,6 +41,7 @@ function serialize(r: any) {
     reference: r.reference,
     amountPesewas: r.amount_pesewas,
     upcoming: r.status === "confirmed" && !departed,
+    cancelReason: r.status === "cancelled" ? r.cancel_reason ?? null : null,
   };
 }
 

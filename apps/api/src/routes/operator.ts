@@ -4,7 +4,9 @@ import { requireRole } from "../lib/auth.js";
 import { query } from "../lib/db.js";
 import { ah, badRequest, conflict, forbidden, notFound } from "../lib/errors.js";
 import { defaultLayout } from "../lib/layout.js";
-import { tripLocks } from "../lib/redis.js";
+import { redis, tripLocks } from "../lib/redis.js";
+import { refund } from "../lib/payments.js";
+import { pool } from "../lib/db.js";
 import { serializeTrip, TRIP_SELECT } from "../lib/trips.js";
 
 export const operator = Router();
@@ -131,6 +133,18 @@ operator.post(
     }
     const { rows: bus } = await query("SELECT * FROM buses WHERE id = $1 AND ($2::uuid IS NULL OR company_id = $2)", [input.busId, c]);
     if (!bus[0]) throw badRequest("invalid_bus", "Choose one of your buses.");
+    // A bus (and its driver) can't be in two places at once.
+    const { rows: clash } = await query(
+      `SELECT origin, destination, departure_at FROM trips WHERE bus_id = $1 AND NOT is_cancelled
+         AND departure_at BETWEEN $2::timestamptz - interval '3 hours' AND $2::timestamptz + interval '3 hours' LIMIT 1`,
+      [input.busId, input.departureAt],
+    );
+    if (clash[0]) {
+      const when = new Intl.DateTimeFormat("en-US", { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit", timeZone: "Africa/Accra" }).format(new Date(clash[0].departure_at));
+      throw badRequest("bus_busy", `This bus already has a trip within 3 hours (${clash[0].origin} → ${clash[0].destination}, ${when}). Choose another bus or time.`, {
+        fields: { departureAt: ["This bus is already scheduled within 3 hours of this time."] },
+      });
+    }
     const { rows } = await query(
       `INSERT INTO trips (company_id, bus_id, origin, destination, departure_at, fare_pesewas, trip_type)
        VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id`,
@@ -168,5 +182,54 @@ operator.get(
         boardedAt: r.boarded_at,
       })),
     });
+  }),
+);
+
+/**
+ * Cancel a trip: no new bookings, every ticket is cancelled, and every successful payment
+ * for it (fares and luggage top-ups) is refunded. Recorded in the audit log.
+ */
+operator.post(
+  "/trips/:id/cancel",
+  ah(async (req, res) => {
+    const c = scope(req);
+    const { reason } = z.object({ reason: z.string().trim().min(3, "Give a short reason for passengers").max(300) }).parse(req.body);
+    const id = String(req.params.id);
+    const client = await pool.connect();
+    let refunds: string[] = [];
+    try {
+      await client.query("BEGIN");
+      const { rows: t } = await client.query("SELECT * FROM trips WHERE id = $1 AND ($2::uuid IS NULL OR company_id = $2) FOR UPDATE", [id, c]).catch(() => ({ rows: [] as any[] }));
+      if (!t[0]) throw notFound("We couldn't find that trip in your company.");
+      if (t[0].is_cancelled) throw conflict("already_cancelled", "This trip is already cancelled.");
+      if (new Date(t[0].departure_at).getTime() < Date.now() - 2 * 3600 * 1000) throw conflict("trip_over", "This trip has already finished.");
+      await client.query("UPDATE trips SET is_cancelled = true, cancelled_at = now(), cancel_reason = $2 WHERE id = $1", [id, reason]);
+      const { rows: b } = await client.query("UPDATE bookings SET status = 'cancelled' WHERE trip_id = $1 AND status IN ('confirmed','boarded') RETURNING id", [id]);
+      const { rows: p } = await client.query(
+        `UPDATE payments SET status = 'refunded', status_reason = $2, updated_at = now()
+         WHERE trip_id = $1 AND status = 'successful' RETURNING reference`,
+        [id, `The trip was cancelled by the operator: ${reason}`],
+      );
+      // Pending payments for this trip will be refunded on arrival (finalizePayment refuses cancelled trips).
+      await client.query("INSERT INTO audit_log (actor_id, action, target, details) VALUES ($1, 'trip_cancelled', $2, $3)", [
+        req.user!.id, id, JSON.stringify({ reason, bookings: b.length, refunds: p.length }),
+      ]);
+      await client.query("COMMIT");
+      refunds = p.map((r) => r.reference);
+      res.json({ cancelled: true, bookingsCancelled: b.length, paymentsRefunded: p.length });
+    } catch (err) {
+      await client.query("ROLLBACK").catch(() => {});
+      throw err;
+    } finally {
+      client.release();
+    }
+    for (const ref of refunds) await refund(ref);
+    // Release any seat holds on the cancelled trip.
+    let cursor = "0";
+    do {
+      const [next, keys] = await redis.scan(cursor, "MATCH", `mova:lock:${id}:*`, "COUNT", 200);
+      cursor = next;
+      if (keys.length) await redis.del(...keys);
+    } while (cursor !== "0");
   }),
 );

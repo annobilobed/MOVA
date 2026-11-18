@@ -17,7 +17,7 @@ async function setStatus(client: pg.PoolClient, id: string, status: string, reas
   );
 }
 
-async function refund(reference: string) {
+export async function refund(reference: string) {
   if (paymentsInTestMode()) return; // test-mode payments move no money
   try {
     await paystack.refundTransaction(reference);
@@ -77,6 +77,16 @@ export async function finalizePayment(reference: string, outcome: ProviderOutcom
         return "successful";
       }
       await setStatus(client, payment.id, "refunded", "Your ticket already had this luggage allowance, so the top-up was refunded.");
+      await client.query("COMMIT");
+      await refund(reference);
+      return "refunded";
+    }
+
+    // Trip departed or cancelled before the money arrived: never book, always refund.
+    const { rows: tripRows } = await client.query("SELECT departure_at, is_cancelled FROM trips WHERE id = $1", [payment.trip_id]);
+    const tripGone = !tripRows[0] || tripRows[0].is_cancelled || new Date(tripRows[0].departure_at).getTime() <= Date.now();
+    if (tripGone && payment.kind !== "luggage_topup") {
+      await setStatus(client, payment.id, "refunded", "The trip had already left or was cancelled when your payment arrived, so it was refunded.");
       await client.query("COMMIT");
       await refund(reference);
       return "refunded";

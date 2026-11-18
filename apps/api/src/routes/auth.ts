@@ -40,6 +40,9 @@ auth.post(
       issueSession(res, rows[0].id);
       res.status(201).json({ user: toAuthUser(rows[0]) });
     } catch (err: any) {
+      if (err.code === "23505" && String(err.constraint).includes("student_id")) {
+        throw conflict("student_id_taken", "An account with this student ID already exists. Try signing in, or contact support if it isn't yours.");
+      }
       if (err.code === "23505") throw conflict("email_taken", "An account with this email already exists. Try signing in.");
       throw err;
     }

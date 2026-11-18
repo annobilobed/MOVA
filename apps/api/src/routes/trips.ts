@@ -115,7 +115,11 @@ trips.post(
     );
     if (mine.length) throw conflict("already_booked", "You already have a seat on this trip. See My tickets.");
     const lock = await lockSeat(row.id, seat, req.user!.id);
-    if (!lock) throw conflict("seat_locked", "Another student is holding that seat right now. Please choose another.");
+    if ("error" in lock) {
+      if (lock.error === "too_many_trips") throw conflict("too_many_holds", "You're already holding seats on two other trips. Finish or release one of those first.");
+      if (lock.error === "too_many_holds") throw conflict("hold_limit", "You've changed seats too many times on this trip. Please wait a while and try again.");
+      throw conflict("seat_locked", "Another student is holding that seat right now. Please choose another.");
+    }
     res.status(201).json({ lock: { seat: lock.seat, expiresAt: lock.expiresAt } });
   }),
 );
